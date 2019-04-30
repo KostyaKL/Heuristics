@@ -308,17 +308,33 @@ print("total number of models:", sum(int(makers[brand]["count"]) for brand in ma
 #
 # save_obj(makers, "db")
 
-for brand in makers:
-    for model in makers[brand]["models"]:
-        for retry in range(0, 5):
-            try:
-                get_specs(brand, model)
-                break
-            except:
-                print(brand, model, "not connected -------------------------------------->")
-                not_connected.append(brand + " " + model)
+# for brand in makers:
+#     for model in makers[brand]["models"]:
+#         for retry in range(0, 5):
+#             try:
+#                 get_specs(brand, model)
+#                 break
+#             except:
+#                 print(brand, model, "not connected -------------------------------------->")
+#                 not_connected.append(brand + " " + model)
+#
+# save_obj(makers, "db")
 
-save_obj(makers, "db")
+with open('test.csv', 'w') as f:
+    printout = "brand,model"
+    for key in makers["Acer"]["models"]["Chromebook Tab 10"]["specs"]:
+        printout = printout + "," + key
+    f.write(printout + "\n")
+    for brand in makers:
+        for model in makers[brand]["models"]:
+            printout = brand + "," + model
+            for spec in makers[brand]["models"][model]["specs"]:
+                tmp = str(makers[brand]["models"][model]["specs"][spec])
+                if tmp.find(",") >= 0:
+                    tmp = "\"" + tmp + "\""
+                printout = printout + "," + tmp
+            f.write(printout + "\n")
+
 
 
 
