@@ -380,77 +380,77 @@ def get_specs(brand, model, model_count):
         print(brand, model, "specs acquired at", strftime("%d-%m-%Y %H:%M:%S", gmtime()))
         model_count.acquired_inc()
 
-    # makers = load_obj("db")
+# makers = load_obj("db")
 
-    print("scarper started at:", strftime("%d-%m-%Y %H:%M:%S", gmtime()))
+print("scarper started at:", strftime("%d-%m-%Y %H:%M:%S", gmtime()))
 
-    start_time = gmtime()
+start_time = gmtime()
 
-    model_count = ModelCount()
+model_count = ModelCount()
 
-    get_brands()
+get_brands()
 
-    print(strftime("%d-%m-%Y %H:%M:%S", gmtime()))
+print(strftime("%d-%m-%Y %H:%M:%S", gmtime()))
 
-    print("total number of models:", sum(int(makers[brand]["count"]) for brand in makers))
+print("total number of models:", sum(int(makers[brand]["count"]) for brand in makers))
 
-    for brand in makers:
+for brand in makers:
+    for retry in range(0, 5):
+        try:
+            get_models(brand, model_count)
+            break
+        except:
+            print(brand, "not connected -------------------------------------->",
+                  strftime("%d-%m-%Y %H:%M:%S", gmtime()))
+            not_connected.append(brand)
+
+print(strftime("%d-%m-%Y %H:%M:%S", gmtime()))
+
+print("not connected:", not_connected)
+
+print("expected", sum(int(makers[brand]["count"]) for brand in makers), "models, found", model_count.get_count())
+
+save_obj(makers, "db")
+
+for brand in makers:
+    for model in makers[brand]["models"]:
         for retry in range(0, 5):
             try:
-                get_models(brand, model_count)
+                get_specs(brand, model, model_count)
                 break
             except:
-                print(brand, "not connected -------------------------------------->",
+                print(brand, model, "not connected -------------------------------------->",
                       strftime("%d-%m-%Y %H:%M:%S", gmtime()))
-                not_connected.append(brand)
+                not_connected.append(brand + " " + model)
 
-    print(strftime("%d-%m-%Y %H:%M:%S", gmtime()))
+print(strftime("%d-%m-%Y %H:%M:%S", gmtime()))
 
-    print("not connected:", not_connected)
+print("not connected:", not_connected)
 
-    print("expected", sum(int(makers[brand]["count"]) for brand in makers), "models, found", model_count.get_count())
+print("expected", sum(int(makers[brand]["count"]) for brand in makers), "models, acquired",
+      model_count.get_acquired())
 
-    save_obj(makers, "db")
+end_time = gmtime()
 
+total_time = end_time - start_time
+
+print("scarper finished after", strftime("%H:%M:%S", total_time))
+
+save_obj(makers, "db")
+
+with open('test.csv', 'w') as f:
+    printout = "brand,model"
+    rand_brand = random.choice(list(makers))
+    rand_model = random.choice(list(makers[rand_brand]["models"]))
+    for key in makers[rand_brand]["models"][rand_model]["specs"]:
+        printout = printout + "," + key
+    f.write(printout + "\n")
     for brand in makers:
         for model in makers[brand]["models"]:
-            for retry in range(0, 5):
-                try:
-                    get_specs(brand, model, model_count)
-                    break
-                except:
-                    print(brand, model, "not connected -------------------------------------->",
-                          strftime("%d-%m-%Y %H:%M:%S", gmtime()))
-                    not_connected.append(brand + " " + model)
-
-    print(strftime("%d-%m-%Y %H:%M:%S", gmtime()))
-
-    print("not connected:", not_connected)
-
-    print("expected", sum(int(makers[brand]["count"]) for brand in makers), "models, acquired",
-          model_count.get_acquired())
-
-    end_time = gmtime()
-
-    total_time = end_time - start_time
-
-    print("scarper finished after", strftime("%H:%M:%S", total_time))
-
-    save_obj(makers, "db")
-
-    with open('test.csv', 'w') as f:
-        printout = "brand,model"
-        rand_brand = random.choice(list(makers))
-        rand_model = random.choice(list(makers[rand_brand]["models"]))
-        for key in makers[rand_brand]["models"][rand_model]["specs"]:
-            printout = printout + "," + key
-        f.write(printout + "\n")
-        for brand in makers:
-            for model in makers[brand]["models"]:
-                printout = brand + "," + model
-                for spec in makers[brand]["models"][model]["specs"]:
-                    tmp = str(makers[brand]["models"][model]["specs"][spec])
-                    if tmp.find(",") >= 0:
-                        tmp = "\"" + tmp + "\""
-                    printout = printout + "," + tmp
-                f.write(printout + "\n")
+            printout = brand + "," + model
+            for spec in makers[brand]["models"][model]["specs"]:
+                tmp = str(makers[brand]["models"][model]["specs"][spec])
+                if tmp.find(",") >= 0:
+                    tmp = "\"" + tmp + "\""
+                printout = printout + "," + tmp
+            f.write(printout + "\n")
