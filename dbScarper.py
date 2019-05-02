@@ -377,8 +377,8 @@ def get_specs(brand, model, model_count):
             if parsed.find("water") >= 0 or parsed.find("Water") >= 0:
                 makers[brand]["models"][model]["specs"]["waterproof"] = 1
 
-        print(brand, model, "specs acquired at", strftime("%d-%m-%Y %H:%M:%S", gmtime()))
-        model_count.acquired_inc()
+    print(brand, model, "specs acquired at", strftime("%d-%m-%Y %H:%M:%S", gmtime()))
+    model_count.acquired_inc()
 
 # makers = load_obj("db")
 
