@@ -6,10 +6,10 @@
 # return score result
 
 
-def borda(table, candidates_num, rankers_num, candidate_dict):
+def borda(table, candidates_num, rankers_num):
     score_res = []
     for candidate in range(0, candidates_num):
-        score_res.append([candidate_dict[candidate], 0])
+        score_res.append(0)
 
     for ranker in range(0, rankers_num):
         tmp_ranker = []
@@ -18,7 +18,7 @@ def borda(table, candidates_num, rankers_num, candidate_dict):
         tmp_ranker.sort(key=lambda x: x[1], reverse=True)
         score = candidates_num - 1
         for candidate in range(0, candidates_num):
-            score_res[tmp_ranker[candidate][0]][1] += score
+            score_res[0] += score
             score -= 1
     return score_res
 
