@@ -232,9 +232,9 @@ def get_specs(brand, model):
                         makers[brand]["models"][model]["specs"]["os"] = 3
                     elif makers[brand]["models"][model]["specs"]["os"].find("BlackBerry") >= 0:
                         makers[brand]["models"][model]["specs"]["os"] = 4
-                    elif makers[brand]["models"][model]["specs"]["os"].find("Symbian") >= 0:
-                        makers[brand]["models"][model]["specs"]["os"] = 5
                     elif makers[brand]["models"][model]["specs"]["os"].find("Firefox") >= 0:
+                        makers[brand]["models"][model]["specs"]["os"] = 5
+                    elif makers[brand]["models"][model]["specs"]["os"].find("Symbian") >= 0:
                         makers[brand]["models"][model]["specs"]["os"] = 6
                     else:
                         makers[brand]["models"][model]["specs"]["os"] = 0
