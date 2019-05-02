@@ -434,7 +434,9 @@ end_time = gmtime()
 
 total_time = end_time - start_time
 
-print("scarper finished after", strftime("%H:%M:%S", total_time))
+print("scarper finished at", strftime("%d-%m-%Y %H:%M:%S", gmtime()))
+
+print("worked for", strftime("%H:%M:%S", total_time))
 
 save_obj(makers, "db")
 
