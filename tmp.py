@@ -134,21 +134,21 @@ def get_specs(brand, model, model_count):
     makers[brand]["models"][model]["specs"][
         "os"] = 0  # 1 android, 2 apple, 3 microsoft, 4 blackberry, 5 firefox, 6 symbian, 0 other
     makers[brand]["models"][model]["specs"]["chipset"] = no_data
-    makers[brand]["models"][model]["specs"]["cpu"] = no_data  # todo need to be dealt with
+    makers[brand]["models"][model]["specs"]["cpu"] = no_data
     makers[brand]["models"][model]["specs"]["gpu"] = no_data
     makers[brand]["models"][model]["specs"]["memoryslot"] = 0
     makers[brand]["models"][model]["specs"]["maxextmemory"] = 0
-    makers[brand]["models"][model]["specs"]["RAM"] = no_data  # todo need to be dealt with
+    makers[brand]["models"][model]["specs"]["RAM"] = no_data
     makers[brand]["models"][model]["specs"]["cam1MP"] = 0
     makers[brand]["models"][model]["specs"]["cam1video"] = 0
     makers[brand]["models"][model]["specs"]["cam2MP"] = 0
     makers[brand]["models"][model]["specs"]["cam2video"] = 0
     makers[brand]["models"][model]["specs"]["ir"] = 0
-    makers[brand]["models"][model]["specs"]["radio"] = 0  # todo nee to be checked
+    makers[brand]["models"][model]["specs"]["radio"] = 0
     makers[brand]["models"][model]["specs"]["usb"] = 0  # 1 type c/iphone, 2 mini, 3 micro, 0 else
     makers[brand]["models"][model]["specs"]["nfc"] = 0
     makers[brand]["models"][model]["specs"]["fingerprint"] = 0
-    makers[brand]["models"][model]["specs"]["price"] = no_data  # todo need to be dealt with
+    makers[brand]["models"][model]["specs"]["price"] = no_data
     makers[brand]["models"][model]["specs"]["basemark"] = 0
     makers[brand]["models"][model]["specs"]["loudspeaker"] = 0
     makers[brand]["models"][model]["specs"]["audioquality"] = 0
@@ -167,15 +167,14 @@ def get_specs(brand, model, model_count):
 
         if parsed.find("batsize") >= 0:
             try:
-                makers[brand]["models"][model]["specs"]["battery"] = int(
-                    parsed[parsed.find("spec=\"batsize-hl\">") + 18:parsed.find("</span>")])
+                makers[brand]["models"][model]["specs"]["battery"] = parsed[parsed.find("spec=\"batsize-hl\">") + 18:parsed.find("</span>")] + " mAh"
             except:
                 makers[brand]["models"][model]["specs"]["battery"] = 0
 
         if specs_list_found is True:
             if parsed.find("data-spec=\"year\"") >= 0:
                 try:
-                    makers[brand]["models"][model]["specs"]["year"] = int(parsed[parsed.find(">") + 1:parsed.find(",")])
+                    makers[brand]["models"][model]["specs"]["year"] = parsed[parsed.find(">") + 1:parsed.find("</")]
                 except:
                     makers[brand]["models"][model]["specs"]["year"] = 0
             if parsed.find("data-spec=\"dimensions\"") >= 0:
@@ -189,21 +188,20 @@ def get_specs(brand, model, model_count):
                     makers[brand]["models"][model]["specs"]["width"] = 0
             if parsed.find("data-spec=\"weight\"") >= 0:
                 try:
-                    makers[brand]["models"][model]["specs"]["weight"] = float(
-                        parsed[parsed.find(">") + 1:parsed.find(" g ")])
+                    makers[brand]["models"][model]["specs"]["weight"] = parsed[parsed.find(">") + 1:parsed.find("</")]
                 except:
                     makers[brand]["models"][model]["specs"]["weight"] = 0
             if parsed.find("data-spec=\"sim\"") >= 0:
                 try:
                     makers[brand]["models"][model]["specs"]["sim"] = parsed[parsed.find(">") + 1:parsed.find("</")]
                     if makers[brand]["models"][model]["specs"]["sim"].find("Nano") >= 0:
-                        makers[brand]["models"][model]["specs"]["simtype"] = 4
+                        makers[brand]["models"][model]["specs"]["simtype"] = "nano"
                     elif makers[brand]["models"][model]["specs"]["sim"].find("Micro") >= 0:
-                        makers[brand]["models"][model]["specs"]["simtype"] = 3
+                        makers[brand]["models"][model]["specs"]["simtype"] = "micro"
                     elif makers[brand]["models"][model]["specs"]["sim"].find("Mini") >= 0:
-                        makers[brand]["models"][model]["specs"]["simtype"] = 2
+                        makers[brand]["models"][model]["specs"]["simtype"] = "mini"
                     elif makers[brand]["models"][model]["specs"]["sim"].find("No") >= 0:
-                        makers[brand]["models"][model]["specs"]["simtype"] = 0
+                        makers[brand]["models"][model]["specs"]["simtype"] = "no sim"
                     else:
                         makers[brand]["models"][model]["specs"]["simtype"] = 1
 
@@ -221,42 +219,19 @@ def get_specs(brand, model, model_count):
                     makers[brand]["models"][model]["specs"]["sim"] = no_data
             if parsed.find("data-spec=\"displaysize\"") >= 0:
                 try:
-                    makers[brand]["models"][model]["specs"]["displaysize"] = float(
-                        parsed[parsed.find(">") + 1:parsed.find(" inches")])
+                    makers[brand]["models"][model]["specs"]["displaysize"] = parsed[parsed.find(">") + 1:parsed.find("</")]
                 except:
                     makers[brand]["models"][model]["specs"]["displaysize"] = 0
             if parsed.find("data-spec=\"displayresolution\"") >= 0:
                 try:
                     makers[brand]["models"][model]["specs"]["displayresolution"] = parsed[
                                                                                    parsed.find(">") + 1:parsed.find(
-                                                                                       " pixels")]
-                    try:
-                        a = makers[brand]["models"][model]["specs"]["displayresolution"][
-                            :makers[brand]["models"][model]["specs"]["displayresolution"].find(" x ")]
-                        b = makers[brand]["models"][model]["specs"]["displayresolution"][
-                            makers[brand]["models"][model]["specs"]["displayresolution"].find(" x ") + 3:]
-                        makers[brand]["models"][model]["specs"]["displayresolution"] = int(a) * int(b)
-                    except:
-                        makers[brand]["models"][model]["specs"]["displayresolution"] = 0
+                                                                                       "</")]
                 except:
                     makers[brand]["models"][model]["specs"]["displayresolution"] = 0
             if parsed.find("data-spec=\"os\"") >= 0:
                 try:
                     makers[brand]["models"][model]["specs"]["os"] = parsed[parsed.find(">") + 1:parsed.find("</")]
-                    if brand == "Apple":
-                        makers[brand]["models"][model]["specs"]["os"] = 2
-                    elif makers[brand]["models"][model]["specs"]["os"].find("Android") >= 0:
-                        makers[brand]["models"][model]["specs"]["os"] = 1
-                    elif makers[brand]["models"][model]["specs"]["os"].find("Microsoft") >= 0:
-                        makers[brand]["models"][model]["specs"]["os"] = 3
-                    elif makers[brand]["models"][model]["specs"]["os"].find("BlackBerry") >= 0:
-                        makers[brand]["models"][model]["specs"]["os"] = 4
-                    elif makers[brand]["models"][model]["specs"]["os"].find("Firefox") >= 0:
-                        makers[brand]["models"][model]["specs"]["os"] = 5
-                    elif makers[brand]["models"][model]["specs"]["os"].find("Symbian") >= 0:
-                        makers[brand]["models"][model]["specs"]["os"] = 6
-                    else:
-                        makers[brand]["models"][model]["specs"]["os"] = 0
                 except:
                     makers[brand]["models"][model]["specs"]["os"] = 0
             if parsed.find("data-spec=\"chipset\"") >= 0:
@@ -291,31 +266,27 @@ def get_specs(brand, model, model_count):
                     makers[brand]["models"][model]["specs"]["memoryslot"] = 0
             if parsed.find("data-spec=\"internalmemory\"") >= 0:
                 try:
-                    makers[brand]["models"][model]["specs"]["RAM"] = parsed[parsed.find(">") + 1:parsed.find(" RAM")]
+                    makers[brand]["models"][model]["specs"]["RAM"] = parsed[parsed.find(">") + 1:parsed.find("</")]
                 except:
                     makers[brand]["models"][model]["specs"]["RAM"] = no_data
             if parsed.find("data-spec=\"cam1modules\"") >= 0:
                 try:
-                    makers[brand]["models"][model]["specs"]["cam1MP"] = int(
-                        parsed[parsed.find(">") + 1:parsed.find(" MP")])
+                    makers[brand]["models"][model]["specs"]["cam1MP"] = parsed[parsed.find(">") + 1:parsed.find("</")]
                 except:
                     makers[brand]["models"][model]["specs"]["cam1MP"] = 0
             if parsed.find("data-spec=\"cam1video\"") >= 0:
                 try:
-                    makers[brand]["models"][model]["specs"]["cam1video"] = int(
-                        parsed[parsed.find(">") + 1:parsed.find("p", parsed.find(">"))])
+                    makers[brand]["models"][model]["specs"]["cam1video"] = parsed[parsed.find(">") + 1:parsed.find("</")]
                 except:
                     makers[brand]["models"][model]["specs"]["cam1video"] = 0
             if parsed.find("data-spec=\"cam2modules\"") >= 0:
                 try:
-                    makers[brand]["models"][model]["specs"]["cam2MP"] = int(
-                        parsed[parsed.find(">") + 1:parsed.find(" MP")])
+                    makers[brand]["models"][model]["specs"]["cam2MP"] = parsed[parsed.find(">") + 1:parsed.find("</")]
                 except:
                     makers[brand]["models"][model]["specs"]["cam2MP"] = 0
             if parsed.find("data-spec=\"cam2video\"") >= 0:
                 try:
-                    makers[brand]["models"][model]["specs"]["cam2video"] = int(
-                        parsed[parsed.find(">") + 1:parsed.find("p@")])
+                    makers[brand]["models"][model]["specs"]["cam2video"] = parsed[parsed.find(">") + 1:parsed.find("</")]
                 except:
                     makers[brand]["models"][model]["specs"]["cam2video"] = 0
             if parsed.find(">Infrared port<") >= 0:
@@ -328,14 +299,6 @@ def get_specs(brand, model, model_count):
             if parsed.find("data-spec=\"usb\"") >= 0:
                 try:
                     makers[brand]["models"][model]["specs"]["usb"] = parsed[parsed.find(">") + 1:parsed.find("</")]
-                    if brand == "Apple":
-                        makers[brand]["models"][model]["specs"]["usb"] = 1
-                    elif makers[brand]["models"][model]["specs"]["usb"].find("mini") >= 0:
-                        makers[brand]["models"][model]["specs"]["usb"] = 2
-                    elif makers[brand]["models"][model]["specs"]["usb"].find("micro") >= 0:
-                        makers[brand]["models"][model]["specs"]["usb"] = 3
-                    else:
-                        makers[brand]["models"][model]["specs"]["usb"] = 0
                 except:
                     makers[brand]["models"][model]["specs"]["usb"] = 0
             if parsed.find("Fingerprint ") >= 0 or parsed.find("fingerprint ") >= 0:
@@ -345,31 +308,30 @@ def get_specs(brand, model, model_count):
             if parsed.find("data-spec=\"price\"") >= 0:
                 try:
                     makers[brand]["models"][model]["specs"]["price"] = parsed[parsed.find(">About ") + 7:parsed.find("</")]
-                    # parsed[parsed.find(">About ") + 7:parsed.find(" ", parsed.find(">About ") + 7)])
                 except:
                     makers[brand]["models"][model]["specs"]["price"] = no_data
             if parsed.find("Basemark X: ") >= 0:
                 try:
                     makers[brand]["models"][model]["specs"]["basemark"] = int(
-                        parsed[parsed.find("Basemark X: ") + 12:parsed.find("</")])
+                        parsed[parsed.find(">") + 1:parsed.find("</")])
                 except:
                     makers[brand]["models"][model]["specs"]["basemark"] = 0
             if parsed.find(">Voice ") >= 0:
                 try:
                     makers[brand]["models"][model]["specs"]["loudspeaker"] = float(
-                        parsed[parsed.find(">Voice ") + 7:parsed.find("dB ")])
+                        parsed[parsed.find(">") + 1:parsed.find("</")])
                 except:
                     makers[brand]["models"][model]["specs"]["loudspeaker"] = 0
             if parsed.find("Crosstalk") >= 0:
                 try:
                     makers[brand]["models"][model]["specs"]["audioquality"] = float(
-                        parsed[parsed.find(">Noise -") + 8:parsed.find("dB ")])
+                        parsed[parsed.find(">") + 1:parsed.find("</")])
                 except:
                     makers[brand]["models"][model]["specs"]["audioquality"] = 0
             if parsed.find(">Endurance rating") >= 0:
                 try:
                     makers[brand]["models"][model]["specs"]["endurance"] = int(
-                        parsed[parsed.find(">Endurance rating ") + 18:parsed.find("h<")])
+                        parsed[parsed.find(">") + 1:parsed.find("</")])
                 except:
                     makers[brand]["models"][model]["specs"]["endurance"] = 0
             if parsed.find("water") >= 0 or parsed.find("Water") >= 0:

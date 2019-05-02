@@ -1,7 +1,7 @@
 import math
 
 
-def topsis(table, candidates_num, specs_num, candidate_dict, specs_weight):
+def topsis(table, candidates_num, specs_num, specs_weight):
 
     normal = table[:]
     normal_weight = specs_weight.copy()
@@ -73,7 +73,7 @@ candidates = {0: "honda",
               3: "subaru",
               }
 
-print(topsis(table, 4, 4, candidates, weight))
+print(topsis(table, 4, 4, weight))
 
 table2 = [[250, 200, 300, 275, 225],
           [16, 16, 32, 32, 16],
@@ -90,4 +90,4 @@ candidates2 = {0: "ph1",
                4: "ph5"
                }
 
-print(topsis(table2, 5, 4, candidates2, weight2))
+print(topsis(table2, 5, 4, weight2))

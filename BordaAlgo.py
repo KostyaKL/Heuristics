@@ -62,5 +62,5 @@ candidates = {0: "a",
               4: "e"
               }
 
-print(borda(table, 3, 21, candidates))
-print(borda(table2, 5, 7, candidates))
+print(borda(table, 3, 21))
+print(borda(table2, 5, 7))
