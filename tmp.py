@@ -1,7 +1,7 @@
 import pickle
 import random
-
 import requests
+from time import gmtime, strftime
 
 test = requests.get("https://www.gsmarena.com/alcatel-phones-f-5-0-p10.php")
 
@@ -33,7 +33,6 @@ class ModelCount:
 
     def get_acquired(self):
         return self.acquired
-
 
 
 def save_obj(obj, name):
@@ -93,7 +92,7 @@ def get_models(brand, model_count):
                     model_img = raw_models[(raw_models.find("<img src=") + 9):(raw_models.find(" title="))]
                     raw_models = raw_models[raw_models.find("</span>") + 4:]
 
-                    print("\t", model_name)
+                    print(brand, model_name, "at", strftime("%d-%m-%Y %H:%M:%S", gmtime()))
                     model_count.count_inc()
 
                     makers[brand]["models"][model_name] = {}
@@ -167,7 +166,8 @@ def get_specs(brand, model, model_count):
 
         if parsed.find("batsize") >= 0:
             try:
-                makers[brand]["models"][model]["specs"]["battery"] = parsed[parsed.find("spec=\"batsize-hl\">") + 18:parsed.find("</span>")] + " mAh"
+                makers[brand]["models"][model]["specs"]["battery"] = parsed[parsed.find(
+                    "spec=\"batsize-hl\">") + 18:parsed.find("</span>")] + " mAh"
             except:
                 makers[brand]["models"][model]["specs"]["battery"] = 0
 
@@ -211,7 +211,8 @@ def get_specs(brand, model, model_count):
                         makers[brand]["models"][model]["specs"]["numofsim"] = 3
                     elif makers[brand]["models"][model]["specs"]["sim"].find("Dual") >= 0:
                         makers[brand]["models"][model]["specs"]["numofsim"] = 2
-                    elif makers[brand]["models"][model]["specs"]["sim"].find("Single") >= 0 or makers[brand]["models"][model]["specs"]["sim"].find("Yes") >= 0:
+                    elif makers[brand]["models"][model]["specs"]["sim"].find("Single") >= 0 or \
+                            makers[brand]["models"][model]["specs"]["sim"].find("Yes") >= 0:
                         makers[brand]["models"][model]["specs"]["numofsim"] = 1
                     else:
                         makers[brand]["models"][model]["specs"]["numofsim"] = 0
@@ -219,7 +220,8 @@ def get_specs(brand, model, model_count):
                     makers[brand]["models"][model]["specs"]["sim"] = no_data
             if parsed.find("data-spec=\"displaysize\"") >= 0:
                 try:
-                    makers[brand]["models"][model]["specs"]["displaysize"] = parsed[parsed.find(">") + 1:parsed.find("</")]
+                    makers[brand]["models"][model]["specs"]["displaysize"] = parsed[
+                                                                             parsed.find(">") + 1:parsed.find("</")]
                 except:
                     makers[brand]["models"][model]["specs"]["displaysize"] = 0
             if parsed.find("data-spec=\"displayresolution\"") >= 0:
@@ -260,7 +262,8 @@ def get_specs(brand, model, model_count):
                         start = makers[brand]["models"][model]["specs"]["memoryslot"].find("up to")
                         end = makers[brand]["models"][model]["specs"]["memoryslot"].find("GB")
                         if start >= 0 and end >= 0:
-                            makers[brand]["models"][model]["specs"]["maxextmemory"] = makers[brand]["models"][model]["specs"]["memoryslot"][start + 5:end]
+                            makers[brand]["models"][model]["specs"]["maxextmemory"] = \
+                            makers[brand]["models"][model]["specs"]["memoryslot"][start + 5:end]
                             makers[brand]["models"][model]["specs"]["memoryslot"] = 1
                 except:
                     makers[brand]["models"][model]["specs"]["memoryslot"] = 0
@@ -276,7 +279,8 @@ def get_specs(brand, model, model_count):
                     makers[brand]["models"][model]["specs"]["cam1MP"] = 0
             if parsed.find("data-spec=\"cam1video\"") >= 0:
                 try:
-                    makers[brand]["models"][model]["specs"]["cam1video"] = parsed[parsed.find(">") + 1:parsed.find("</")]
+                    makers[brand]["models"][model]["specs"]["cam1video"] = parsed[
+                                                                           parsed.find(">") + 1:parsed.find("</")]
                 except:
                     makers[brand]["models"][model]["specs"]["cam1video"] = 0
             if parsed.find("data-spec=\"cam2modules\"") >= 0:
@@ -286,7 +290,8 @@ def get_specs(brand, model, model_count):
                     makers[brand]["models"][model]["specs"]["cam2MP"] = 0
             if parsed.find("data-spec=\"cam2video\"") >= 0:
                 try:
-                    makers[brand]["models"][model]["specs"]["cam2video"] = parsed[parsed.find(">") + 1:parsed.find("</")]
+                    makers[brand]["models"][model]["specs"]["cam2video"] = parsed[
+                                                                           parsed.find(">") + 1:parsed.find("</")]
                 except:
                     makers[brand]["models"][model]["specs"]["cam2video"] = 0
             if parsed.find(">Infrared port<") >= 0:
@@ -307,7 +312,8 @@ def get_specs(brand, model, model_count):
                 makers[brand]["models"][model]["specs"]["nfc"] = 1
             if parsed.find("data-spec=\"price\"") >= 0:
                 try:
-                    makers[brand]["models"][model]["specs"]["price"] = parsed[parsed.find(">About ") + 7:parsed.find("</")]
+                    makers[brand]["models"][model]["specs"]["price"] = parsed[
+                                                                       parsed.find(">About ") + 7:parsed.find("</")]
                 except:
                     makers[brand]["models"][model]["specs"]["price"] = no_data
             if parsed.find("Basemark X: ") >= 0:
@@ -337,26 +343,35 @@ def get_specs(brand, model, model_count):
             if parsed.find("water") >= 0 or parsed.find("Water") >= 0:
                 makers[brand]["models"][model]["specs"]["waterproof"] = 1
 
-    print(brand, model, "specs acquired")
+    print(brand, model, "specs acquired at", strftime("%d-%m-%Y %H:%M:%S", gmtime()))
     model_count.acquired_inc()
 
 
 # makers = load_obj("db")
 
+print("scarper started at:", strftime("%d-%m-%Y %H:%M:%S", gmtime()))
+
+start_time = gmtime()
+
 model_count = ModelCount()
 
 get_brands()
 
+print(strftime("%d-%m-%Y %H:%M:%S", gmtime()))
+
 print("total number of models:", sum(int(makers[brand]["count"]) for brand in makers))
 
 for brand in makers:
-    for retry in range(0,5):
+    for retry in range(0, 5):
         try:
             get_models(brand, model_count)
             break
         except:
-            print(brand, "not connected -------------------------------------->")
+            print(brand, "not connected -------------------------------------->",
+                  strftime("%d-%m-%Y %H:%M:%S", gmtime()))
             not_connected.append(brand)
+
+print(strftime("%d-%m-%Y %H:%M:%S", gmtime()))
 
 print("not connected:", not_connected)
 
@@ -371,12 +386,21 @@ for brand in makers:
                 get_specs(brand, model, model_count)
                 break
             except:
-                print(brand, model, "not connected -------------------------------------->")
+                print(brand, model, "not connected -------------------------------------->",
+                      strftime("%d-%m-%Y %H:%M:%S", gmtime()))
                 not_connected.append(brand + " " + model)
+
+print(strftime("%d-%m-%Y %H:%M:%S", gmtime()))
 
 print("not connected:", not_connected)
 
 print("expected", sum(int(makers[brand]["count"]) for brand in makers), "models, acquired", model_count.get_acquired())
+
+end_time = gmtime()
+
+total_time = end_time - start_time
+
+print("scarper finished after", strftime("%H:%M:%S", total_time))
 
 save_obj(makers, "db")
 
