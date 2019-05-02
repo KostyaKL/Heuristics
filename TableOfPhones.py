@@ -60,6 +60,190 @@ class TableOfPhones:
                 spec_value = db[self.candidate_dict[j]["brand"]]["models"][self.candidate_dict[j]["model"]]["specs"][self.specs_dict[i]]
                 criteria.append(self.spec_grade(self.specs_dict[i], spec_value, target))
             self.table.append(criteria)
-        
+
     def spec_grade(self, spec, spec_value, target):
-        
+        if target == "kids":
+            if spec == "battery":
+                return spec_value
+            elif spec == "year":
+                return spec_value
+            elif spec == "height":
+                return spec_value
+            elif spec == "width":
+                return spec_value
+            elif spec == "weight":
+                return spec_value
+            elif spec == "numofsim":
+                return spec_value
+            elif spec == "simtype":
+                return spec_value
+            elif spec == "displaysize":
+                return spec_value
+            elif spec == "displayresolution":
+                return spec_value
+            elif spec == "os":
+                return spec_value
+            elif spec == "cpu":
+                return spec_value
+            elif spec == "memoryslot":
+                return spec_value
+            elif spec == "maxextmemory":
+                return spec_value
+            elif spec == "RAM":
+                return spec_value
+            elif spec == "cam1MP":
+                return spec_value
+            elif spec == "cam1video":
+                return spec_value
+            elif spec == "cam2MP":
+                return spec_value
+            elif spec == "cam2video":
+                return spec_value
+            elif spec == "ir":
+                return spec_value
+            elif spec == "radio":
+                return spec_value
+            elif spec == "usb":
+                return spec_value
+            elif spec == "nfc":
+                return spec_value
+            elif spec == "fingerprint":
+                return spec_value
+            elif spec == "price":
+                return spec_value
+            elif spec == "basemark":
+                return spec_value
+            elif spec == "loudspeaker":
+                return spec_value
+            elif spec == "audioquality":
+                return spec_value
+            elif spec == "endurance":
+                return spec_value
+            elif spec == "waterproof":
+                return spec_value
+            else:
+                return 0
+        elif target == "hightech":
+            if spec == "battery":
+                return spec_value
+            elif spec == "year":
+                return spec_value
+            elif spec == "height":
+                return spec_value
+            elif spec == "width":
+                return spec_value
+            elif spec == "weight":
+                return spec_value
+            elif spec == "numofsim":
+                return spec_value
+            elif spec == "simtype":
+                return spec_value
+            elif spec == "displaysize":
+                return spec_value
+            elif spec == "displayresolution":
+                return spec_value
+            elif spec == "os":
+                return spec_value
+            elif spec == "cpu":
+                return spec_value
+            elif spec == "memoryslot":
+                return spec_value
+            elif spec == "maxextmemory":
+                return spec_value
+            elif spec == "RAM":
+                return spec_value
+            elif spec == "cam1MP":
+                return spec_value
+            elif spec == "cam1video":
+                return spec_value
+            elif spec == "cam2MP":
+                return spec_value
+            elif spec == "cam2video":
+                return spec_value
+            elif spec == "ir":
+                return spec_value
+            elif spec == "radio":
+                return spec_value
+            elif spec == "usb":
+                return spec_value
+            elif spec == "nfc":
+                return spec_value
+            elif spec == "fingerprint":
+                return spec_value
+            elif spec == "price":
+                return spec_value
+            elif spec == "basemark":
+                return spec_value
+            elif spec == "loudspeaker":
+                return spec_value
+            elif spec == "audioquality":
+                return spec_value
+            elif spec == "endurance":
+                return spec_value
+            elif spec == "waterproof":
+                return spec_value
+            else:
+                return 0
+        elif target == "pensioners":
+            if spec == "battery":
+                return spec_value
+            elif spec == "year":
+                return spec_value
+            elif spec == "height":
+                return spec_value
+            elif spec == "width":
+                return spec_value
+            elif spec == "weight":
+                return spec_value
+            elif spec == "numofsim":
+                return spec_value
+            elif spec == "simtype":
+                return spec_value
+            elif spec == "displaysize":
+                return spec_value
+            elif spec == "displayresolution":
+                return spec_value
+            elif spec == "os":
+                return spec_value
+            elif spec == "cpu":
+                return spec_value
+            elif spec == "memoryslot":
+                return spec_value
+            elif spec == "maxextmemory":
+                return spec_value
+            elif spec == "RAM":
+                return spec_value
+            elif spec == "cam1MP":
+                return spec_value
+            elif spec == "cam1video":
+                return spec_value
+            elif spec == "cam2MP":
+                return spec_value
+            elif spec == "cam2video":
+                return spec_value
+            elif spec == "ir":
+                return spec_value
+            elif spec == "radio":
+                return spec_value
+            elif spec == "usb":
+                return spec_value
+            elif spec == "nfc":
+                return spec_value
+            elif spec == "fingerprint":
+                return spec_value
+            elif spec == "price":
+                return spec_value
+            elif spec == "basemark":
+                return spec_value
+            elif spec == "loudspeaker":
+                return spec_value
+            elif spec == "audioquality":
+                return spec_value
+            elif spec == "endurance":
+                return spec_value
+            elif spec == "waterproof":
+                return spec_value
+            else:
+                return 0
+        else:
+            return 0
