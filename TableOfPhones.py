@@ -91,11 +91,17 @@ class TableOfPhones:
                 else:
                     return 1
         elif type_of_grade == "sim":
-            return sim_grade[spec_value]
+            if spec_value - 1 < 0 or spec_value > len(sim_grade):
+                return 0
+            return sim_grade[spec_value - 1]
         elif type_of_grade == "os":
-            return os_grade[spec_value]
+            if spec_value - 1 < 0 or spec_value > len(os_grade):
+                return 0
+            return os_grade[spec_value - 1]
         elif type_of_grade == "usb":
-            return usb_grade[spec_value]
+            if spec_value - 1 < 0 or spec_value > len(usb_grade):
+                return 0
+            return usb_grade[spec_value - 1]
         else:
             return 0
 
@@ -110,60 +116,256 @@ class TableOfPhones:
             else:
                 return 0
         elif spec == "year":
-            return spec_value
+            if target == "kids":
+                return self.grade_type("highest_better", spec_value, 0, True, [], [], [])
+            elif target == "hightech":
+                return self.grade_type("highest_better", spec_value, 0, True, [], [], [])
+            elif target == "pensioners":
+                return self.grade_type("highest_better", spec_value, 0, True, [], [], [])
+            else:
+                return 0
         elif spec == "height":
-            return spec_value
+            if target == "kids":
+                return self.grade_type("optimal_range", spec_value, 145, True, [], [], [])
+            elif target == "hightech":
+                return self.grade_type("optimal_range", spec_value, 150, True, [], [], [])
+            elif target == "pensioners":
+                return self.grade_type("optimal_range", spec_value, 175, True, [], [], [])
+            else:
+                return 0
         elif spec == "width":
-            return spec_value
+            if target == "kids":
+                return self.grade_type("optimal_range", spec_value, 65, True, [], [], [])
+            elif target == "hightech":
+                return self.grade_type("optimal_range", spec_value, 70, True, [], [], [])
+            elif target == "pensioners":
+                return self.grade_type("optimal_range", spec_value, 85, True, [], [], [])
+            else:
+                return 0
         elif spec == "weight":
-            return spec_value
+            if target == "kids":
+                return self.grade_type("lowest_better", spec_value, 0, True, [], [], [])
+            elif target == "hightech":
+                return self.grade_type("lowest_better", spec_value, 0, True, [], [], [])
+            elif target == "pensioners":
+                return self.grade_type("lowest_better", spec_value, 0, True, [], [], [])
+            else:
+                return 0
         elif spec == "numofsim":
-            return spec_value
+            if target == "kids":
+                return self.grade_type("not_important", spec_value, 0, True, [], [], [])
+            elif target == "hightech":
+                return self.grade_type("highest_better", spec_value, 0, True, [], [], [])
+            elif target == "pensioners":
+                return self.grade_type("not_important", spec_value, 0, True, [], [], [])
+            else:
+                return 0
         elif spec == "simtype":
-            return spec_value
+            if target == "kids":
+                return self.grade_type("not_important", spec_value, 0, True, [], [], [])
+            elif target == "hightech":
+                return self.grade_type("sim", spec_value, 0, True, [1, 2, 3, 4], [], [])
+            elif target == "pensioners":
+                return self.grade_type("sim", spec_value, 0, True, [4, 3, 2, 1], [], [])
+            else:
+                return 0
         elif spec == "displaysize":
-            return spec_value
+            if target == "kids":
+                return self.grade_type("optimal_range", spec_value, 4.75, True, [], [], [])
+            elif target == "hightech":
+                return self.grade_type("optimal_range", spec_value, 5.25, True, [], [], [])
+            elif target == "pensioners":
+                return self.grade_type("highest_better", spec_value, 0, True, [], [], [])
+            else:
+                return 0
         elif spec == "displayresolution":
-            return spec_value
+            if target == "kids":
+                return self.grade_type("highest_better", spec_value, 0, True, [], [], [])
+            elif target == "hightech":
+                return self.grade_type("highest_better", spec_value, 0, True, [], [], [])
+            elif target == "pensioners":
+                return self.grade_type("highest_better", spec_value, 0, True, [], [], [])
+            else:
+                return 0
         elif spec == "os":
-            return spec_value
+            if target == "kids":
+                return self.grade_type("os", spec_value, 0, True, [], [6,5,4,3,1,2], [])
+            elif target == "hightech":
+                return self.grade_type("os", spec_value, 0, True, [], [6,5,3,4,1,2], [])
+            elif target == "pensioners":
+                return self.grade_type("os", spec_value, 0, True, [], [5,6,3,4,1,2], [])
+            else:
+                return 0
         elif spec == "cpu":
-            return spec_value
+            if target == "kids":
+                return self.grade_type("highest_better", spec_value, 0, True, [], [], [])
+            elif target == "hightech":
+                return self.grade_type("highest_better", spec_value, 0, True, [], [], [])
+            elif target == "pensioners":
+                return self.grade_type("highest_better", spec_value, 0, True, [], [], [])
+            else:
+                return 0
         elif spec == "memoryslot":
-            return spec_value
+            if target == "kids":
+                return self.grade_type("not_important", spec_value, 0, True, [], [], [])
+            elif target == "hightech":
+                return self.grade_type("boolean", spec_value, 0, True, [], [], [])
+            elif target == "pensioners":
+                return self.grade_type("boolean", spec_value, 0, True, [], [], [])
+            else:
+                return 0
         elif spec == "maxextmemory":
-            return spec_value
+            if target == "kids":
+                return self.grade_type("highest_better", spec_value, 0, True, [], [], [])
+            elif target == "hightech":
+                return self.grade_type("highest_better", spec_value, 0, True, [], [], [])
+            elif target == "pensioners":
+                return self.grade_type("highest_better", spec_value, 0, True, [], [], [])
+            else:
+                return 0
         elif spec == "RAM":
-            return spec_value
+            if target == "kids":
+                return self.grade_type("highest_better", spec_value, 0, True, [], [], [])
+            elif target == "hightech":
+                return self.grade_type("highest_better", spec_value, 0, True, [], [], [])
+            elif target == "pensioners":
+                return self.grade_type("highest_better", spec_value, 0, True, [], [], [])
+            else:
+                return 0
         elif spec == "cam1MP":
-            return spec_value
+            if target == "kids":
+                return self.grade_type("highest_better", spec_value, 0, True, [], [], [])
+            elif target == "hightech":
+                return self.grade_type("highest_better", spec_value, 0, True, [], [], [])
+            elif target == "pensioners":
+                return self.grade_type("highest_better", spec_value, 0, True, [], [], [])
+            else:
+                return 0
         elif spec == "cam1video":
-            return spec_value
+            if target == "kids":
+                return self.grade_type("highest_better", spec_value, 0, True, [], [], [])
+            elif target == "hightech":
+                return self.grade_type("highest_better", spec_value, 0, True, [], [], [])
+            elif target == "pensioners":
+                return self.grade_type("highest_better", spec_value, 0, True, [], [], [])
+            else:
+                return 0
         elif spec == "cam2MP":
-            return spec_value
+            if target == "kids":
+                return self.grade_type("highest_better", spec_value, 0, True, [], [], [])
+            elif target == "hightech":
+                return self.grade_type("highest_better", spec_value, 0, True, [], [], [])
+            elif target == "pensioners":
+                return self.grade_type("highest_better", spec_value, 0, True, [], [], [])
+            else:
+                return 0
         elif spec == "cam2video":
-            return spec_value
+            if target == "kids":
+                return self.grade_type("highest_better", spec_value, 0, True, [], [], [])
+            elif target == "hightech":
+                return self.grade_type("highest_better", spec_value, 0, True, [], [], [])
+            elif target == "pensioners":
+                return self.grade_type("highest_better", spec_value, 0, True, [], [], [])
+            else:
+                return 0
         elif spec == "ir":
-            return spec_value
+            if target == "kids":
+                return self.grade_type("not_important", spec_value, 0, True, [], [], [])
+            elif target == "hightech":
+                return self.grade_type("boolean", spec_value, 0, True, [], [], [])
+            elif target == "pensioners":
+                return self.grade_type("boolean", spec_value, 0, True, [], [], [])
+            else:
+                return 0
         elif spec == "radio":
-            return spec_value
+            if target == "kids":
+                return self.grade_type("not_important", spec_value, 0, True, [], [], [])
+            elif target == "hightech":
+                return self.grade_type("not_important", spec_value, 0, True, [], [], [])
+            elif target == "pensioners":
+                return self.grade_type("boolean", spec_value, 0, True, [], [], [])
+            else:
+                return 0
         elif spec == "usb":
-            return spec_value
+            if target == "kids":
+                return self.grade_type("usb", spec_value, 0, True, [], [], [3, 1, 2])
+            elif target == "hightech":
+                return self.grade_type("usb", spec_value, 0, True, [], [], [3, 1, 2])
+            elif target == "pensioners":
+                return self.grade_type("usb", spec_value, 0, True, [], [], [3, 1, 2])
+            else:
+                return 0
         elif spec == "nfc":
-            return spec_value
+            if target == "kids":
+                return self.grade_type("boolean", spec_value, 0, True, [], [], [])
+            elif target == "hightech":
+                return self.grade_type("boolean", spec_value, 0, True, [], [], [])
+            elif target == "pensioners":
+                return self.grade_type("not_important", spec_value, 0, True, [], [], [])
+            else:
+                return 0
         elif spec == "fingerprint":
-            return spec_value
+            if target == "kids":
+                return self.grade_type("highest_better", spec_value, 0, False, [], [], [])
+            elif target == "hightech":
+                return self.grade_type("highest_better", spec_value, 0, True, [], [], [])
+            elif target == "pensioners":
+                return self.grade_type("highest_better", spec_value, 0, False, [], [], [])
+            else:
+                return 0
         elif spec == "price":
-            return spec_value
+            if target == "kids":
+                return self.grade_type("lowest_better", spec_value, 0, True, [], [], [])
+            elif target == "hightech":
+                return self.grade_type("lowest_better", spec_value, 0, True, [], [], [])
+            elif target == "pensioners":
+                return self.grade_type("lowest_better", spec_value, 0, True, [], [], [])
+            else:
+                return 0
         elif spec == "basemark":
-            return spec_value
+            if target == "kids":
+                return self.grade_type("highest_better", spec_value, 0, True, [], [], [])
+            elif target == "hightech":
+                return self.grade_type("highest_better", spec_value, 0, True, [], [], [])
+            elif target == "pensioners":
+                return self.grade_type("not_important", spec_value, 0, True, [], [], [])
+            else:
+                return 0
         elif spec == "loudspeaker":
-            return spec_value
+            if target == "kids":
+                return self.grade_type("highest_better", spec_value, 0, True, [], [], [])
+            elif target == "hightech":
+                return self.grade_type("not_important", spec_value, 0, True, [], [], [])
+            elif target == "pensioners":
+                return self.grade_type("highest_better", spec_value, 0, True, [], [], [])
+            else:
+                return 0
         elif spec == "audioquality":
-            return spec_value
+            if target == "kids":
+                return self.grade_type("highest_better", spec_value, 0, True, [], [], [])
+            elif target == "hightech":
+                return self.grade_type("highest_better", spec_value, 0, True, [], [], [])
+            elif target == "pensioners":
+                return self.grade_type("highest_better", spec_value, 0, True, [], [], [])
+            else:
+                return 0
         elif spec == "endurance":
-            return spec_value
+            if target == "kids":
+                return self.grade_type("highest_better", spec_value, 0, True, [], [], [])
+            elif target == "hightech":
+                return self.grade_type("highest_better", spec_value, 0, True, [], [], [])
+            elif target == "pensioners":
+                return self.grade_type("highest_better", spec_value, 0, True, [], [], [])
+            else:
+                return 0
         elif spec == "waterproof":
-            return spec_value
+            if target == "kids":
+                return self.grade_type("boolean", spec_value, 0, True, [], [], [])
+            elif target == "hightech":
+                return self.grade_type("boolean", spec_value, 0, True, [], [], [])
+            elif target == "pensioners":
+                return self.grade_type("boolean", spec_value, 0, True, [], [], [])
+            else:
+                return 0
         else:
             return 0
