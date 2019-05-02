@@ -135,6 +135,7 @@ def get_specs(brand, model):
     makers[brand]["models"][model]["specs"]["loudspeaker"] = 0
     makers[brand]["models"][model]["specs"]["audioquality"] = 0
     makers[brand]["models"][model]["specs"]["endurance"] = 0
+    makers[brand]["models"][model]["specs"]["waterproof"] = 0
 
     specs_list_found = False
     ir = False
@@ -353,6 +354,8 @@ def get_specs(brand, model):
                         parsed[parsed.find(">Endurance rating ") + 18:parsed.find("h<")])
                 except:
                     makers[brand]["models"][model]["specs"]["endurance"] = 0
+            if parsed.find("water") >= 0 or parsed.find("Water") >= 0:
+                makers[brand]["models"][model]["specs"]["waterproof"] = 1
 
 
 makers = load_obj("db")
