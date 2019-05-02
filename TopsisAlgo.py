@@ -2,9 +2,6 @@ import math
 
 
 def topsis(table, candidates_num, specs_num, candidate_dict, specs_weight):
-    score_res = []
-    for candidate in range(0, candidates_num):
-        score_res.append([candidate_dict[candidate], 0])
 
     normal = table[:]
     normal_weight = specs_weight.copy()
@@ -58,9 +55,8 @@ def topsis(table, candidates_num, specs_num, candidate_dict, specs_weight):
     similarity = []
     for candidate in range(0, candidates_num):
         similarity.append(dist_worst[candidate] / (dist_worst[candidate] + dist_best[candidate]))
-        score_res[candidate][1] = dist_worst[candidate] / (dist_worst[candidate] + dist_best[candidate])
 
-    return score_res
+    return similarity
 
 
 table = [[7, 8, 9, 6],
