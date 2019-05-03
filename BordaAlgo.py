@@ -74,5 +74,3 @@ test1 = Borda.borda(table, 3, 21)
 print(test1["result"], "in", strftime("%H:%M:%S", gmtime(test1["time"])))
 test2 = Borda.borda(table2, 5, 7)
 print(test2["result"], "in", strftime("%H:%M:%S", gmtime(test2["time"])))
-
-
