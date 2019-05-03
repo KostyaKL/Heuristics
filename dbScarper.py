@@ -1,7 +1,7 @@
 import pickle
 import random
 import requests
-from time import gmtime, strftime
+from time import gmtime, strftime, time
 
 test = requests.get("https://www.gsmarena.com/alcatel-phones-f-5-0-p10.php")
 
@@ -16,20 +16,31 @@ not_connected = []
 
 class ModelCount:
     count = 0
+    models = 0
     acquired = 0
 
     def __init__(self):
         self.count = 0
+        self.models = 0
         self.acquired = 0
 
     def count_inc(self):
         self.count += 1
+
+    def count_reset(self):
+        self.count = 0
+
+    def models_add(self):
+        self.models += self.count
 
     def acquired_inc(self):
         self.acquired += 1
 
     def get_count(self):
         return self.count
+
+    def get_models(self):
+        return self.models
 
     def get_acquired(self):
         return self.acquired
@@ -68,6 +79,7 @@ def get_brands():
 def get_models(brand, model_count):
     if brand in not_connected:
         not_connected.remove(brand)
+    model_count.count_reset()
     source = requests.get(makers[brand]["url"])
     model_class_found = False
     page_class_found = True
@@ -384,7 +396,7 @@ def get_specs(brand, model, model_count):
 
 print("scarper started at:", strftime("%d-%m-%Y %H:%M:%S", gmtime()))
 
-start_time = gmtime()
+start_time = time()
 
 model_count = ModelCount()
 
@@ -398,6 +410,7 @@ for brand in makers:
     for retry in range(0, 5):
         try:
             get_models(brand, model_count)
+            model_count.models_add()
             break
         except:
             print(brand, "not connected -------------------------------------->",
@@ -408,7 +421,7 @@ print(strftime("%d-%m-%Y %H:%M:%S", gmtime()))
 
 print("not connected:", not_connected)
 
-print("expected", sum(int(makers[brand]["count"]) for brand in makers), "models, found", model_count.get_count())
+print("expected", sum(int(makers[brand]["count"]) for brand in makers), "models, found", model_count.get_models())
 
 save_obj(makers, "db")
 
@@ -430,13 +443,13 @@ print("not connected:", not_connected)
 print("expected", sum(int(makers[brand]["count"]) for brand in makers), "models, acquired",
       model_count.get_acquired())
 
-end_time = gmtime()
+end_time = time()
 
 total_time = end_time - start_time
 
 print("scarper finished at", strftime("%d-%m-%Y %H:%M:%S", gmtime()))
 
-print("worked for", strftime("%H:%M:%S", total_time))
+print("worked for", strftime("%H:%M:%S", gmtime(total_time)))
 
 save_obj(makers, "db")
 
