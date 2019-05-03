@@ -1,62 +1,68 @@
 import math
+from time import gmtime, strftime, time
 
 
-def topsis(table, candidates_num, specs_num, specs_weight):
+class Topsis:
+    @staticmethod
+    def topsis(table, candidates_num, specs_num, specs_weight):
+        start_time = time()
 
-    normal = table[:]
-    normal_weight = specs_weight.copy()
+        normal = table[:]
+        normal_weight = specs_weight.copy()
 
-    # step 1 create normalized table
-    for spec in range(0, specs_num):
-        r = 0
-        for i in range(0, candidates_num):
-            r += table[spec][i] * table[spec][i]
-        for candidate in range(0, candidates_num):
-            x = table[spec][candidate]
-            normal[spec][candidate] = x / math.sqrt(r)
-
-    # normalize weight
-    weight_sum = sum(specs_weight)
-    for i in range(0, specs_num):
-        normal_weight[i] = specs_weight[i] / weight_sum
-
-    # step 2 multiply by weight
-    for spec in range(0, specs_num):
-        for candidate in range(0, candidates_num):
-            normal[spec][candidate] *= normal_weight[spec]
-
-    # step 3 determine best and worst solution
-    alt_worst = []
-    alt_best = []
-
-    for spec in range(0, specs_num):
-        alt_worst.append(min(normal[spec]))
-        alt_best.append(max(normal[spec]))
-
-    # for test only DELETE
-    # tmp = alt_worst[0]
-    # alt_worst[0] = alt_best[0]
-    # alt_best[0] = tmp
-
-    # step 4 measure distance
-    dist_worst = []
-    dist_best = []
-    for candidate in range(0, candidates_num):
-        good_sum = 0
-        bad_sum = 0
+        # step 1 create normalized table
         for spec in range(0, specs_num):
-            bad_sum += (normal[spec][candidate] - alt_worst[spec]) * (normal[spec][candidate] - alt_worst[spec])
-            good_sum += (normal[spec][candidate] - alt_best[spec]) * (normal[spec][candidate] - alt_best[spec])
+            r = 0
+            for i in range(0, candidates_num):
+                r += table[spec][i] * table[spec][i]
+            for candidate in range(0, candidates_num):
+                x = table[spec][candidate]
+                normal[spec][candidate] = x / math.sqrt(r)
 
-        dist_worst.append(math.sqrt(bad_sum))
-        dist_best.append(math.sqrt(good_sum))
+        # normalize weight
+        weight_sum = sum(specs_weight)
+        for i in range(0, specs_num):
+            normal_weight[i] = specs_weight[i] / weight_sum
 
-    # step 5 calculate relative closeness
-    similarity = []
-    for candidate in range(0, candidates_num):
-        similarity.append(dist_worst[candidate] / (dist_worst[candidate] + dist_best[candidate]))
+        # step 2 multiply by weight
+        for spec in range(0, specs_num):
+            for candidate in range(0, candidates_num):
+                normal[spec][candidate] *= normal_weight[spec]
 
-    return similarity
+        # step 3 determine best and worst solution
+        alt_worst = []
+        alt_best = []
+
+        for spec in range(0, specs_num):
+            alt_worst.append(min(normal[spec]))
+            alt_best.append(max(normal[spec]))
+
+        # for test only DELETE
+        # tmp = alt_worst[0]
+        # alt_worst[0] = alt_best[0]
+        # alt_best[0] = tmp
+
+        # step 4 measure distance
+        dist_worst = []
+        dist_best = []
+        for candidate in range(0, candidates_num):
+            good_sum = 0
+            bad_sum = 0
+            for spec in range(0, specs_num):
+                bad_sum += (normal[spec][candidate] - alt_worst[spec]) * (normal[spec][candidate] - alt_worst[spec])
+                good_sum += (normal[spec][candidate] - alt_best[spec]) * (normal[spec][candidate] - alt_best[spec])
+
+            dist_worst.append(math.sqrt(bad_sum))
+            dist_best.append(math.sqrt(good_sum))
+
+        # step 5 calculate relative closeness
+        similarity = []
+        for candidate in range(0, candidates_num):
+            similarity.append(dist_worst[candidate] / (dist_worst[candidate] + dist_best[candidate]))
+
+        total_time = time()-start_time
+
+        return {"result": similarity, "time": total_time}
 
 
 table = [[7, 8, 9, 6],
@@ -73,7 +79,8 @@ candidates = {0: "honda",
               3: "subaru",
               }
 
-print(topsis(table, 4, 4, weight))
+test1 = Topsis.topsis(table, 4, 4, weight)
+print(test1["result"], "in", strftime("%H:%M:%S", gmtime(test1["time"])))
 
 table2 = [[250, 200, 300, 275, 225],
           [16, 16, 32, 32, 16],
@@ -90,4 +97,5 @@ candidates2 = {0: "ph1",
                4: "ph5"
                }
 
-print(topsis(table2, 5, 4, weight2))
+test1 = Topsis.topsis(table2, 5, 4, weight2)
+print(test1["result"], "in", strftime("%H:%M:%S", gmtime(test1["time"])))

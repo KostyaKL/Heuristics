@@ -5,22 +5,30 @@
 # add result to score count
 # return score result
 
+from time import gmtime, strftime, time
 
-def borda(table, candidates_num, rankers_num):
-    score_res = []
-    for candidate in range(0, candidates_num):
-        score_res.append(0)
 
-    for ranker in range(0, rankers_num):
-        tmp_ranker = []
+class Borda:
+    @staticmethod
+    def borda(table, candidates_num, rankers_num):
+        start_time = time()
+        score_res = []
         for candidate in range(0, candidates_num):
-            tmp_ranker.append([candidate, table[ranker][candidate]])
-        tmp_ranker.sort(key=lambda x: x[1], reverse=True)
-        score = candidates_num - 1
-        for candidate in range(0, candidates_num):
-            score_res[0] += score
-            score -= 1
-    return score_res
+            score_res.append(0)
+
+        for ranker in range(0, rankers_num):
+            tmp_ranker = []
+            for candidate in range(0, candidates_num):
+                tmp_ranker.append([candidate, table[ranker][candidate]])
+            tmp_ranker.sort(key=lambda x: x[1], reverse=True)
+            score = candidates_num - 1
+            for candidate in range(0, candidates_num):
+                score_res[0] += score
+                score -= 1
+
+        total_time = time()-start_time
+
+        return {"result": score_res, "time": total_time}
 
 
 table = [[3, 2, 1],
@@ -62,7 +70,9 @@ candidates = {0: "a",
               4: "e"
               }
 
-print(borda(table, 3, 21))
-print(borda(table2, 5, 7))
+test1 = Borda.borda(table, 3, 21)
+print(test1["result"], "in", strftime("%H:%M:%S", gmtime(test1["time"])))
+test2 = Borda.borda(table2, 5, 7)
+print(test2["result"], "in", strftime("%H:%M:%S", gmtime(test2["time"])))
 
 
