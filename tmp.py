@@ -72,6 +72,7 @@ def get_brands():
             makers[brand_name]["url"] = brand_url
             makers[brand_name]["models"] = {}
 
+            print(brand_name, brand_count, "at", strftime("%d-%m-%Y %H:%M:%S", gmtime()))
         if parsed == '<table>':
             table = True
 

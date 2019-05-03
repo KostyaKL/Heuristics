@@ -64,3 +64,5 @@ candidates = {0: "a",
 
 print(borda(table, 3, 21))
 print(borda(table2, 5, 7))
+
+
