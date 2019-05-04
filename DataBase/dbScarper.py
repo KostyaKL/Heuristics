@@ -147,11 +147,11 @@ def get_specs(brand, model, model_count):
     makers[brand]["models"][model]["specs"][
         "os"] = 0  # 1 android, 2 apple, 3 microsoft, 4 blackberry, 5 firefox, 6 symbian, 0 other
     makers[brand]["models"][model]["specs"]["chipset"] = no_data
-    makers[brand]["models"][model]["specs"]["cpu"] = no_data  # todo need to be dealt with
+    makers[brand]["models"][model]["specs"]["cpu"] = 0
     makers[brand]["models"][model]["specs"]["gpu"] = no_data
     makers[brand]["models"][model]["specs"]["memoryslot"] = 0
     makers[brand]["models"][model]["specs"]["maxextmemory"] = 0
-    makers[brand]["models"][model]["specs"]["RAM"] = no_data  # todo need to be dealt with
+    makers[brand]["models"][model]["specs"]["RAM"] = 0
     makers[brand]["models"][model]["specs"]["cam1MP"] = 0
     makers[brand]["models"][model]["specs"]["cam1video"] = 0
     makers[brand]["models"][model]["specs"]["cam2MP"] = 0
@@ -317,7 +317,7 @@ def get_specs(brand, model, model_count):
                         makers[brand]["models"][model]["specs"]["cpu"] = 1
                 except Exception as e:
                     print(e,12)
-                    makers[brand]["models"][model]["specs"]["cpu"] = no_data
+                    makers[brand]["models"][model]["specs"]["cpu"] = 0
             if parsed.find("data-spec=\"gpu\"") >= 0:
                 try:
                     makers[brand]["models"][model]["specs"]["gpu"] = parsed[parsed.find(">") + 1:parsed.find("</")]
@@ -348,9 +348,11 @@ def get_specs(brand, model, model_count):
                 try:
                     makers[brand]["models"][model]["specs"]["RAM"] = parsed[parsed.find(">") + 1:parsed.find("</")]
                     makers[brand]["models"][model]["specs"]["RAM"] = int(makers[brand]["models"][model]["specs"]["RAM"][makers[brand]["models"][model]["specs"]["RAM"].find(", ", makers[brand]["models"][model]["specs"]["RAM"].find(" GB RAM") - 8) + 2:makers[brand]["models"][model]["specs"]["RAM"].find(" GB RAM")])
+                    if makers[brand]["models"][model]["specs"]["RAM"] > 12:
+                        makers[brand]["models"][model]["specs"]["RAM"] = 0
                 except Exception as e:
                     print(e,15)
-                    makers[brand]["models"][model]["specs"]["RAM"] = no_data
+                    makers[brand]["models"][model]["specs"]["RAM"] = 0
             if parsed.find("data-spec=\"cam1modules\"") >= 0:
                 try:
                     makers[brand]["models"][model]["specs"]["cam1MP"] = int(

@@ -21,6 +21,7 @@ class main_dialog ( wx.Frame ):
 		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"Phone Picker", pos = wx.DefaultPosition, size = wx.Size( 1010,795 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
 
 		self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
+		self.SetBackgroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOW))
 
 		main_dialog = wx.FlexGridSizer( 2, 1, 0, 0 )
 		main_dialog.SetFlexibleDirection( wx.VERTICAL )
@@ -94,7 +95,7 @@ class main_dialog ( wx.Frame ):
 		specificatios.Add( self.specifications_label, 0, wx.ALIGN_CENTER|wx.ALL, 5 )
 
 		self.cols_panel = wx.Panel( self, wx.ID_ANY, wx.DefaultPosition, wx.Size( -1,15 ), wx.TAB_TRAVERSAL )
-		self.cols_panel.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_APPWORKSPACE ) )
+		self.cols_panel.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_WINDOW ) )
 		self.cols_panel.SetMaxSize( wx.Size( -1,25 ) )
 
 		cols = wx.FlexGridSizer( 1, 5, 0, 0 )
@@ -143,7 +144,7 @@ class main_dialog ( wx.Frame ):
 
 		self.specs_scroll = wx.ScrolledWindow( self, wx.ID_ANY, wx.DefaultPosition, wx.Size( 500,-1 ), wx.VSCROLL )
 		self.specs_scroll.SetScrollRate( 5, 5 )
-		self.specs_scroll.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_APPWORKSPACE ) )
+		self.specs_scroll.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_WINDOW ) )
 
 		specs = wx.FlexGridSizer( 30, 5, 0, 0 )
 		specs.SetFlexibleDirection( wx.BOTH )
@@ -426,7 +427,7 @@ class main_dialog ( wx.Frame ):
 			self.weight[i].SetSelection(0)
 			self.weight[i].Enable(False)
 
-			specs.Add(self.weight[i], 0, wx.ALL, 5)
+			specs.Add(self.weight[i], 0, wx.ALIGN_CENTER_VERTICAL, wx.ALL, 5)
 
 		self.specs_scroll.SetSizer( specs )
 		self.specs_scroll.Layout()
@@ -446,7 +447,7 @@ class main_dialog ( wx.Frame ):
 
 		self.res_scroll = wx.ScrolledWindow( self, wx.ID_ANY, wx.DefaultPosition, wx.Size( 400,-1 ), wx.VSCROLL )
 		self.res_scroll.SetScrollRate( 5, 5 )
-		self.res_scroll.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_APPWORKSPACE ) )
+		self.res_scroll.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_WINDOW ) )
 
 		top_5 = wx.FlexGridSizer( 5, 3, 0, 0 )
 		top_5.SetFlexibleDirection( wx.HORIZONTAL )
@@ -457,7 +458,7 @@ class main_dialog ( wx.Frame ):
 
 		top_5.Add( self.label1, 0, wx.ALL, 5 )
 
-		self.name1 = wx.adv.HyperlinkCtrl( self.res_scroll, wx.ID_ANY, u"phone name", "", wx.DefaultPosition, wx.DefaultSize, wx.adv.HL_DEFAULT_STYLE)
+		self.name1 = wx.adv.HyperlinkCtrl( self.res_scroll, wx.ID_ANY, u"Phone Name", "", wx.DefaultPosition, wx.DefaultSize, wx.adv.HL_DEFAULT_STYLE)
 
 		top_5.Add( self.name1, 0, wx.ALL, 5 )
 
@@ -469,7 +470,7 @@ class main_dialog ( wx.Frame ):
 
 		top_5.Add( self.label2, 0, wx.ALL, 5 )
 
-		self.name2 = wx.adv.HyperlinkCtrl( self.res_scroll, wx.ID_ANY, u"phone name", "", wx.DefaultPosition, wx.DefaultSize, wx.adv.HL_DEFAULT_STYLE)
+		self.name2 = wx.adv.HyperlinkCtrl( self.res_scroll, wx.ID_ANY, u"Phone Name", "", wx.DefaultPosition, wx.DefaultSize, wx.adv.HL_DEFAULT_STYLE)
 
 		top_5.Add( self.name2, 0, wx.ALL, 5 )
 
@@ -481,7 +482,7 @@ class main_dialog ( wx.Frame ):
 
 		top_5.Add( self.label3, 0, wx.ALL, 5 )
 
-		self.name3 = wx.adv.HyperlinkCtrl( self.res_scroll, wx.ID_ANY, u"phone name", "", wx.DefaultPosition, wx.DefaultSize, wx.adv.HL_DEFAULT_STYLE)
+		self.name3 = wx.adv.HyperlinkCtrl( self.res_scroll, wx.ID_ANY, u"Phone Name", "", wx.DefaultPosition, wx.DefaultSize, wx.adv.HL_DEFAULT_STYLE)
 
 		top_5.Add( self.name3, 0, wx.ALL, 5 )
 
@@ -493,7 +494,7 @@ class main_dialog ( wx.Frame ):
 
 		top_5.Add( self.label4, 0, wx.ALL, 5 )
 
-		self.name4 = wx.adv.HyperlinkCtrl( self.res_scroll, wx.ID_ANY, u"phone name", "", wx.DefaultPosition, wx.DefaultSize, wx.adv.HL_DEFAULT_STYLE)
+		self.name4 = wx.adv.HyperlinkCtrl( self.res_scroll, wx.ID_ANY, u"Phone Name", "", wx.DefaultPosition, wx.DefaultSize, wx.adv.HL_DEFAULT_STYLE)
 
 		top_5.Add( self.name4, 0, wx.ALL, 5 )
 
@@ -505,7 +506,7 @@ class main_dialog ( wx.Frame ):
 
 		top_5.Add( self.label5, 0, wx.ALL, 5 )
 
-		self.name5 = wx.adv.HyperlinkCtrl( self.res_scroll, wx.ID_ANY, u"phone name", "", wx.DefaultPosition, wx.DefaultSize, wx.adv.HL_DEFAULT_STYLE)
+		self.name5 = wx.adv.HyperlinkCtrl( self.res_scroll, wx.ID_ANY, u"Phone Name", "", wx.DefaultPosition, wx.DefaultSize, wx.adv.HL_DEFAULT_STYLE)
 
 		top_5.Add( self.name5, 0, wx.ALL, 5 )
 
