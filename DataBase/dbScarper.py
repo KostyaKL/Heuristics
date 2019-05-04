@@ -347,6 +347,7 @@ def get_specs(brand, model, model_count):
             if parsed.find("data-spec=\"internalmemory\"") >= 0:
                 try:
                     makers[brand]["models"][model]["specs"]["RAM"] = parsed[parsed.find(">") + 1:parsed.find("</")]
+                    makers[brand]["models"][model]["specs"]["RAM"] = int(makers[brand]["models"][model]["specs"]["RAM"][makers[brand]["models"][model]["specs"]["RAM"].find(", ", makers[brand]["models"][model]["specs"]["RAM"].find(" GB RAM") - 8) + 2:makers[brand]["models"][model]["specs"]["RAM"].find(" GB RAM")])
                 except Exception as e:
                     print(e,15)
                     makers[brand]["models"][model]["specs"]["RAM"] = no_data
