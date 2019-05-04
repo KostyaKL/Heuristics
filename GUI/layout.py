@@ -82,7 +82,7 @@ class main_dialog ( wx.Frame ):
 
 		options_container = wx.BoxSizer( wx.HORIZONTAL )
 
-		options_container.SetMinSize( wx.Size( -1,700 ) )
+		options_container.SetMinSize( wx.Size( -1,1000 ) )
 		specificatios = wx.BoxSizer( wx.VERTICAL )
 
 		self.specifications_label = wx.StaticText( self, wx.ID_ANY, u"Specifications", wx.DefaultPosition, wx.DefaultSize, 0 )
@@ -107,21 +107,21 @@ class main_dialog ( wx.Frame ):
 
 		cols.Add( self.spacer_col, 0, wx.ALL, 5 )
 
-		self.name_col = wx.StaticText( self.cols_panel, wx.ID_ANY, u"Name", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.name_col = wx.StaticText( self.cols_panel, wx.ID_ANY, u"Name                                    ", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.name_col.Wrap( -1 )
 
 		self.name_col.SetFont( wx.Font( 9, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_BOLD, False, "Arial" ) )
 
 		cols.Add( self.name_col, 0, wx.ALL, 5 )
 
-		self.rule_col = wx.StaticText( self.cols_panel, wx.ID_ANY, u"Rule", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.rule_col = wx.StaticText( self.cols_panel, wx.ID_ANY, u"Rule                           ", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.rule_col.Wrap( -1 )
 
 		self.rule_col.SetFont( wx.Font( 9, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_BOLD, False, "Arial" ) )
 
 		cols.Add( self.rule_col, 0, wx.ALL, 5 )
 
-		self.value_col = wx.StaticText( self.cols_panel, wx.ID_ANY, u"Value", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.value_col = wx.StaticText( self.cols_panel, wx.ID_ANY, u"Value                         ", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.value_col.Wrap( -1 )
 
 		self.value_col.SetFont( wx.Font( 9, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_BOLD, False, "Arial" ) )
@@ -140,7 +140,7 @@ class main_dialog ( wx.Frame ):
 		self.cols_panel.Layout()
 		specificatios.Add( self.cols_panel, 1, wx.ALL|wx.EXPAND, 5 )
 
-		self.specs_scroll = wx.ScrolledWindow( self, wx.ID_ANY, wx.DefaultPosition, wx.Size( 400,-1 ), wx.VSCROLL )
+		self.specs_scroll = wx.ScrolledWindow( self, wx.ID_ANY, wx.DefaultPosition, wx.Size( 500,-1 ), wx.VSCROLL )
 		self.specs_scroll.SetScrollRate( 5, 5 )
 		self.specs_scroll.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_APPWORKSPACE ) )
 
@@ -148,258 +148,84 @@ class main_dialog ( wx.Frame ):
 		specs.SetFlexibleDirection( wx.BOTH )
 		specs.SetNonFlexibleGrowMode( wx.FLEX_GROWMODE_SPECIFIED )
 
-		self.n1 = wx.StaticText( self.specs_scroll, wx.ID_ANY, u"1", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.n1.Wrap( -1 )
-
-		specs.Add( self.n1, 0, wx.ALL, 5 )
-
-		self.name1 = wx.StaticText( self.specs_scroll, wx.ID_ANY, u"MyLabel", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.name1.Wrap( -1 )
-
-		specs.Add( self.name1, 0, wx.ALL, 5 )
-
-		self.rule1 = wx.StaticText( self.specs_scroll, wx.ID_ANY, u"MyLabel", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.rule1.Wrap( -1 )
-
-		specs.Add( self.rule1, 0, wx.ALL, 5 )
-
-		self.value1 = wx.TextCtrl( self.specs_scroll, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		specs.Add( self.value1, 0, wx.ALL, 5 )
-
-		self.weight1 = wx.TextCtrl( self.specs_scroll, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		specs.Add( self.weight1, 0, wx.ALL, 5 )
-
-		self.m_staticText22 = wx.StaticText( self.specs_scroll, wx.ID_ANY, u"2", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.m_staticText22.Wrap( -1 )
-
-		specs.Add( self.m_staticText22, 0, wx.ALL, 5 )
-
-		self.m_staticText23 = wx.StaticText( self.specs_scroll, wx.ID_ANY, u"MyLabel", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.m_staticText23.Wrap( -1 )
-
-		specs.Add( self.m_staticText23, 0, wx.ALL, 5 )
-
-		self.m_staticText24 = wx.StaticText( self.specs_scroll, wx.ID_ANY, u"MyLabel", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.m_staticText24.Wrap( -1 )
-
-		specs.Add( self.m_staticText24, 0, wx.ALL, 5 )
-
-		self.m_textCtrl3 = wx.TextCtrl( self.specs_scroll, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		specs.Add( self.m_textCtrl3, 0, wx.ALL, 5 )
-
-		self.m_textCtrl4 = wx.TextCtrl( self.specs_scroll, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		specs.Add( self.m_textCtrl4, 0, wx.ALL, 5 )
-
-		self.m_staticText25 = wx.StaticText( self.specs_scroll, wx.ID_ANY, u"3", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.m_staticText25.Wrap( -1 )
-
-		specs.Add( self.m_staticText25, 0, wx.ALL, 5 )
-
-		self.m_staticText26 = wx.StaticText( self.specs_scroll, wx.ID_ANY, u"MyLabel", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.m_staticText26.Wrap( -1 )
-
-		specs.Add( self.m_staticText26, 0, wx.ALL, 5 )
-
-		self.m_staticText27 = wx.StaticText( self.specs_scroll, wx.ID_ANY, u"MyLabel", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.m_staticText27.Wrap( -1 )
-
-		specs.Add( self.m_staticText27, 0, wx.ALL, 5 )
-
-		self.m_textCtrl5 = wx.TextCtrl( self.specs_scroll, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		specs.Add( self.m_textCtrl5, 0, wx.ALL, 5 )
-
-		self.m_textCtrl6 = wx.TextCtrl( self.specs_scroll, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		specs.Add( self.m_textCtrl6, 0, wx.ALL, 5 )
-
-		self.m_staticText28 = wx.StaticText( self.specs_scroll, wx.ID_ANY, u"4", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.m_staticText28.Wrap( -1 )
-
-		specs.Add( self.m_staticText28, 0, wx.ALL, 5 )
-
-		self.m_staticText29 = wx.StaticText( self.specs_scroll, wx.ID_ANY, u"MyLabel", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.m_staticText29.Wrap( -1 )
-
-		specs.Add( self.m_staticText29, 0, wx.ALL, 5 )
-
-		self.m_staticText30 = wx.StaticText( self.specs_scroll, wx.ID_ANY, u"MyLabel", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.m_staticText30.Wrap( -1 )
-
-		specs.Add( self.m_staticText30, 0, wx.ALL, 5 )
-
-		self.m_textCtrl7 = wx.TextCtrl( self.specs_scroll, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		specs.Add( self.m_textCtrl7, 0, wx.ALL, 5 )
-
-		self.m_textCtrl8 = wx.TextCtrl( self.specs_scroll, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		specs.Add( self.m_textCtrl8, 0, wx.ALL, 5 )
-
-		self.m_staticText31 = wx.StaticText( self.specs_scroll, wx.ID_ANY, u"5", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.m_staticText31.Wrap( -1 )
-
-		specs.Add( self.m_staticText31, 0, wx.ALL, 5 )
-
-		self.m_staticText32 = wx.StaticText( self.specs_scroll, wx.ID_ANY, u"MyLabel", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.m_staticText32.Wrap( -1 )
-
-		specs.Add( self.m_staticText32, 0, wx.ALL, 5 )
-
-		self.m_staticText33 = wx.StaticText( self.specs_scroll, wx.ID_ANY, u"MyLabel", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.m_staticText33.Wrap( -1 )
-
-		specs.Add( self.m_staticText33, 0, wx.ALL, 5 )
-
-		self.m_textCtrl9 = wx.TextCtrl( self.specs_scroll, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		specs.Add( self.m_textCtrl9, 0, wx.ALL, 5 )
-
-		self.m_textCtrl10 = wx.TextCtrl( self.specs_scroll, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		specs.Add( self.m_textCtrl10, 0, wx.ALL, 5 )
-
-		self.m_staticText34 = wx.StaticText( self.specs_scroll, wx.ID_ANY, u"6", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.m_staticText34.Wrap( -1 )
-
-		specs.Add( self.m_staticText34, 0, wx.ALL, 5 )
-
-		self.m_staticText35 = wx.StaticText( self.specs_scroll, wx.ID_ANY, u"MyLabel", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.m_staticText35.Wrap( -1 )
-
-		specs.Add( self.m_staticText35, 0, wx.ALL, 5 )
-
-		self.m_staticText36 = wx.StaticText( self.specs_scroll, wx.ID_ANY, u"MyLabel", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.m_staticText36.Wrap( -1 )
-
-		specs.Add( self.m_staticText36, 0, wx.ALL, 5 )
-
-		self.m_textCtrl11 = wx.TextCtrl( self.specs_scroll, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		specs.Add( self.m_textCtrl11, 0, wx.ALL, 5 )
-
-		self.m_textCtrl12 = wx.TextCtrl( self.specs_scroll, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		specs.Add( self.m_textCtrl12, 0, wx.ALL, 5 )
-
-		self.m_staticText37 = wx.StaticText( self.specs_scroll, wx.ID_ANY, u"7", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.m_staticText37.Wrap( -1 )
-
-		specs.Add( self.m_staticText37, 0, wx.ALL, 5 )
-
-		self.m_staticText38 = wx.StaticText( self.specs_scroll, wx.ID_ANY, u"MyLabel", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.m_staticText38.Wrap( -1 )
-
-		specs.Add( self.m_staticText38, 0, wx.ALL, 5 )
-
-		self.m_staticText39 = wx.StaticText( self.specs_scroll, wx.ID_ANY, u"MyLabel", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.m_staticText39.Wrap( -1 )
-
-		specs.Add( self.m_staticText39, 0, wx.ALL, 5 )
-
-		self.m_textCtrl13 = wx.TextCtrl( self.specs_scroll, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		specs.Add( self.m_textCtrl13, 0, wx.ALL, 5 )
-
-		self.m_textCtrl14 = wx.TextCtrl( self.specs_scroll, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		specs.Add( self.m_textCtrl14, 0, wx.ALL, 5 )
-
-		self.m_staticText40 = wx.StaticText( self.specs_scroll, wx.ID_ANY, u"8", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.m_staticText40.Wrap( -1 )
-
-		specs.Add( self.m_staticText40, 0, wx.ALL, 5 )
-
-		self.m_staticText41 = wx.StaticText( self.specs_scroll, wx.ID_ANY, u"MyLabel", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.m_staticText41.Wrap( -1 )
-
-		specs.Add( self.m_staticText41, 0, wx.ALL, 5 )
-
-		self.m_staticText42 = wx.StaticText( self.specs_scroll, wx.ID_ANY, u"MyLabel", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.m_staticText42.Wrap( -1 )
-
-		specs.Add( self.m_staticText42, 0, wx.ALL, 5 )
-
-		self.m_textCtrl15 = wx.TextCtrl( self.specs_scroll, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		specs.Add( self.m_textCtrl15, 0, wx.ALL, 5 )
-
-		self.m_textCtrl16 = wx.TextCtrl( self.specs_scroll, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		specs.Add( self.m_textCtrl16, 0, wx.ALL, 5 )
-
-		self.m_staticText43 = wx.StaticText( self.specs_scroll, wx.ID_ANY, u"9", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.m_staticText43.Wrap( -1 )
-
-		specs.Add( self.m_staticText43, 0, wx.ALL, 5 )
-
-		self.m_staticText44 = wx.StaticText( self.specs_scroll, wx.ID_ANY, u"MyLabel", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.m_staticText44.Wrap( -1 )
-
-		specs.Add( self.m_staticText44, 0, wx.ALL, 5 )
-
-		self.m_staticText45 = wx.StaticText( self.specs_scroll, wx.ID_ANY, u"MyLabel", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.m_staticText45.Wrap( -1 )
-
-		specs.Add( self.m_staticText45, 0, wx.ALL, 5 )
-
-		self.m_textCtrl17 = wx.TextCtrl( self.specs_scroll, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		specs.Add( self.m_textCtrl17, 0, wx.ALL, 5 )
-
-		self.m_textCtrl18 = wx.TextCtrl( self.specs_scroll, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		specs.Add( self.m_textCtrl18, 0, wx.ALL, 5 )
-
-		self.m_staticText46 = wx.StaticText( self.specs_scroll, wx.ID_ANY, u"10", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.m_staticText46.Wrap( -1 )
-
-		specs.Add( self.m_staticText46, 0, wx.ALL, 5 )
-
-		self.m_staticText47 = wx.StaticText( self.specs_scroll, wx.ID_ANY, u"MyLabel", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.m_staticText47.Wrap( -1 )
-
-		specs.Add( self.m_staticText47, 0, wx.ALL, 5 )
-
-		self.m_staticText48 = wx.StaticText( self.specs_scroll, wx.ID_ANY, u"MyLabel", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.m_staticText48.Wrap( -1 )
-
-		specs.Add( self.m_staticText48, 0, wx.ALL, 5 )
-
-		self.m_textCtrl19 = wx.TextCtrl( self.specs_scroll, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		specs.Add( self.m_textCtrl19, 0, wx.ALL, 5 )
-
-		self.m_textCtrl20 = wx.TextCtrl( self.specs_scroll, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		specs.Add( self.m_textCtrl20, 0, wx.ALL, 5 )
-
-		self.m_staticText49 = wx.StaticText( self.specs_scroll, wx.ID_ANY, u"11", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.m_staticText49.Wrap( -1 )
-
-		specs.Add( self.m_staticText49, 0, wx.ALL, 5 )
-
-		self.m_staticText50 = wx.StaticText( self.specs_scroll, wx.ID_ANY, u"MyLabel", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.m_staticText50.Wrap( -1 )
-
-		specs.Add( self.m_staticText50, 0, wx.ALL, 5 )
-
-		self.m_staticText51 = wx.StaticText( self.specs_scroll, wx.ID_ANY, u"MyLabel", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.m_staticText51.Wrap( -1 )
-
-		specs.Add( self.m_staticText51, 0, wx.ALL, 5 )
-
-		self.m_textCtrl21 = wx.TextCtrl( self.specs_scroll, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		specs.Add( self.m_textCtrl21, 0, wx.ALL, 5 )
-
-		self.m_textCtrl22 = wx.TextCtrl( self.specs_scroll, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		specs.Add( self.m_textCtrl22, 0, wx.ALL, 5 )
-
-		self.m_staticText52 = wx.StaticText( self.specs_scroll, wx.ID_ANY, u"12", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.m_staticText52.Wrap( -1 )
-
-		specs.Add( self.m_staticText52, 0, wx.ALL, 5 )
-
-		self.m_staticText53 = wx.StaticText( self.specs_scroll, wx.ID_ANY, u"MyLabel", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.m_staticText53.Wrap( -1 )
-
-		specs.Add( self.m_staticText53, 0, wx.ALL, 5 )
-
-		self.m_staticText54 = wx.StaticText( self.specs_scroll, wx.ID_ANY, u"MyLabel", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.m_staticText54.Wrap( -1 )
-
-		specs.Add( self.m_staticText54, 0, wx.ALL, 5 )
-
-		self.m_textCtrl23 = wx.TextCtrl( self.specs_scroll, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		specs.Add( self.m_textCtrl23, 0, wx.ALL, 5 )
-
-		self.m_textCtrl24 = wx.TextCtrl( self.specs_scroll, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		specs.Add( self.m_textCtrl24, 0, wx.ALL, 5 )
-
+		self.num = [0]
+		self.name = [0]
+		self.rule = [0]
+		self.value = [0]
+		self.weight = [0]
+
+		self.specs_name = [
+						0,
+						["Battery Capacity", ""],
+						["Year", ""],
+						["Height", ""],
+						["Width", ""],
+						["Weight", ""],
+						["No. of SIM Cards", ""],
+						["SIM Card Type", "constant"],
+						["Screen Size", ""],
+						["Screen Resolution", ""],
+						["Operating System", "constant"],
+						["No. of CPU Cores", "constant"],
+						["SD Card Option", "boolean"],
+						["Max SD Card Size", ""],
+						["RAM", ""],
+						["Main Camera Quality", ""],
+						["Main Camera Video", ""],
+						["Secondary Camera Quality", ""],
+						["Secondary Camera Video", ""],
+						["IR Transmitter", "boolean"],
+						["Radio", "boolean"],
+						["Charging Cable Type", "constant"],
+						["NFC", "boolean"],
+						["Finger Print", "boolean"],
+						["Price", ""],
+						["BaseMark Test", ""],
+						["Load Speaker", ""],
+						["Audio Quality", ""],
+						["Battery Endurance", ""],
+						["Water Resistant", "boolean"]
+		]
+		self.common_rule_choice = ["Highest Better", "Lowest Better", "Optimal Value", "Not Important"]
+		self.boolean_rule_choice = ["Yes/No", "Not Important"]
+		self.constant_rule_choice = ["Constant Scale", "Not Important"]
+		self.spec_weight_choice = ["1", "2", "3", "4", "5"]
+
+		for i in range(1, 30):
+			self.num.append(wx.StaticText(self.specs_scroll, wx.ID_ANY, str(i), wx.DefaultPosition, wx.DefaultSize, 0))
+			self.num[i].Wrap(-1)
+
+			specs.Add(self.num[i], 0, wx.ALL, 5)
+
+			self.name.append(wx.StaticText(self.specs_scroll, wx.ID_ANY, self.specs_name[i][0], wx.DefaultPosition, wx.DefaultSize, 0))
+			self.name[i].Wrap(-1)
+
+			specs.Add(self.name[i], 0, wx.ALL, 5)
+
+			if self.specs_name[i][1] == "boolean":
+				self.rule_choice = self.boolean_rule_choice
+			elif self.specs_name[i][1] == "constant":
+				self.rule_choice = self.constant_rule_choice
+			else:
+				self.rule_choice = self.common_rule_choice
+
+			self.rule.append(wx.Choice(self.specs_scroll, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, self.rule_choice, 0))
+			self.rule[i].SetSelection(0)
+			self.rule[i].Enable(False)
+
+			specs.Add(self.rule[i], 0, wx.ALL, 5)
+
+			self.value.append(wx.TextCtrl(self.specs_scroll, wx.ID_ANY, "no value", wx.DefaultPosition, wx.DefaultSize, 0))
+			self.value[i].SetMaxLength(10)
+			self.value[i].Enable(False)
+
+			specs.Add(self.value[i], 0, wx.ALL, 5)
+
+			self.weight.append(wx.Choice(self.specs_scroll, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, self.spec_weight_choice, 0))
+			self.weight[i].SetSelection(0)
+			self.weight[i].Enable(False)
+
+			specs.Add(self.weight[i], 0, wx.ALL, 5)
 
 		self.specs_scroll.SetSizer( specs )
 		self.specs_scroll.Layout()

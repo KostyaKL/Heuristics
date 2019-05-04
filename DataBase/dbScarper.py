@@ -181,7 +181,7 @@ def get_specs(brand, model, model_count):
                 else:
                     makers[brand]["models"][model]["specs"]["ir"] = 0
             except Exception as e:
-                print(e)
+                print(e, 1)
                 makers[brand]["models"][model]["specs"]["ir"] = 0
 
         if parsed.find("<div id=\"specs-list\">") == 0:
@@ -195,7 +195,7 @@ def get_specs(brand, model, model_count):
                 makers[brand]["models"][model]["specs"]["battery"] = int(
                     parsed[parsed.find("spec=\"batsize-hl\">") + 18:parsed.find("</span>")])
             except Exception as e:
-                print(e)
+                print(e,2)
                 makers[brand]["models"][model]["specs"]["battery"] = 0
 
         if specs_list_found is True:
@@ -203,7 +203,7 @@ def get_specs(brand, model, model_count):
                 try:
                     makers[brand]["models"][model]["specs"]["year"] = int(parsed[parsed.find(">") + 1:parsed.find(",")])
                 except Exception as e:
-                    print(e)
+                    print(e,3)
                     makers[brand]["models"][model]["specs"]["year"] = 0
             if parsed.find("data-spec=\"dimensions\"") >= 0:
                 try:
@@ -212,7 +212,7 @@ def get_specs(brand, model, model_count):
                     parsed = parsed[parsed.find(" x ") + 3:]
                     makers[brand]["models"][model]["specs"]["width"] = float(parsed[:parsed.find(" x ")])
                 except Exception as e:
-                    print(e)
+                    print(e,4)
                     makers[brand]["models"][model]["specs"]["height"] = 0
                     makers[brand]["models"][model]["specs"]["width"] = 0
             if parsed.find("data-spec=\"weight\"") >= 0:
@@ -220,7 +220,7 @@ def get_specs(brand, model, model_count):
                     makers[brand]["models"][model]["specs"]["weight"] = float(
                         parsed[parsed.find(">") + 1:parsed.find(" g ")])
                 except Exception as e:
-                    print(e)
+                    print(e,5)
                     makers[brand]["models"][model]["specs"]["weight"] = 0
             if parsed.find("data-spec=\"sim\"") >= 0:
                 try:
@@ -248,14 +248,14 @@ def get_specs(brand, model, model_count):
                     else:
                         makers[brand]["models"][model]["specs"]["numofsim"] = 0
                 except Exception as e:
-                    print(e)
+                    print(e,6)
                     makers[brand]["models"][model]["specs"]["sim"] = no_data
             if parsed.find("data-spec=\"displaysize\"") >= 0:
                 try:
                     makers[brand]["models"][model]["specs"]["displaysize"] = float(
                         parsed[parsed.find(">") + 1:parsed.find(" inches")])
                 except Exception as e:
-                    print(e)
+                    print(e,7)
                     makers[brand]["models"][model]["specs"]["displaysize"] = 0
             if parsed.find("data-spec=\"displayresolution\"") >= 0:
                 try:
@@ -269,10 +269,10 @@ def get_specs(brand, model, model_count):
                             makers[brand]["models"][model]["specs"]["displayresolution"].find(" x ") + 3:]
                         makers[brand]["models"][model]["specs"]["displayresolution"] = int(a) * int(b)
                     except Exception as e:
-                        print(e)
+                        print(e,8)
                         makers[brand]["models"][model]["specs"]["displayresolution"] = 0
                 except Exception as e:
-                    print(e)
+                    print(e,9)
                     makers[brand]["models"][model]["specs"]["displayresolution"] = 0
             if parsed.find("data-spec=\"os\"") >= 0:
                 try:
@@ -292,13 +292,13 @@ def get_specs(brand, model, model_count):
                     else:
                         makers[brand]["models"][model]["specs"]["os"] = 0
                 except Exception as e:
-                    print(e)
+                    print(e,10)
                     makers[brand]["models"][model]["specs"]["os"] = 0
             if parsed.find("data-spec=\"chipset\"") >= 0:
                 try:
                     makers[brand]["models"][model]["specs"]["chipset"] = parsed[parsed.find(">") + 1:parsed.find("</")]
                 except Exception as e:
-                    print(e)
+                    print(e,11)
                     makers[brand]["models"][model]["specs"]["chipset"] = no_data
             if parsed.find("data-spec=\"cpu\"") >= 0:
                 try:
@@ -316,13 +316,13 @@ def get_specs(brand, model, model_count):
                     else:
                         makers[brand]["models"][model]["specs"]["os"] = 1
                 except Exception as e:
-                    print(e)
+                    print(e,12)
                     makers[brand]["models"][model]["specs"]["cpu"] = no_data
             if parsed.find("data-spec=\"gpu\"") >= 0:
                 try:
                     makers[brand]["models"][model]["specs"]["gpu"] = parsed[parsed.find(">") + 1:parsed.find("</")]
                 except Exception as e:
-                    print(e)
+                    print(e,13)
                     makers[brand]["models"][model]["specs"]["gpu"] = no_data
             if parsed.find("data-spec=\"memoryslot\"") >= 0:
                 try:
@@ -342,41 +342,41 @@ def get_specs(brand, model, model_count):
                             makers[brand]["models"][model]["specs"]["memoryslot"] = 1
                             makers[brand]["models"][model]["specs"]["maxextmemory"] = 0
                 except Exception as e:
-                    print(e)
+                    print(e,14)
                     makers[brand]["models"][model]["specs"]["memoryslot"] = 0
             if parsed.find("data-spec=\"internalmemory\"") >= 0:
                 try:
                     makers[brand]["models"][model]["specs"]["RAM"] = parsed[parsed.find(">") + 1:parsed.find("</")]
                 except Exception as e:
-                    print(e)
+                    print(e,15)
                     makers[brand]["models"][model]["specs"]["RAM"] = no_data
             if parsed.find("data-spec=\"cam1modules\"") >= 0:
                 try:
                     makers[brand]["models"][model]["specs"]["cam1MP"] = int(
                         parsed[parsed.find(">") + 1:parsed.find(" MP")])
                 except Exception as e:
-                    print(e)
+                    print(e,16)
                     makers[brand]["models"][model]["specs"]["cam1MP"] = 0
             if parsed.find("data-spec=\"cam1video\"") >= 0:
                 try:
                     makers[brand]["models"][model]["specs"]["cam1video"] = int(
                         parsed[parsed.find(">") + 1:parsed.find("p", parsed.find(">"))])
                 except Exception as e:
-                    print(e)
+                    print(e,17)
                     makers[brand]["models"][model]["specs"]["cam1video"] = 0
             if parsed.find("data-spec=\"cam2modules\"") >= 0:
                 try:
                     makers[brand]["models"][model]["specs"]["cam2MP"] = int(
                         parsed[parsed.find(">") + 1:parsed.find(" MP")])
                 except Exception as e:
-                    print(e)
+                    print(e,18)
                     makers[brand]["models"][model]["specs"]["cam2MP"] = 0
             if parsed.find("data-spec=\"cam2video\"") >= 0:
                 try:
                     makers[brand]["models"][model]["specs"]["cam2video"] = int(
                         parsed[parsed.find(">") + 1:parsed.find("p@")])
                 except Exception as e:
-                    print(e)
+                    print(e,19)
                     makers[brand]["models"][model]["specs"]["cam2video"] = 0
             if parsed.find(">Infrared port<") >= 0:
                 makers[brand]["models"][model]["specs"]["radio"] = 1
@@ -391,7 +391,7 @@ def get_specs(brand, model, model_count):
                     else:
                         makers[brand]["models"][model]["specs"]["radio"] = 0
                 except Exception as e:
-                    print(e)
+                    print(e,20)
                     makers[brand]["models"][model]["specs"]["radio"] = 0
             if parsed.find("data-spec=\"usb\"") >= 0:
                 try:
@@ -405,7 +405,7 @@ def get_specs(brand, model, model_count):
                     else:
                         makers[brand]["models"][model]["specs"]["usb"] = 0
                 except Exception as e:
-                    print(e)
+                    print(e,21)
                     makers[brand]["models"][model]["specs"]["usb"] = 0
             if parsed.find("Fingerprint ") >= 0 or parsed.find("fingerprint ") >= 0:
                 makers[brand]["models"][model]["specs"]["fingerprint"] = 1
@@ -426,35 +426,35 @@ def get_specs(brand, model, model_count):
                     else:
                         makers[brand]["models"][model]["specs"]["price"] = 0
                 except Exception as e:
-                    print(e)
+                    print(e,22)
                     makers[brand]["models"][model]["specs"]["price"] = 0
             if parsed.find("Basemark X: ") >= 0:
                 try:
                     makers[brand]["models"][model]["specs"]["basemark"] = int(
                         parsed[parsed.find("Basemark X: ") + 12:parsed.find("</")])
                 except Exception as e:
-                    print(e)
+                    print(e,23)
                     makers[brand]["models"][model]["specs"]["basemark"] = 0
             if parsed.find(">Voice ") >= 0:
                 try:
                     makers[brand]["models"][model]["specs"]["loudspeaker"] = float(
                         parsed[parsed.find(">Voice ") + 7:parsed.find("dB ")])
                 except Exception as e:
-                    print(e)
+                    print(e,24)
                     makers[brand]["models"][model]["specs"]["loudspeaker"] = 0
             if parsed.find("Crosstalk") >= 0:
                 try:
                     makers[brand]["models"][model]["specs"]["audioquality"] = float(
                         parsed[parsed.find(">Noise -") + 8:parsed.find("dB ")])
                 except Exception as e:
-                    print(e)
+                    print(e,25)
                     makers[brand]["models"][model]["specs"]["audioquality"] = 0
             if parsed.find(">Endurance rating") >= 0:
                 try:
                     makers[brand]["models"][model]["specs"]["endurance"] = int(
                         parsed[parsed.find(">Endurance rating ") + 18:parsed.find("h<")])
                 except Exception as e:
-                    print(e)
+                    print(e,26)
                     makers[brand]["models"][model]["specs"]["endurance"] = 0
             if parsed.find("water") >= 0 or parsed.find("Water") >= 0:
                 makers[brand]["models"][model]["specs"]["waterproof"] = 1
@@ -484,7 +484,7 @@ for brand in makers:
             model_count.models_add()
             break
         except Exception as e:
-            print(e)
+            print(e,27)
             print(brand, "not connected -------------------------------------->",
                   strftime("%d-%m-%Y %H:%M:%S", gmtime()))
             not_connected.append(brand)
@@ -504,7 +504,7 @@ for brand in makers:
                 get_specs(brand, model, model_count)
                 break
             except Exception as e:
-                print(e)
+                print(e,28)
                 print(brand, model, "not connected -------------------------------------->",
                       strftime("%d-%m-%Y %H:%M:%S", gmtime()))
                 not_connected.append(brand + " " + model)
