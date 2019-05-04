@@ -6,6 +6,7 @@
 
 import wx
 
+
 # begin wxGlade: dependencies
 # end wxGlade
 
