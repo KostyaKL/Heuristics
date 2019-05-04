@@ -434,9 +434,8 @@ def get_specs(brand, model, model_count):
 
 
 def input_thread(a_list):
-    command = str(input())
-    if command == "stop":
-        a_list.append(True)
+    input()
+    a_list.append(True)
 
 
 a_list = []
