@@ -1,5 +1,5 @@
 import math
-from time import gmtime, strftime, time
+from time import time
 
 
 class Topsis:
@@ -65,37 +65,37 @@ class Topsis:
         return {"result": similarity, "time": total_time}
 
 
-table = [[7, 8, 9, 6],
-         [9, 7, 6, 7],
-         [9, 8, 8, 8],
-         [8, 7, 9, 6]
-         ]
-
-weight = [0.1, 0.4, 0.3, 0.2]
-
-candidates = {0: "honda",
-              1: "ford",
-              2: "mazda",
-              3: "subaru",
-              }
-
-test1 = Topsis.topsis(table, 4, 4, weight)
-print(test1["result"], "in", strftime("%H:%M:%S:{}".format(test1["time"]%1000), gmtime(test1["time"]/1000.0)))
-
-table2 = [[250, 200, 300, 275, 225],
-          [16, 16, 32, 32, 16],
-          [12, 8, 16, 8, 16],
-          [5, 3, 4, 4, 2]
-          ]
-
-weight2 = [0.25, 0.25, 0.25, 0.25]
-
-candidates2 = {0: "ph1",
-               1: "ph2",
-               2: "ph3",
-               3: "ph4",
-               4: "ph5"
-               }
-
-test1 = Topsis.topsis(table2, 5, 4, weight2)
-print(test1["result"], "in", strftime("%H:%M:%S:{}".format(test1["time"]%1000), gmtime(test1["time"]/1000.0)))
+# table = [[7, 8, 9, 6],
+#          [9, 7, 6, 7],
+#          [9, 8, 8, 8],
+#          [8, 7, 9, 6]
+#          ]
+#
+# weight = [0.1, 0.4, 0.3, 0.2]
+#
+# candidates = {0: "honda",
+#               1: "ford",
+#               2: "mazda",
+#               3: "subaru",
+#               }
+#
+# test1 = Topsis.topsis(table, 4, 4, weight)
+# print(test1["result"], "in", strftime("%H:%M:%S:{}".format(test1["time"]%1000), gmtime(test1["time"]/1000.0)))
+#
+# table2 = [[250, 200, 300, 275, 225],
+#           [16, 16, 32, 32, 16],
+#           [12, 8, 16, 8, 16],
+#           [5, 3, 4, 4, 2]
+#           ]
+#
+# weight2 = [0.25, 0.25, 0.25, 0.25]
+#
+# candidates2 = {0: "ph1",
+#                1: "ph2",
+#                2: "ph3",
+#                3: "ph4",
+#                4: "ph5"
+#                }
+#
+# test1 = Topsis.topsis(table2, 5, 4, weight2)
+# print(test1["result"], "in", strftime("%H:%M:%S:{}".format(test1["time"]%1000), gmtime(test1["time"]/1000.0)))

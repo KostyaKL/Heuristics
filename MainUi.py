@@ -1,6 +1,8 @@
-import wx
-from GUI import layout as lay
 
+import wx
+import wx.xrc
+from GUI import layout as lay
+from time import strftime, gmtime
 
 class MainFrame(lay.main_dialog):
     def __init__(self, parent):
@@ -172,10 +174,47 @@ class MainFrame(lay.main_dialog):
         if self.borda.GetValue() is True:
             algo = "borda"
         else:
-            alg = "topsis"
+            algo = "topsis"
 
         target = self.target_choiseChoices[self.target_choise.GetSelection()]
-        print((target))
+
+        from DataBase import TableOfPhones, dbScarper
+        db = dbScarper.load_obj("DataBase/db")
+        table = TableOfPhones.TableOfPhones(db, target)
+
+
+
+        if algo == "borda":
+            from Algorithms import BordaAlgo
+            result = BordaAlgo.Borda.borda(table.table, table.num_of_phones, table.num_of_specs)
+        elif algo == "topsis":
+            from Algorithms import TopsisAlgo
+            result = TopsisAlgo.Topsis.topsis(table.table, table.num_of_phones, table.num_of_specs, table.criteria_weight)
+
+        top_candidate = []
+        for i in range(0, table.num_of_phones):
+            table.candidate_dict[i]["rank"] = result["result"][i]
+            top_candidate.append(table.candidate_dict[i])
+
+        top_candidate = sorted(top_candidate, key=lambda k: k["rank"], reverse=True)
+
+        self.name1.SetLabelText(top_candidate[0]["brand"] + " " + top_candidate[0]["model"])
+        self.name1.SetURL(db[top_candidate[0]["brand"]]["models"][top_candidate[0]["model"]]["url"])
+        #self.m_bitmap1.SetBitmap(wxBitmap(db[top_candidate[0]["brand"]]["models"][top_candidate[0]["model"]]["img"]))
+
+        self.name2.SetLabelText(top_candidate[1]["brand"] + " " + top_candidate[1]["model"])
+        self.name2.SetURL(db[top_candidate[1]["brand"]]["models"][top_candidate[1]["model"]]["url"])
+
+        self.name3.SetLabelText(top_candidate[2]["brand"] + " " + top_candidate[2]["model"])
+        self.name3.SetURL(db[top_candidate[2]["brand"]]["models"][top_candidate[2]["model"]]["url"])
+
+        self.name4.SetLabelText(top_candidate[3]["brand"] + " " + top_candidate[3]["model"])
+        self.name4.SetURL(db[top_candidate[3]["brand"]]["models"][top_candidate[3]["model"]]["url"])
+
+        self.name5.SetLabelText(top_candidate[4]["brand"] + " " + top_candidate[4]["model"])
+        self.name5.SetURL(db[top_candidate[4]["brand"]]["models"][top_candidate[4]["model"]]["url"])
+
+        print(strftime("%H:%M:%S:{}".format(result["time"]%1000), gmtime(result["time"]/1000.0)))
 
     def reset(self, event):
         self.target_choise.SetSelection(0)

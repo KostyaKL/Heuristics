@@ -466,83 +466,86 @@ def get_specs(brand, model, model_count):
     model_count.acquired_inc()
 
 
-# makers = load_obj("db")
+def run_script():
+    # makers = load_obj("db")
 
-print("scarper started at:", strftime("%d-%m-%Y %H:%M:%S", gmtime()))
+    print("scarper started at:", strftime("%d-%m-%Y %H:%M:%S", gmtime()))
 
-start_time = time()
+    start_time = time()
 
-model_count = ModelCount()
+    model_count = ModelCount()
 
-get_brands()
+    get_brands()
 
-print(strftime("%d-%m-%Y %H:%M:%S", gmtime()))
+    print(strftime("%d-%m-%Y %H:%M:%S", gmtime()))
 
-print("total number of models:", sum(int(makers[brand]["count"]) for brand in makers))
+    print("total number of models:", sum(int(makers[brand]["count"]) for brand in makers))
 
-for brand in makers:
-    for retry in range(0, 5):
-        try:
-            get_models(brand, model_count)
-            model_count.models_add()
-            break
-        except Exception as e:
-            print(e,27)
-            print(brand, "not connected -------------------------------------->",
-                  strftime("%d-%m-%Y %H:%M:%S", gmtime()))
-            not_connected.append(brand)
-
-print(strftime("%d-%m-%Y %H:%M:%S", gmtime()))
-
-print("not connected:", not_connected)
-
-print("expected", sum(int(makers[brand]["count"]) for brand in makers), "models, found", model_count.get_models())
-
-save_obj(makers, "db")
-
-for brand in makers:
-    for model in makers[brand]["models"]:
+    for brand in makers:
         for retry in range(0, 5):
             try:
-                get_specs(brand, model, model_count)
+                get_models(brand, model_count)
+                model_count.models_add()
                 break
             except Exception as e:
-                print(e,28)
-                print(brand, model, "not connected -------------------------------------->",
+                print(e,27)
+                print(brand, "not connected -------------------------------------->",
                       strftime("%d-%m-%Y %H:%M:%S", gmtime()))
-                not_connected.append(brand + " " + model)
+                not_connected.append(brand)
 
-print(strftime("%d-%m-%Y %H:%M:%S", gmtime()))
+    print(strftime("%d-%m-%Y %H:%M:%S", gmtime()))
 
-print("not connected:", not_connected)
+    print("not connected:", not_connected)
 
-print("expected", sum(int(makers[brand]["count"]) for brand in makers), "models, number of models",
-      model_count.get_models(), "acquired",
-      model_count.get_acquired())
+    print("expected", sum(int(makers[brand]["count"]) for brand in makers), "models, found", model_count.get_models())
 
-end_time = time()
+    save_obj(makers, "db")
 
-total_time = end_time - start_time
-
-print("scarper finished at", strftime("%d-%m-%Y %H:%M:%S", gmtime()))
-
-print("worked for", strftime("%H:%M:%S", gmtime(total_time)))
-
-save_obj(makers, "db")
-
-with open('phoneDB.csv', 'w') as f:
-    printout = "brand,model"
-    rand_brand = random.choice(list(makers))
-    rand_model = random.choice(list(makers[rand_brand]["models"]))
-    for key in makers[rand_brand]["models"][rand_model]["specs"]:
-        printout = printout + "," + key
-    f.write(printout + "\n")
     for brand in makers:
         for model in makers[brand]["models"]:
-            printout = brand + "," + model
-            for spec in makers[brand]["models"][model]["specs"]:
-                tmp = str(makers[brand]["models"][model]["specs"][spec])
-                if tmp.find(",") >= 0:
-                    tmp = "\"" + tmp + "\""
-                printout = printout + "," + tmp
-            f.write(printout + "\n")
+            for retry in range(0, 5):
+                try:
+                    get_specs(brand, model, model_count)
+                    break
+                except Exception as e:
+                    print(e,28)
+                    print(brand, model, "not connected -------------------------------------->",
+                          strftime("%d-%m-%Y %H:%M:%S", gmtime()))
+                    not_connected.append(brand + " " + model)
+
+    print(strftime("%d-%m-%Y %H:%M:%S", gmtime()))
+
+    print("not connected:", not_connected)
+
+    print("expected", sum(int(makers[brand]["count"]) for brand in makers), "models, number of models",
+          model_count.get_models(), "acquired",
+          model_count.get_acquired())
+
+    end_time = time()
+
+    total_time = end_time - start_time
+
+    print("scarper finished at", strftime("%d-%m-%Y %H:%M:%S", gmtime()))
+
+    print("worked for", strftime("%H:%M:%S", gmtime(total_time)))
+
+    save_obj(makers, "db")
+
+    with open('phoneDB.csv', 'w') as f:
+        printout = "brand,model"
+        rand_brand = random.choice(list(makers))
+        rand_model = random.choice(list(makers[rand_brand]["models"]))
+        for key in makers[rand_brand]["models"][rand_model]["specs"]:
+            printout = printout + "," + key
+        f.write(printout + "\n")
+        for brand in makers:
+            for model in makers[brand]["models"]:
+                printout = brand + "," + model
+                for spec in makers[brand]["models"][model]["specs"]:
+                    tmp = str(makers[brand]["models"][model]["specs"][spec])
+                    if tmp.find(",") >= 0:
+                        tmp = "\"" + tmp + "\""
+                    printout = printout + "," + tmp
+                f.write(printout + "\n")
+
+# run_script()
