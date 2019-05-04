@@ -11,7 +11,7 @@ from time import gmtime, strftime, time
 class Borda:
     @staticmethod
     def borda(table, candidates_num, rankers_num):
-        start_time = time()
+        start_time = int(round(time() * 1000))
         score_res = []
         for candidate in range(0, candidates_num):
             score_res.append(0)
@@ -26,7 +26,7 @@ class Borda:
                 score_res[0] += score
                 score -= 1
 
-        total_time = time()-start_time
+        total_time = int(round(time() * 1000)) - start_time
 
         return {"result": score_res, "time": total_time}
 
@@ -71,6 +71,6 @@ candidates = {0: "a",
               }
 
 test1 = Borda.borda(table, 3, 21)
-print(test1["result"], "in", strftime("%H:%M:%S", gmtime(test1["time"])))
+print(test1["result"], "in", strftime("%H:%M:%S:{}".format(test1["time"]%1000), gmtime(test1["time"]/1000.0)))
 test2 = Borda.borda(table2, 5, 7)
-print(test2["result"], "in", strftime("%H:%M:%S", gmtime(test2["time"])))
+print(test1["result"], "in", strftime("%H:%M:%S:{}".format(test2["time"]%1000), gmtime(test2["time"]/1000.0)))

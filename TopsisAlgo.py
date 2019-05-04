@@ -5,7 +5,7 @@ from time import gmtime, strftime, time
 class Topsis:
     @staticmethod
     def topsis(table, candidates_num, specs_num, specs_weight):
-        start_time = time()
+        start_time = int(round(time() * 1000))
 
         normal = table[:]
         normal_weight = specs_weight.copy()
@@ -60,7 +60,7 @@ class Topsis:
         for candidate in range(0, candidates_num):
             similarity.append(dist_worst[candidate] / (dist_worst[candidate] + dist_best[candidate]))
 
-        total_time = time()-start_time
+        total_time = int(round(time() * 1000)) - start_time
 
         return {"result": similarity, "time": total_time}
 
@@ -80,7 +80,7 @@ candidates = {0: "honda",
               }
 
 test1 = Topsis.topsis(table, 4, 4, weight)
-print(test1["result"], "in", strftime("%H:%M:%S", gmtime(test1["time"])))
+print(test1["result"], "in", strftime("%H:%M:%S:{}".format(test1["time"]%1000), gmtime(test1["time"]/1000.0)))
 
 table2 = [[250, 200, 300, 275, 225],
           [16, 16, 32, 32, 16],
@@ -98,4 +98,4 @@ candidates2 = {0: "ph1",
                }
 
 test1 = Topsis.topsis(table2, 5, 4, weight2)
-print(test1["result"], "in", strftime("%H:%M:%S", gmtime(test1["time"])))
+print(test1["result"], "in", strftime("%H:%M:%S:{}".format(test1["time"]%1000), gmtime(test1["time"]/1000.0)))
