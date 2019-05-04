@@ -492,7 +492,7 @@ print("worked for", strftime("%H:%M:%S", gmtime(total_time)))
 
 save_obj(makers, "db")
 
-with open('test.csv', 'w') as f:
+with open('phoneDB.csv', 'w') as f:
     printout = "brand,model"
     rand_brand = random.choice(list(makers))
     rand_model = random.choice(list(makers[rand_brand]["models"]))
