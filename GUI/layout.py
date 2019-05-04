@@ -417,7 +417,7 @@ class main_dialog ( wx.Frame ):
 
 				specs.Add(self.rule[i], 0, wx.ALL, 5)
 
-				self.value.append(wx.TextCtrl(self.specs_scroll, wx.ID_ANY, "no value", wx.DefaultPosition, wx.DefaultSize, 0))
+				self.value.append(wx.TextCtrl(self.specs_scroll, wx.ID_ANY, "N/A", wx.DefaultPosition, wx.DefaultSize, 0))
 				self.value[i].SetMaxLength(10)
 				self.value[i].Enable(False)
 

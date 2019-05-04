@@ -29,8 +29,8 @@ class MainFrame(lay.main_dialog):
         if target == "Children":
             criteria_weight = [5, 4, 3, 3, 4, 1, 1, 5, 5, 5, 4, 2, 4, 4, 4, 4, 4, 4, 2, 1, 1, 1, 2, 5, 3, 5, 5, 5, 4]
 
-            # 0 highest better/boollean/constant, 1 lowest/not important, 2 optimal, 4 not important
-            criteria_rule = [0, 0, 2, 2, 1, 4, 1, 2, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0]
+            # 0 highest better/boollean/constant, 1 lowest/not important, 2 optimal, 3 not important
+            criteria_rule = [0, 0, 2, 2, 1, 3, 1, 2, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0]
             for i in range(1, 30):
                 self.rule[i].Enable(False)
                 self.weight[i].Enable(False)
@@ -72,8 +72,8 @@ class MainFrame(lay.main_dialog):
         elif target == "Hi-Tech Employee":
             criteria_weight = [5, 5, 3, 3, 4, 4, 3, 4, 5, 4, 4, 5, 5, 5, 5, 5, 5, 5, 2, 1, 3, 3, 4, 5, 4, 1, 2, 5, 4]
 
-            # 0 highest better/boollean/constant, 1 lowest/not important, 2 optimal, 4 not important
-            criteria_rule = [0, 0, 2, 2, 1, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0, 0, 0]
+            # 0 highest better/boollean/constant, 1 lowest/not important, 2 optimal, 3 not important
+            criteria_rule = [0, 0, 2, 2, 1, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0, 0, 0]
             for i in range(1, 30):
                 self.rule[i].Enable(False)
                 self.weight[i].Enable(False)
@@ -115,8 +115,8 @@ class MainFrame(lay.main_dialog):
         elif target == "Pensioners":
             criteria_weight = [5, 2, 4, 4, 4, 1, 1, 5, 3, 1, 1, 5, 5, 1, 4, 4, 4, 4, 4, 5, 4, 2, 1, 5, 1, 5, 5, 5, 3]
 
-            # 0 highest better/boollean/constant, 1 lowest/not important, 2 optimal, 4 not important
-            criteria_rule = [0, 0, 2, 2, 1, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 4, 0, 0, 0, 0]
+            # 0 highest better/boollean/constant, 1 lowest/not important, 2 optimal, 3 not important
+            criteria_rule = [0, 0, 2, 2, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 3, 0, 0, 0, 0]
             for i in range(1, 30):
                 self.rule[i].Enable(False)
                 self.weight[i].Enable(False)
@@ -178,7 +178,10 @@ class MainFrame(lay.main_dialog):
         print((target))
 
     def reset(self, event):
-        self.name2.SetLabelText("reset")
+        self.target_choise.SetSelection(0)
+        self.borda.SetValue(True)
+        self.borda_click(0)
+        self.target_refresh()
 
     def rule_select(self, event):
         print(self.Id)

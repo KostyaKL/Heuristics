@@ -1,6 +1,3 @@
-# cpu no data = 1 or 0
-# ram above 12 or no data = 0
-
 class TableOfPhones:
     num_of_specs = 29
     num_of_phones = 9000
