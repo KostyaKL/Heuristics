@@ -167,7 +167,7 @@ class main_dialog ( wx.Frame ):
 						["Screen Size", ""],
 						["Screen Resolution", ""],
 						["Operating System", "constant"],
-						["No. of CPU Cores", "constant"],
+						["No. of CPU Cores", ""],
 						["SD Card Option", "boolean"],
 						["Max SD Card Size", ""],
 						["RAM", ""],
@@ -192,16 +192,190 @@ class main_dialog ( wx.Frame ):
 		self.constant_rule_choice = ["Constant Scale", "Not Important"]
 		self.spec_weight_choice = ["1", "2", "3", "4", "5"]
 
+		sim_container = wx.FlexGridSizer(4, 2, 0, 0)
+		sim_container.SetFlexibleDirection(wx.BOTH)
+		sim_container.SetNonFlexibleGrowMode(wx.FLEX_GROWMODE_SPECIFIED)
+
+		self.nano_sim = wx.StaticText(self.specs_scroll, wx.ID_ANY, u"Nano", wx.DefaultPosition,
+											wx.DefaultSize, 0)
+		self.nano_sim.Wrap(-1)
+
+		sim_container.Add(self.nano_sim, 0, wx.ALL, 5)
+
+		sim_choice = ["1", "2", "3", "4"]
+		self.nano_choice = wx.Choice(self.specs_scroll, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, sim_choice, 0)
+		self.nano_choice.SetSelection(0)
+		self.nano_choice.Enable(False)
+		sim_container.Add(self.nano_choice, 0, wx.ALL, 5)
+
+		self.micro_sim = wx.StaticText(self.specs_scroll, wx.ID_ANY, u"Micro", wx.DefaultPosition,
+											wx.DefaultSize, 0)
+		self.micro_sim.Wrap(-1)
+
+		sim_container.Add(self.micro_sim, 0, wx.ALL, 5)
+
+		self.micro_choice = wx.Choice(self.specs_scroll, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, sim_choice,
+								   0)
+		self.micro_choice.SetSelection(0)
+		self.micro_choice.Enable(False)
+		sim_container.Add(self.micro_choice, 0, wx.ALL, 5)
+
+		self.mini_sim = wx.StaticText(self.specs_scroll, wx.ID_ANY, u"Mini", wx.DefaultPosition,
+											wx.DefaultSize, 0)
+		self.mini_sim.Wrap(-1)
+
+		sim_container.Add(self.mini_sim, 0, wx.ALL, 5)
+
+		self.mini_choice = wx.Choice(self.specs_scroll, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, sim_choice,
+								   0)
+		self.mini_choice.SetSelection(0)
+		self.mini_choice.Enable(False)
+		sim_container.Add(self.mini_choice, 0, wx.ALL, 5)
+
+		self.full_sim = wx.StaticText(self.specs_scroll, wx.ID_ANY, u"Full", wx.DefaultPosition,
+									  wx.DefaultSize, 0)
+		self.full_sim.Wrap(-1)
+
+		sim_container.Add(self.full_sim, 0, wx.ALL, 5)
+
+		self.full_choice = wx.Choice(self.specs_scroll, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, sim_choice,
+								   0)
+		self.full_choice.SetSelection(0)
+		self.full_choice.Enable(False)
+		sim_container.Add(self.full_choice, 0, wx.ALL, 5)
+
+		#specs.Add(sim_container, 1, wx.EXPAND, 5)
+
+		op_container = wx.FlexGridSizer(6, 2, 0, 0)
+		op_container.SetFlexibleDirection(wx.BOTH)
+		op_container.SetNonFlexibleGrowMode(wx.FLEX_GROWMODE_SPECIFIED)
+
+		self.android_op = wx.StaticText(self.specs_scroll, wx.ID_ANY, u"Android", wx.DefaultPosition,
+									  wx.DefaultSize, 0)
+		self.android_op.Wrap(-1)
+
+		op_container.Add(self.android_op, 0, wx.ALL, 5)
+
+		op_choice = ["1", "2", "3", "4", "5", "6"]
+		self.android_choice = wx.Choice(self.specs_scroll, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, op_choice, 0)
+		self.android_choice.SetSelection(0)
+		self.android_choice.Enable(False)
+		op_container.Add(self.android_choice, 0, wx.ALL, 5)
+
+		self.apple_op = wx.StaticText(self.specs_scroll, wx.ID_ANY, u"Apple", wx.DefaultPosition,
+									   wx.DefaultSize, 0)
+		self.apple_op.Wrap(-1)
+
+		op_container.Add(self.apple_op, 0, wx.ALL, 5)
+
+		self.apple_choice = wx.Choice(self.specs_scroll, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, op_choice,
+									  0)
+		self.apple_choice.SetSelection(0)
+		self.apple_choice.Enable(False)
+		op_container.Add(self.apple_choice, 0, wx.ALL, 5)
+
+		self.microsoft_op = wx.StaticText(self.specs_scroll, wx.ID_ANY, u"Microsoft", wx.DefaultPosition,
+									  wx.DefaultSize, 0)
+		self.microsoft_op.Wrap(-1)
+
+		op_container.Add(self.microsoft_op, 0, wx.ALL, 5)
+
+		self.microsoft_choice = wx.Choice(self.specs_scroll, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, op_choice,
+									 0)
+		self.microsoft_choice.SetSelection(0)
+		self.microsoft_choice.Enable(False)
+		op_container.Add(self.microsoft_choice, 0, wx.ALL, 5)
+
+		self.blackberry_op = wx.StaticText(self.specs_scroll, wx.ID_ANY, u"Blackberry", wx.DefaultPosition,
+									  wx.DefaultSize, 0)
+		self.blackberry_op.Wrap(-1)
+
+		op_container.Add(self.blackberry_op, 0, wx.ALL, 5)
+
+		self.blackberry_choice = wx.Choice(self.specs_scroll, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, op_choice,
+									 0)
+		self.blackberry_choice.SetSelection(0)
+		self.blackberry_choice.Enable(False)
+		op_container.Add(self.blackberry_choice, 0, wx.ALL, 5)
+
+		self.firefox_op = wx.StaticText(self.specs_scroll, wx.ID_ANY, u"Firefox", wx.DefaultPosition,
+									  wx.DefaultSize, 0)
+		self.firefox_op.Wrap(-1)
+
+		op_container.Add(self.firefox_op, 0, wx.ALL, 5)
+
+		self.firefox_choice = wx.Choice(self.specs_scroll, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, op_choice,
+									 0)
+		self.firefox_choice.SetSelection(0)
+		self.firefox_choice.Enable(False)
+		op_container.Add(self.firefox_choice, 0, wx.ALL, 5)
+
+		self.symbian_op = wx.StaticText(self.specs_scroll, wx.ID_ANY, u"Symbian", wx.DefaultPosition,
+									  wx.DefaultSize, 0)
+		self.symbian_op.Wrap(-1)
+
+		op_container.Add(self.symbian_op, 0, wx.ALL, 5)
+
+		self.symbian_choice = wx.Choice(self.specs_scroll, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, op_choice,
+									 0)
+		self.symbian_choice.SetSelection(0)
+		self.symbian_choice.Enable(False)
+		op_container.Add(self.symbian_choice, 0, wx.ALL, 5)
+
+		# specs.Add(op_container, 1, wx.EXPAND, 5)
+
+		usb_container = wx.FlexGridSizer(3, 2, 0, 0)
+		usb_container.SetFlexibleDirection(wx.BOTH)
+		usb_container.SetNonFlexibleGrowMode(wx.FLEX_GROWMODE_SPECIFIED)
+
+		self.type_c_usb = wx.StaticText(self.specs_scroll, wx.ID_ANY, u"Type C / iPhone", wx.DefaultPosition,
+										wx.DefaultSize, 0)
+		self.type_c_usb.Wrap(-1)
+
+		usb_container.Add(self.type_c_usb, 0, wx.ALL, 5)
+
+		usb_choice = ["1", "2", "3"]
+		self.type_c_choice = wx.Choice(self.specs_scroll, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, usb_choice, 0)
+		self.type_c_choice.SetSelection(0)
+		self.type_c_choice.Enable(False)
+		usb_container.Add(self.type_c_choice, 0, wx.ALL, 5)
+
+		self.mini_usb = wx.StaticText(self.specs_scroll, wx.ID_ANY, u"Mini USB", wx.DefaultPosition,
+									  wx.DefaultSize, 0)
+		self.mini_usb.Wrap(-1)
+
+		usb_container.Add(self.mini_usb, 0, wx.ALL, 5)
+
+		self.mini_choice = wx.Choice(self.specs_scroll, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, usb_choice,
+									  0)
+		self.mini_choice.SetSelection(0)
+		self.mini_choice.Enable(False)
+		usb_container.Add(self.mini_choice, 0, wx.ALL, 5)
+
+		self.micro_usb = wx.StaticText(self.specs_scroll, wx.ID_ANY, u"Micro USB", wx.DefaultPosition,
+										  wx.DefaultSize, 0)
+		self.micro_usb.Wrap(-1)
+
+		usb_container.Add(self.micro_usb, 0, wx.ALL, 5)
+
+		self.micro_choice_usb = wx.Choice(self.specs_scroll, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, usb_choice,
+										  0)
+		self.micro_choice_usb.SetSelection(0)
+		self.micro_choice_usb.Enable(False)
+		usb_container.Add(self.micro_choice_usb, 0, wx.ALL, 5)
+
+		# specs.Add(usb_container, 1, wx.EXPAND, 5)
+
 		for i in range(1, 30):
-			self.num.append(wx.StaticText(self.specs_scroll, wx.ID_ANY, str(i), wx.DefaultPosition, wx.DefaultSize, 0))
+			self.num.append(wx.StaticText(self.specs_scroll, wx.ID_ANY, str(i) + "  ", wx.DefaultPosition, wx.DefaultSize, 0))
 			self.num[i].Wrap(-1)
 
-			specs.Add(self.num[i], 0, wx.ALL, 5)
+			specs.Add(self.num[i], 0, wx.ALIGN_CENTER_VERTICAL, wx.ALL, 5)
 
 			self.name.append(wx.StaticText(self.specs_scroll, wx.ID_ANY, self.specs_name[i][0], wx.DefaultPosition, wx.DefaultSize, 0))
 			self.name[i].Wrap(-1)
 
-			specs.Add(self.name[i], 0, wx.ALL, 5)
+			specs.Add(self.name[i], 0, wx.ALIGN_CENTER_VERTICAL, wx.ALL, 5)
 
 			if self.specs_name[i][1] == "boolean":
 				self.rule_choice = self.boolean_rule_choice
@@ -226,10 +400,12 @@ class main_dialog ( wx.Frame ):
 
 				specs.Add(self.rule[i], 0, wx.ALL, 5)
 
-				self.value.append(
-					wx.TextCtrl(self.specs_scroll, wx.ID_ANY, "no value", wx.DefaultPosition, wx.DefaultSize, 0))
-				self.value[i].SetMaxLength(10)
-				self.value[i].Enable(False)
+				if self.specs_name[i][0] == "SIM Card Type":
+					self.value.append(sim_container)
+				elif self.specs_name[i][0] == "Operating System":
+					self.value.append(op_container)
+				elif self.specs_name[i][0] == "Charging Cable Type":
+					self.value.append(usb_container)
 
 				specs.Add(self.value[i], 0, wx.ALL, 5)
 			else:

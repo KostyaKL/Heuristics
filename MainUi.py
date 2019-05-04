@@ -73,6 +73,7 @@ class MainFrame(lay.main_dialog):
         self.name2.SetLabelText("reset")
 
     def rule_select(self, event):
+        print(self.Id)
         print(event)
 
 
