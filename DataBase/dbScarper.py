@@ -351,7 +351,7 @@ def get_specs(brand, model, model_count):
                     if makers[brand]["models"][model]["specs"]["RAM"] > 12:
                         makers[brand]["models"][model]["specs"]["RAM"] = 0
                 except Exception as e:
-                    print(e,15)
+                    #print(e,15)
                     makers[brand]["models"][model]["specs"]["RAM"] = 0
             if parsed.find("data-spec=\"cam1modules\"") >= 0:
                 try:
