@@ -157,11 +157,11 @@ def get_specs(brand, model, model_count):
     makers[brand]["models"][model]["specs"]["cam2MP"] = 0
     makers[brand]["models"][model]["specs"]["cam2video"] = 0
     makers[brand]["models"][model]["specs"]["ir"] = 0
-    makers[brand]["models"][model]["specs"]["radio"] = 0  # todo nee to be checked
+    makers[brand]["models"][model]["specs"]["radio"] = 0  # todo need to be checked
     makers[brand]["models"][model]["specs"]["usb"] = 0  # 1 type c/iphone, 2 mini, 3 micro, 0 else
     makers[brand]["models"][model]["specs"]["nfc"] = 0
     makers[brand]["models"][model]["specs"]["fingerprint"] = 0
-    makers[brand]["models"][model]["specs"]["price"] = no_data  # todo need to be dealt with
+    makers[brand]["models"][model]["specs"]["price"] = 0  # todo need to be dealt with
     makers[brand]["models"][model]["specs"]["basemark"] = 0
     makers[brand]["models"][model]["specs"]["loudspeaker"] = 0
     makers[brand]["models"][model]["specs"]["audioquality"] = 0
@@ -338,6 +338,10 @@ def get_specs(brand, model, model_count):
             if parsed.find("data-spec=\"radio\"") >= 0:
                 try:
                     makers[brand]["models"][model]["specs"]["radio"] = parsed[parsed.find(">") + 1:parsed.find("</")]
+                    if makers[brand]["models"][model]["specs"]["radio"].find("Radio") >= 0 or makers[brand]["models"][model]["specs"]["radio"].find("radio") >=0:
+                        makers[brand]["models"][model]["specs"]["radio"] = 1
+                    else:
+                        makers[brand]["models"][model]["specs"]["radio"] = 0
                 except:
                     makers[brand]["models"][model]["specs"]["radio"] = 0
             if parsed.find("data-spec=\"usb\"") >= 0:
@@ -359,11 +363,19 @@ def get_specs(brand, model, model_count):
                 makers[brand]["models"][model]["specs"]["nfc"] = 1
             if parsed.find("data-spec=\"price\"") >= 0:
                 try:
-                    makers[brand]["models"][model]["specs"]["price"] = parsed[
-                                                                       parsed.find(">About ") + 7:parsed.find("</")]
-                    # parsed[parsed.find(">About ") + 7:parsed.find(" ", parsed.find(">About ") + 7)])
+                    makers[brand]["models"][model]["specs"]["price"] = parsed[parsed.find(">About ") + 7:parsed.find("</")]
+                    price = parsed[parsed.find(">About ") + 7:parsed.find(" ", parsed.find(">About ") + 7)]
+                    currency = makers[brand]["models"][model]["specs"]["price"]
+                    if currency.find("USD") >= 0:
+                        makers[brand]["models"][model]["specs"]["price"] = price
+                    elif currency.find("EUR") >= 0:
+                        makers[brand]["models"][model]["specs"]["price"] = int(price) * 1.12
+                    elif currency.find("INR") >= 0:
+                        makers[brand]["models"][model]["specs"]["price"] = int(price) * 0.014
+                    else:
+                        makers[brand]["models"][model]["specs"]["price"] = 0
                 except:
-                    makers[brand]["models"][model]["specs"]["price"] = no_data
+                    makers[brand]["models"][model]["specs"]["price"] = 0
             if parsed.find("Basemark X: ") >= 0:
                 try:
                     makers[brand]["models"][model]["specs"]["basemark"] = int(
@@ -442,7 +454,7 @@ print(strftime("%d-%m-%Y %H:%M:%S", gmtime()))
 
 print("not connected:", not_connected)
 
-print("expected", sum(int(makers[brand]["count"]) for brand in makers), "models, acquired",
+print("expected", sum(int(makers[brand]["count"]) for brand in makers), "models, number of models", model_count.get_models() ,"acquired",
       model_count.get_acquired())
 
 end_time = time()
