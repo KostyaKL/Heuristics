@@ -258,7 +258,7 @@ class main_dialog ( wx.Frame ):
 
 		op_choice = ["1", "2", "3", "4", "5", "6"]
 		self.android_choice = wx.Choice(self.specs_scroll, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, op_choice, 0)
-		self.android_choice.SetSelection(0)
+		self.android_choice.SetSelection(5)
 		self.android_choice.Enable(False)
 		op_container.Add(self.android_choice, 0, wx.ALL, 5)
 
@@ -270,7 +270,7 @@ class main_dialog ( wx.Frame ):
 
 		self.apple_choice = wx.Choice(self.specs_scroll, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, op_choice,
 									  0)
-		self.apple_choice.SetSelection(0)
+		self.apple_choice.SetSelection(4)
 		self.apple_choice.Enable(False)
 		op_container.Add(self.apple_choice, 0, wx.ALL, 5)
 
@@ -282,7 +282,7 @@ class main_dialog ( wx.Frame ):
 
 		self.microsoft_choice = wx.Choice(self.specs_scroll, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, op_choice,
 									 0)
-		self.microsoft_choice.SetSelection(0)
+		self.microsoft_choice.SetSelection(3)
 		self.microsoft_choice.Enable(False)
 		op_container.Add(self.microsoft_choice, 0, wx.ALL, 5)
 
@@ -294,7 +294,7 @@ class main_dialog ( wx.Frame ):
 
 		self.blackberry_choice = wx.Choice(self.specs_scroll, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, op_choice,
 									 0)
-		self.blackberry_choice.SetSelection(0)
+		self.blackberry_choice.SetSelection(2)
 		self.blackberry_choice.Enable(False)
 		op_container.Add(self.blackberry_choice, 0, wx.ALL, 5)
 
@@ -318,7 +318,7 @@ class main_dialog ( wx.Frame ):
 
 		self.symbian_choice = wx.Choice(self.specs_scroll, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, op_choice,
 									 0)
-		self.symbian_choice.SetSelection(0)
+		self.symbian_choice.SetSelection(1)
 		self.symbian_choice.Enable(False)
 		op_container.Add(self.symbian_choice, 0, wx.ALL, 5)
 
@@ -336,7 +336,7 @@ class main_dialog ( wx.Frame ):
 
 		usb_choice = ["1", "2", "3"]
 		self.type_c_choice = wx.Choice(self.specs_scroll, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, usb_choice, 0)
-		self.type_c_choice.SetSelection(0)
+		self.type_c_choice.SetSelection(2)
 		self.type_c_choice.Enable(False)
 		usb_container.Add(self.type_c_choice, 0, wx.ALL, 5)
 
@@ -346,11 +346,11 @@ class main_dialog ( wx.Frame ):
 
 		usb_container.Add(self.mini_usb, 0, wx.ALL, 5)
 
-		self.mini_choice = wx.Choice(self.specs_scroll, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, usb_choice,
+		self.mini_choice_usb = wx.Choice(self.specs_scroll, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, usb_choice,
 									  0)
-		self.mini_choice.SetSelection(0)
-		self.mini_choice.Enable(False)
-		usb_container.Add(self.mini_choice, 0, wx.ALL, 5)
+		self.mini_choice_usb.SetSelection(0)
+		self.mini_choice_usb.Enable(False)
+		usb_container.Add(self.mini_choice_usb, 0, wx.ALL, 5)
 
 		self.micro_usb = wx.StaticText(self.specs_scroll, wx.ID_ANY, u"Micro USB", wx.DefaultPosition,
 										  wx.DefaultSize, 0)
@@ -360,7 +360,7 @@ class main_dialog ( wx.Frame ):
 
 		self.micro_choice_usb = wx.Choice(self.specs_scroll, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, usb_choice,
 										  0)
-		self.micro_choice_usb.SetSelection(0)
+		self.micro_choice_usb.SetSelection(1)
 		self.micro_choice_usb.Enable(False)
 		usb_container.Add(self.micro_choice_usb, 0, wx.ALL, 5)
 
@@ -385,7 +385,7 @@ class main_dialog ( wx.Frame ):
 
 				specs.Add(self.rule[i], 0, wx.ALL, 5)
 
-				boolean_chice = ["Yes", "No"]
+				boolean_chice = ["Good", "Bad"]
 				self.value.append(wx.Choice(self.specs_scroll, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, boolean_chice, 0))
 				self.value[i].SetSelection(0)
 				self.value[i].Enable(False)
