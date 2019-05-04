@@ -37,6 +37,8 @@ class TableOfPhones:
         28: "waterproof"
     }
 
+    rule_dict = []
+
     def __init__(self, db, target):
         i = 0
         for brand in db:

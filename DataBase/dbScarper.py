@@ -157,11 +157,11 @@ def get_specs(brand, model, model_count):
     makers[brand]["models"][model]["specs"]["cam2MP"] = 0
     makers[brand]["models"][model]["specs"]["cam2video"] = 0
     makers[brand]["models"][model]["specs"]["ir"] = 0
-    makers[brand]["models"][model]["specs"]["radio"] = 0  # todo need to be checked
+    makers[brand]["models"][model]["specs"]["radio"] = 0
     makers[brand]["models"][model]["specs"]["usb"] = 0  # 1 type c/iphone, 2 mini, 3 micro, 0 else
     makers[brand]["models"][model]["specs"]["nfc"] = 0
     makers[brand]["models"][model]["specs"]["fingerprint"] = 0
-    makers[brand]["models"][model]["specs"]["price"] = 0  # todo need to be dealt with
+    makers[brand]["models"][model]["specs"]["price"] = 0
     makers[brand]["models"][model]["specs"]["basemark"] = 0
     makers[brand]["models"][model]["specs"]["loudspeaker"] = 0
     makers[brand]["models"][model]["specs"]["audioquality"] = 0
@@ -314,7 +314,7 @@ def get_specs(brand, model, model_count):
                     elif makers[brand]["models"][model]["specs"]["cpu"].find("Dual") >= 0:
                         makers[brand]["models"][model]["specs"]["cpu"] = 2
                     else:
-                        makers[brand]["models"][model]["specs"]["os"] = 1
+                        makers[brand]["models"][model]["specs"]["cpu"] = 1
                 except Exception as e:
                     print(e,12)
                     makers[brand]["models"][model]["specs"]["cpu"] = no_data
@@ -355,28 +355,28 @@ def get_specs(brand, model, model_count):
                     makers[brand]["models"][model]["specs"]["cam1MP"] = int(
                         parsed[parsed.find(">") + 1:parsed.find(" MP")])
                 except Exception as e:
-                    print(e,16)
+                    # print(e,16)
                     makers[brand]["models"][model]["specs"]["cam1MP"] = 0
             if parsed.find("data-spec=\"cam1video\"") >= 0:
                 try:
                     makers[brand]["models"][model]["specs"]["cam1video"] = int(
                         parsed[parsed.find(">") + 1:parsed.find("p", parsed.find(">"))])
                 except Exception as e:
-                    print(e,17)
+                    # print(e,17)
                     makers[brand]["models"][model]["specs"]["cam1video"] = 0
             if parsed.find("data-spec=\"cam2modules\"") >= 0:
                 try:
                     makers[brand]["models"][model]["specs"]["cam2MP"] = int(
                         parsed[parsed.find(">") + 1:parsed.find(" MP")])
                 except Exception as e:
-                    print(e,18)
+                    # print(e,18)
                     makers[brand]["models"][model]["specs"]["cam2MP"] = 0
             if parsed.find("data-spec=\"cam2video\"") >= 0:
                 try:
                     makers[brand]["models"][model]["specs"]["cam2video"] = int(
                         parsed[parsed.find(">") + 1:parsed.find("p@")])
                 except Exception as e:
-                    print(e,19)
+                    # print(e,19)
                     makers[brand]["models"][model]["specs"]["cam2video"] = 0
             if parsed.find(">Infrared port<") >= 0:
                 makers[brand]["models"][model]["specs"]["radio"] = 1

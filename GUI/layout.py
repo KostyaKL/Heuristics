@@ -9,6 +9,7 @@
 
 import wx
 import wx.xrc
+import wx.adv
 
 ###########################################################################
 ## Class main_dialog
@@ -58,8 +59,8 @@ class main_dialog ( wx.Frame ):
 
 		targets.Add( self.target_label, 0, wx.ALL, 5 )
 
-		target_choiseChoices = [ u"Children", u"Hi-Tech Employee", u"Pensioners", u"Custom" ]
-		self.target_choise = wx.Choice( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, target_choiseChoices, 0 )
+		self.target_choiseChoices = ["Children", "Hi-Tech Employee", "Pensioners", "Custom"]
+		self.target_choise = wx.Choice( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, self.target_choiseChoices, 0 )
 		self.target_choise.SetSelection( 0 )
 		targets.Add( self.target_choise, 0, wx.ALL, 5 )
 
@@ -187,7 +188,7 @@ class main_dialog ( wx.Frame ):
 						["Water Resistant", "boolean"]
 		]
 		self.common_rule_choice = ["Highest Better", "Lowest Better", "Optimal Value", "Not Important"]
-		self.boolean_rule_choice = ["Yes/No", "Not Important"]
+		self.boolean_rule_choice = ["Boolean", "Not Important"]
 		self.constant_rule_choice = ["Constant Scale", "Not Important"]
 		self.spec_weight_choice = ["1", "2", "3", "4", "5"]
 
@@ -204,22 +205,46 @@ class main_dialog ( wx.Frame ):
 
 			if self.specs_name[i][1] == "boolean":
 				self.rule_choice = self.boolean_rule_choice
+				self.rule.append(wx.Choice(self.specs_scroll, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, self.rule_choice, 0))
+				self.rule[i].SetSelection(0)
+				self.rule[i].Enable(False)
+
+				specs.Add(self.rule[i], 0, wx.ALL, 5)
+
+				boolean_chice = ["Yes", "No"]
+				self.value.append(wx.Choice(self.specs_scroll, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, boolean_chice, 0))
+				self.value[i].SetSelection(0)
+				self.value[i].Enable(False)
+
+				specs.Add(self.value[i], 0, wx.ALL, 5)
 			elif self.specs_name[i][1] == "constant":
 				self.rule_choice = self.constant_rule_choice
+				self.rule.append(
+					wx.Choice(self.specs_scroll, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, self.rule_choice, 0))
+				self.rule[i].SetSelection(0)
+				self.rule[i].Enable(False)
+
+				specs.Add(self.rule[i], 0, wx.ALL, 5)
+
+				self.value.append(
+					wx.TextCtrl(self.specs_scroll, wx.ID_ANY, "no value", wx.DefaultPosition, wx.DefaultSize, 0))
+				self.value[i].SetMaxLength(10)
+				self.value[i].Enable(False)
+
+				specs.Add(self.value[i], 0, wx.ALL, 5)
 			else:
 				self.rule_choice = self.common_rule_choice
+				self.rule.append(wx.Choice(self.specs_scroll, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, self.rule_choice, 0))
+				self.rule[i].SetSelection(0)
+				self.rule[i].Enable(False)
 
-			self.rule.append(wx.Choice(self.specs_scroll, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, self.rule_choice, 0))
-			self.rule[i].SetSelection(0)
-			self.rule[i].Enable(False)
+				specs.Add(self.rule[i], 0, wx.ALL, 5)
 
-			specs.Add(self.rule[i], 0, wx.ALL, 5)
+				self.value.append(wx.TextCtrl(self.specs_scroll, wx.ID_ANY, "no value", wx.DefaultPosition, wx.DefaultSize, 0))
+				self.value[i].SetMaxLength(10)
+				self.value[i].Enable(False)
 
-			self.value.append(wx.TextCtrl(self.specs_scroll, wx.ID_ANY, "no value", wx.DefaultPosition, wx.DefaultSize, 0))
-			self.value[i].SetMaxLength(10)
-			self.value[i].Enable(False)
-
-			specs.Add(self.value[i], 0, wx.ALL, 5)
+				specs.Add(self.value[i], 0, wx.ALL, 5)
 
 			self.weight.append(wx.Choice(self.specs_scroll, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, self.spec_weight_choice, 0))
 			self.weight[i].SetSelection(0)
@@ -256,8 +281,7 @@ class main_dialog ( wx.Frame ):
 
 		top_5.Add( self.label1, 0, wx.ALL, 5 )
 
-		self.name1 = wx.StaticText( self.res_scroll, wx.ID_ANY, u"phone name", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.name1.Wrap( -1 )
+		self.name1 = wx.adv.HyperlinkCtrl( self.res_scroll, wx.ID_ANY, u"phone name", "", wx.DefaultPosition, wx.DefaultSize, wx.adv.HL_DEFAULT_STYLE)
 
 		top_5.Add( self.name1, 0, wx.ALL, 5 )
 
@@ -269,8 +293,7 @@ class main_dialog ( wx.Frame ):
 
 		top_5.Add( self.label2, 0, wx.ALL, 5 )
 
-		self.name2 = wx.StaticText( self.res_scroll, wx.ID_ANY, u"phone name", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.name2.Wrap( -1 )
+		self.name2 = wx.adv.HyperlinkCtrl( self.res_scroll, wx.ID_ANY, u"phone name", "", wx.DefaultPosition, wx.DefaultSize, wx.adv.HL_DEFAULT_STYLE)
 
 		top_5.Add( self.name2, 0, wx.ALL, 5 )
 
@@ -282,8 +305,7 @@ class main_dialog ( wx.Frame ):
 
 		top_5.Add( self.label3, 0, wx.ALL, 5 )
 
-		self.name3 = wx.StaticText( self.res_scroll, wx.ID_ANY, u"phone name", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.name3.Wrap( -1 )
+		self.name3 = wx.adv.HyperlinkCtrl( self.res_scroll, wx.ID_ANY, u"phone name", "", wx.DefaultPosition, wx.DefaultSize, wx.adv.HL_DEFAULT_STYLE)
 
 		top_5.Add( self.name3, 0, wx.ALL, 5 )
 
@@ -295,8 +317,7 @@ class main_dialog ( wx.Frame ):
 
 		top_5.Add( self.label4, 0, wx.ALL, 5 )
 
-		self.name4 = wx.StaticText( self.res_scroll, wx.ID_ANY, u"phone name", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.name4.Wrap( -1 )
+		self.name4 = wx.adv.HyperlinkCtrl( self.res_scroll, wx.ID_ANY, u"phone name", "", wx.DefaultPosition, wx.DefaultSize, wx.adv.HL_DEFAULT_STYLE)
 
 		top_5.Add( self.name4, 0, wx.ALL, 5 )
 
@@ -308,8 +329,7 @@ class main_dialog ( wx.Frame ):
 
 		top_5.Add( self.label5, 0, wx.ALL, 5 )
 
-		self.name5 = wx.StaticText( self.res_scroll, wx.ID_ANY, u"phone name", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.name5.Wrap( -1 )
+		self.name5 = wx.adv.HyperlinkCtrl( self.res_scroll, wx.ID_ANY, u"phone name", "", wx.DefaultPosition, wx.DefaultSize, wx.adv.HL_DEFAULT_STYLE)
 
 		top_5.Add( self.name5, 0, wx.ALL, 5 )
 
@@ -333,7 +353,35 @@ class main_dialog ( wx.Frame ):
 
 		self.Centre( wx.BOTH )
 
-	def __del__( self ):
+		# Connect Events
+		self.borda.Bind(wx.EVT_RADIOBUTTON, self.borda_click)
+		self.topsis.Bind(wx.EVT_RADIOBUTTON, self.topsis_click)
+		self.target_choise.Bind( wx.EVT_CHOICE, self.target_select)
+		self.calc_btn.Bind(wx.EVT_BUTTON, self.calc)
+		self.rst_btn.Bind(wx.EVT_BUTTON, self.reset)
+		for i in range(1, 30):
+			self.rule[i].Bind(wx.EVT_CHOICE, self.rule_select)
+
+	def __del__(self):
 		pass
+
+	# Virtual event handlers, overide them in your derived class
+	def borda_click(self, event):
+		event.Skip()
+
+	def topsis_click(self, event):
+		event.Skip()
+
+	def target_select(self, event):
+		event.Skip()
+
+	def calc(self, event):
+		event.Skip()
+
+	def reset(self, event):
+		event.Skip()
+
+	def rule_select(self, event):
+		event.Skip()
 
 
