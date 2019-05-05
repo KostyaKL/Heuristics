@@ -1,8 +1,11 @@
 import itertools
 import threading
+import urllib.request
 
 import wx
 import wx.xrc
+from PIL import Image
+
 from GUI import layout as lay
 from time import strftime, gmtime
 
@@ -180,9 +183,9 @@ class MainFrame(lay.main_dialog):
         progg.Pulse()
 
         if self.borda.GetValue() is True:
-            algo = "borda"
+            algo = "Borda"
         else:
-            algo = "topsis"
+            algo = "TOPSIS"
 
         target = self.target_choiseChoices[self.target_choise.GetSelection()]
 
@@ -190,10 +193,10 @@ class MainFrame(lay.main_dialog):
         db = dbScarper.load_obj("DataBase/db")
         table = TableOfPhones.TableOfPhones(db, target)
 
-        if algo == "borda":
+        if algo == "Borda":
             from Algorithms import BordaAlgo
             result = BordaAlgo.Borda.borda(table.table, table.num_of_phones, table.num_of_specs)
-        elif algo == "topsis":
+        elif algo == "TOPSIS":
             from Algorithms import TopsisAlgo
             result = TopsisAlgo.Topsis.topsis(table.table, table.num_of_phones, table.num_of_specs, table.criteria_weight)
 
@@ -208,14 +211,22 @@ class MainFrame(lay.main_dialog):
             self.res_phone[i].SetLabelText(top_candidate[i-1]["brand"] + " " + top_candidate[i-1]["model"])
             self.res_phone[i].SetURL(db[top_candidate[i-1]["brand"]]["models"][top_candidate[i-1]["model"]]["url"])
 
+            img_url = db[top_candidate[i-1]["brand"]]["models"][top_candidate[i-1]["model"]]["img"]
+
+            with urllib.request.urlopen(img_url) as url:
+                with open('temp.jpg', 'wb') as f:
+                    f.write(url.read())
+
+            img = wx.Image('temp.jpg').ConvertToBitmap()
+
+            self.res_img[i].SetBitmap(wx.Bitmap(img))
+
             print(top_candidate[i-1]["brand"], top_candidate[i-1]["model"], "|- Rank:", top_candidate[i-1]["rank"])
 
-        algo_time = strftime("%H:%M:%S:{}".format(result["time"]%1000), gmtime(result["time"]/1000.0))
-        self.result_time.SetLabelText("After " + algo_time)
+        algo_time = strftime("%H:%M:%S:{}".format(result["time"] % 1000), gmtime(result["time"]/1000.0))
+        self.result_time.SetLabelText(algo + " Finished After " + algo_time)
         self.result_time.Show()
         self.Layout()
-
-        self.done = True
 
         progg.Destroy()
 
@@ -228,6 +239,7 @@ class MainFrame(lay.main_dialog):
         for i in range(1,6):
             self.res_phone[i].SetLabelText("Phone Name")
             self.res_phone[i].SetURL("")
+            self.res_img[i].SetBitmap(wx.NullBitmap)
 
         self.result_time.Hide()
         self.Layout()
