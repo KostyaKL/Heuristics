@@ -29,7 +29,8 @@ class main_dialog ( wx.Frame ):
 
 		options = wx.BoxSizer( wx.HORIZONTAL )
 
-		self.m_bitmap6 = wx.StaticBitmap( self, wx.ID_ANY, wx.NullBitmap, wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.topBullet = wx.Image("GUI/topBullet.jpg").ConvertToBitmap()
+		self.m_bitmap6 = wx.StaticBitmap( self, wx.ID_ANY, wx.Bitmap(self.topBullet), wx.DefaultPosition, wx.DefaultSize, 0 )
 		options.Add( self.m_bitmap6, 0, wx.ALL, 5 )
 
 		algorithms = wx.BoxSizer( wx.VERTICAL )

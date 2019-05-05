@@ -1,10 +1,7 @@
-import itertools
-import threading
 import urllib.request
 
 import wx
 import wx.xrc
-from PIL import Image
 
 from GUI import layout as lay
 from time import strftime, gmtime
