@@ -237,6 +237,7 @@ class MainFrame(lay.main_dialog):
             self.res_phone[i].SetLabelText("Phone Name")
             self.res_phone[i].SetURL("")
             self.res_img[i].SetBitmap(wx.NullBitmap)
+            self.res_img[i].SetBitmap(wx.Bitmap("GUI/defPhone.png"))
 
         self.result_time.Hide()
         self.Layout()
