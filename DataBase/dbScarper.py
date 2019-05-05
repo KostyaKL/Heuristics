@@ -9,8 +9,6 @@ makers = {}
 
 not_connected = []
 
-source = None
-
 
 class ModelCount:
     count = 0
@@ -54,7 +52,7 @@ def load_obj(name):
         return pickle.load(load_file)
 
 
-def get_brands():
+def get_brands(source):
     table = False
     for line in source.iter_lines():
         parsed = str(line, 'utf-8')
@@ -465,7 +463,13 @@ def get_specs(brand, model, model_count):
 
 
 def run_script():
-    source = requests.get(url + "makers.php3")
+    for retry in range(0, 5):
+        try:
+            source = requests.get(url + "makers.php3")
+            break
+        except Exception as e:
+            print("no source -------------------------------------->")
+
 
     # makers = load_obj("db")
 
@@ -475,7 +479,7 @@ def run_script():
 
     model_count = ModelCount()
 
-    get_brands()
+    get_brands(source)
 
     print(strftime("%d-%m-%Y %H:%M:%S", gmtime()))
 
