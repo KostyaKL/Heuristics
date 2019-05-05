@@ -1,10 +1,2 @@
-# todo: GUI description
-# todo: load DB
-# todo: choose algorithm
-# todo: choose target audience: kids, students, hi tech worker, custom
-# todo: custom:
-# todo: for borda ??? set ranking key for each spec
-# todo: for topsis give weight to specs
-
-
-# todo: add time o finish in gui
+# todo: export result to csv
+# todo: add time stamp to database
