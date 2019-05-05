@@ -1,6 +1,6 @@
 class TableOfPhones:
     num_of_specs = 29
-    num_of_phones = 9000
+    num_of_phones = 9600
 
     table = []  # each row is criteria, each column is phone
     criteria_weight = []
@@ -77,15 +77,15 @@ class TableOfPhones:
     @staticmethod
     def optimal_range_grade(spec_value, opt_range):
         try:
-            if opt_range * 0.95 < int(spec_value) <= opt_range * 1.05:
+            if opt_range * 0.90 < int(spec_value) <= opt_range * 1.10:
                 return 5
-            elif opt_range * 0.90 < int(spec_value) <= opt_range * 0.95 or opt_range * 1.05 < int(spec_value) <= opt_range * 1.10:
+            elif opt_range * 0.80 < int(spec_value) <= opt_range * 0.90 or opt_range * 1.10 < int(spec_value) <= opt_range * 1.20:
                 return 4
-            elif opt_range * 0.85 < int(spec_value) <= opt_range * 0.90 or opt_range * 1.10 < int(spec_value) <= opt_range * 1.15:
+            elif opt_range * 0.70 < int(spec_value) <= opt_range * 0.80 or opt_range * 1.20 < int(spec_value) <= opt_range * 1.30:
                 return 3
-            elif opt_range * 0.80 < int(spec_value) <= opt_range * 0.85 or opt_range * 1.15 < int(spec_value) <= opt_range * 1.20:
+            elif opt_range * 0.60 < int(spec_value) <= opt_range * 0.70 or opt_range * 1.30 < int(spec_value) <= opt_range * 1.40:
                 return 2
-            elif int(spec_value) <= opt_range * 0.80 or opt_range * 1.20 < int(spec_value):
+            elif int(spec_value) <= opt_range * 0.60 or opt_range * 1.40 < int(spec_value):
                 return 1
             else:
                 return 1
@@ -95,6 +95,8 @@ class TableOfPhones:
     @staticmethod
     def lowest_better_grade(spec_value):
         try:
+            if spec_value == 0:
+                return 1
             return 10000000 - int(spec_value)
         except:
             return 1

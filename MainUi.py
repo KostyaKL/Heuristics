@@ -1,3 +1,4 @@
+import random
 import urllib.request
 
 import wx
@@ -222,6 +223,23 @@ class MainFrame(lay.main_dialog):
             self.res_img[i].SetBitmap(wx.Bitmap(img))
 
             # print(top_candidate[i-1]["brand"], top_candidate[i-1]["model"], "|- Rank:", top_candidate[i-1]["rank"])
+
+        # for debugging
+        # with open('table.csv', 'w') as f:
+        #     printout = "spec"
+        #     for i in range(0, table.num_of_specs):
+        #         printout = printout + "," + table.specs_dict[i]
+        #     printout = printout + "," + strftime("%d-%m-%Y %H:%M:%S", gmtime())
+        #     f.write(printout + "\n")
+        #     for j in range(0, table.num_of_phones):
+        #         printout = table.candidate_dict[j]["brand"] + " " + table.candidate_dict[j]["model"]
+        #         for i in range(0, table.num_of_specs):
+        #             tmp = str(table.table[i][j])
+        #             if tmp.find(",") >= 0:
+        #                 tmp = "\"" + tmp + "\""
+        #             printout = printout + "," + tmp
+        #         f.write(printout + "\n")
+        # for debugging
 
         algo_time = strftime("{}".format(result["time"] % 1000), gmtime(result["time"]/1000.0))
         self.result_time.SetLabelText(algo + " Algorithm Finished After " + algo_time + " ms")
