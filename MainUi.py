@@ -13,6 +13,8 @@ class MainFrame(lay.main_dialog):
             self.topsis_click(0)
         self.target_refresh()
 
+        self.result_time.Hide()
+
     def borda_click(self, event):
         self.weight_col.Hide()
         for i in range(1, 30):
@@ -198,29 +200,30 @@ class MainFrame(lay.main_dialog):
 
         top_candidate = sorted(top_candidate, key=lambda k: k["rank"], reverse=True)
 
-        self.name1.SetLabelText(top_candidate[0]["brand"] + " " + top_candidate[0]["model"])
-        self.name1.SetURL(db[top_candidate[0]["brand"]]["models"][top_candidate[0]["model"]]["url"])
-        #self.m_bitmap1.SetBitmap(wxBitmap(db[top_candidate[0]["brand"]]["models"][top_candidate[0]["model"]]["img"]))
+        for i in range(1,6):
+            self.res_phone[i].SetLabelText(top_candidate[i-1]["brand"] + " " + top_candidate[i-1]["model"])
+            self.res_phone[i].SetURL(db[top_candidate[i-1]["brand"]]["models"][top_candidate[i-1]["model"]]["url"])
 
-        self.name2.SetLabelText(top_candidate[1]["brand"] + " " + top_candidate[1]["model"])
-        self.name2.SetURL(db[top_candidate[1]["brand"]]["models"][top_candidate[1]["model"]]["url"])
+            print(top_candidate[i-1]["brand"], top_candidate[i-1]["model"], "|- Rank:", top_candidate[i-1]["rank"])
 
-        self.name3.SetLabelText(top_candidate[2]["brand"] + " " + top_candidate[2]["model"])
-        self.name3.SetURL(db[top_candidate[2]["brand"]]["models"][top_candidate[2]["model"]]["url"])
-
-        self.name4.SetLabelText(top_candidate[3]["brand"] + " " + top_candidate[3]["model"])
-        self.name4.SetURL(db[top_candidate[3]["brand"]]["models"][top_candidate[3]["model"]]["url"])
-
-        self.name5.SetLabelText(top_candidate[4]["brand"] + " " + top_candidate[4]["model"])
-        self.name5.SetURL(db[top_candidate[4]["brand"]]["models"][top_candidate[4]["model"]]["url"])
-
-        print(strftime("%H:%M:%S:{}".format(result["time"]%1000), gmtime(result["time"]/1000.0)))
+        algo_time = strftime("%H:%M:%S:{}".format(result["time"]%1000), gmtime(result["time"]/1000.0))
+        self.result_time.SetLabelText("After " + algo_time)
+        self.result_time.Show()
+        self.Layout()
 
     def reset(self, event):
         self.target_choise.SetSelection(0)
         self.borda.SetValue(True)
         self.borda_click(0)
         self.target_refresh()
+
+        for i in range(1,6):
+            self.res_phone[i].SetLabelText("Phone Name")
+            self.res_phone[i].SetURL("")
+
+        self.result_time.Hide()
+        self.Layout()
+
 
     def rule_select(self, event):
         print(self.Id)

@@ -3,11 +3,7 @@ import random
 import requests
 from time import gmtime, strftime, time
 
-test = requests.get("https://www.gsmarena.com/alcatel-phones-f-5-0-p10.php")
-
 url = "https://www.gsmarena.com/"
-
-source = requests.get(url + "makers.php3")
 
 makers = {}
 
@@ -467,6 +463,8 @@ def get_specs(brand, model, model_count):
 
 
 def run_script():
+    source = requests.get(url + "makers.php3")
+
     # makers = load_obj("db")
 
     print("scarper started at:", strftime("%d-%m-%Y %H:%M:%S", gmtime()))

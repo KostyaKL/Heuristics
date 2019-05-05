@@ -438,12 +438,21 @@ class main_dialog ( wx.Frame ):
 
 		result = wx.BoxSizer( wx.VERTICAL )
 
+		self.result_headline = wx.BoxSizer(wx.HORIZONTAL)
+
 		self.result_label = wx.StaticText( self, wx.ID_ANY, u"Result", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.result_label.Wrap( -1 )
+		self.result_label.Wrap(-1)
 
-		self.result_label.SetFont( wx.Font( 10, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_BOLD, True, "Arial" ) )
+		self.result_label.SetFont(wx.Font(10, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_BOLD, True, "Arial"))
 
-		result.Add( self.result_label, 0, wx.ALIGN_CENTER|wx.ALL, 5 )
+		self.result_headline.Add(self.result_label, 0, wx.ALL, 5)
+
+		self.result_time = wx.StaticText(self, wx.ID_ANY, u"After mS", wx.DefaultPosition, wx.DefaultSize, 0)
+		self.result_time.Wrap(-1)
+
+		self.result_headline.Add(self.result_time, 0, wx.ALL, 5)
+
+		result.Add( self.result_headline, 0, wx.ALIGN_CENTER | wx.ALL, 5 )
 
 		self.res_scroll = wx.ScrolledWindow( self, wx.ID_ANY, wx.DefaultPosition, wx.Size( 400,-1 ), wx.VSCROLL )
 		self.res_scroll.SetScrollRate( 5, 5 )
@@ -453,66 +462,23 @@ class main_dialog ( wx.Frame ):
 		top_5.SetFlexibleDirection( wx.HORIZONTAL )
 		top_5.SetNonFlexibleGrowMode( wx.FLEX_GROWMODE_SPECIFIED )
 
-		self.label1 = wx.StaticText( self.res_scroll, wx.ID_ANY, u"1.", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.label1.Wrap( -1 )
+		self.res_num = [0]
+		self.res_phone = [0]
+		self.res_img = [0]
 
-		top_5.Add( self.label1, 0, wx.ALL, 5 )
+		for i in range(1, 6):
+			self.res_num.append(wx.StaticText(self.res_scroll, wx.ID_ANY, str(i) + ".", wx.DefaultPosition, wx.DefaultSize, 0))
+			self.res_num[i].Wrap(-1)
 
-		self.name1 = wx.adv.HyperlinkCtrl( self.res_scroll, wx.ID_ANY, u"Phone Name", "", wx.DefaultPosition, wx.DefaultSize, wx.adv.HL_DEFAULT_STYLE)
+			top_5.Add(self.res_num[i], 0, wx.ALL, 5)
 
-		top_5.Add( self.name1, 0, wx.ALL, 5 )
+			self.res_phone.append(wx.adv.HyperlinkCtrl( self.res_scroll, wx.ID_ANY, u"Phone Name", "", wx.DefaultPosition, wx.DefaultSize, wx.adv.HL_DEFAULT_STYLE))
 
-		self.m_bitmap1 = wx.StaticBitmap( self.res_scroll, wx.ID_ANY, wx.NullBitmap, wx.DefaultPosition, wx.DefaultSize, 0 )
-		top_5.Add( self.m_bitmap1, 0, wx.ALL, 5 )
+			top_5.Add(self.res_phone[i], 0, wx.ALL, 5)
 
-		self.label2 = wx.StaticText( self.res_scroll, wx.ID_ANY, u"2.", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.label2.Wrap( -1 )
+			self.res_img.append(wx.StaticBitmap(self.res_scroll, wx.ID_ANY, wx.NullBitmap, wx.DefaultPosition, wx.DefaultSize, 0))
 
-		top_5.Add( self.label2, 0, wx.ALL, 5 )
-
-		self.name2 = wx.adv.HyperlinkCtrl( self.res_scroll, wx.ID_ANY, u"Phone Name", "", wx.DefaultPosition, wx.DefaultSize, wx.adv.HL_DEFAULT_STYLE)
-
-		top_5.Add( self.name2, 0, wx.ALL, 5 )
-
-		self.m_bitmap2 = wx.StaticBitmap( self.res_scroll, wx.ID_ANY, wx.NullBitmap, wx.DefaultPosition, wx.DefaultSize, 0 )
-		top_5.Add( self.m_bitmap2, 0, wx.ALL, 5 )
-
-		self.label3 = wx.StaticText( self.res_scroll, wx.ID_ANY, u"3.", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.label3.Wrap( -1 )
-
-		top_5.Add( self.label3, 0, wx.ALL, 5 )
-
-		self.name3 = wx.adv.HyperlinkCtrl( self.res_scroll, wx.ID_ANY, u"Phone Name", "", wx.DefaultPosition, wx.DefaultSize, wx.adv.HL_DEFAULT_STYLE)
-
-		top_5.Add( self.name3, 0, wx.ALL, 5 )
-
-		self.m_bitmap3 = wx.StaticBitmap( self.res_scroll, wx.ID_ANY, wx.NullBitmap, wx.DefaultPosition, wx.DefaultSize, 0 )
-		top_5.Add( self.m_bitmap3, 0, wx.ALL, 5 )
-
-		self.label4 = wx.StaticText( self.res_scroll, wx.ID_ANY, u"4.", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.label4.Wrap( -1 )
-
-		top_5.Add( self.label4, 0, wx.ALL, 5 )
-
-		self.name4 = wx.adv.HyperlinkCtrl( self.res_scroll, wx.ID_ANY, u"Phone Name", "", wx.DefaultPosition, wx.DefaultSize, wx.adv.HL_DEFAULT_STYLE)
-
-		top_5.Add( self.name4, 0, wx.ALL, 5 )
-
-		self.m_bitmap4 = wx.StaticBitmap( self.res_scroll, wx.ID_ANY, wx.NullBitmap, wx.DefaultPosition, wx.DefaultSize, 0 )
-		top_5.Add( self.m_bitmap4, 0, wx.ALL, 5 )
-
-		self.label5 = wx.StaticText( self.res_scroll, wx.ID_ANY, u"5.", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.label5.Wrap( -1 )
-
-		top_5.Add( self.label5, 0, wx.ALL, 5 )
-
-		self.name5 = wx.adv.HyperlinkCtrl( self.res_scroll, wx.ID_ANY, u"Phone Name", "", wx.DefaultPosition, wx.DefaultSize, wx.adv.HL_DEFAULT_STYLE)
-
-		top_5.Add( self.name5, 0, wx.ALL, 5 )
-
-		self.m_bitmap5 = wx.StaticBitmap( self.res_scroll, wx.ID_ANY, wx.NullBitmap, wx.DefaultPosition, wx.DefaultSize, 0 )
-		top_5.Add( self.m_bitmap5, 0, wx.ALL, 5 )
-
+			top_5.Add(self.res_img[i], 0, wx.ALL, 5)
 
 		self.res_scroll.SetSizer( top_5 )
 		self.res_scroll.Layout()
