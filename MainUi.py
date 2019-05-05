@@ -225,7 +225,7 @@ class MainFrame(lay.main_dialog):
             # print(top_candidate[i-1]["brand"], top_candidate[i-1]["model"], "|- Rank:", top_candidate[i-1]["rank"])
 
         # for debugging
-        # with open('table.csv', 'w') as f:
+        # with open(target + '_table.csv', 'w') as f:
         #     printout = "spec"
         #     for i in range(0, table.num_of_specs):
         #         printout = printout + "," + table.specs_dict[i]
