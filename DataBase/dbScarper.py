@@ -9,6 +9,8 @@ makers = {}
 
 not_connected = []
 
+source = None
+
 
 class ModelCount:
     count = 0
@@ -527,6 +529,8 @@ def run_script():
 
     print("worked for", strftime("%H:%M:%S", gmtime(total_time)))
 
+    makers["time_stamp"] = strftime("%d-%m-%Y %H:%M:%S", gmtime())
+
     save_obj(makers, "db")
 
     with open('phoneDB.csv', 'w') as f:
@@ -535,6 +539,7 @@ def run_script():
         rand_model = random.choice(list(makers[rand_brand]["models"]))
         for key in makers[rand_brand]["models"][rand_model]["specs"]:
             printout = printout + "," + key
+        printout = printout + "," + strftime("%d-%m-%Y %H:%M:%S", gmtime())
         f.write(printout + "\n")
         for brand in makers:
             for model in makers[brand]["models"]:
