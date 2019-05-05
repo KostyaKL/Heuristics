@@ -176,6 +176,8 @@ class MainFrame(lay.main_dialog):
                 self.weight[i].SetSelection(0)
 
     def calc(self, event):
+        self.res_scroll.Hide()
+        self.result_time.Hide()
         progg = wx.ProgressDialog("Please Wait", "Calculating", maximum=100, parent=None, style=wx.PD_AUTO_HIDE | wx.PD_APP_MODAL)
         progg.Pulse()
 
@@ -224,6 +226,7 @@ class MainFrame(lay.main_dialog):
         algo_time = strftime("{}".format(result["time"] % 1000), gmtime(result["time"]/1000.0))
         self.result_time.SetLabelText(algo + " Algorithm Finished After " + algo_time + " ms")
         self.result_time.Show()
+        self.res_scroll.Show()
         self.Layout()
 
         progg.Destroy()
