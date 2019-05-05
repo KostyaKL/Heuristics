@@ -23,7 +23,7 @@ class Borda:
             tmp_ranker.sort(key=lambda x: x[1], reverse=True)
             score = candidates_num - 1
             for candidate in range(0, candidates_num):
-                score_res[0] += score
+                score_res[tmp_ranker[candidate][0]] += score
                 score -= 1
 
         total_time = int(round(time() * 1000)) - start_time
