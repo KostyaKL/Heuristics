@@ -1,8 +1,11 @@
+import itertools
+import threading
 
 import wx
 import wx.xrc
 from GUI import layout as lay
 from time import strftime, gmtime
+
 
 class MainFrame(lay.main_dialog):
     def __init__(self, parent):
@@ -173,6 +176,9 @@ class MainFrame(lay.main_dialog):
                 self.weight[i].SetSelection(0)
 
     def calc(self, event):
+        progg = wx.ProgressDialog("Please Wait", "Calculating", maximum=100, parent=None, style=wx.PD_AUTO_HIDE | wx.PD_APP_MODAL)
+        progg.Pulse()
+
         if self.borda.GetValue() is True:
             algo = "borda"
         else:
@@ -183,8 +189,6 @@ class MainFrame(lay.main_dialog):
         from DataBase import TableOfPhones, dbScarper
         db = dbScarper.load_obj("DataBase/db")
         table = TableOfPhones.TableOfPhones(db, target)
-
-
 
         if algo == "borda":
             from Algorithms import BordaAlgo
@@ -211,6 +215,10 @@ class MainFrame(lay.main_dialog):
         self.result_time.Show()
         self.Layout()
 
+        self.done = True
+
+        progg.Destroy()
+
     def reset(self, event):
         self.target_choise.SetSelection(0)
         self.borda.SetValue(True)
@@ -223,7 +231,6 @@ class MainFrame(lay.main_dialog):
 
         self.result_time.Hide()
         self.Layout()
-
 
     def rule_select(self, event):
         print(self.Id)
