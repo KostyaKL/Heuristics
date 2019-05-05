@@ -25,6 +25,7 @@ class main_dialog(wx.Frame):
         self.SetSizeHints(wx.DefaultSize, wx.DefaultSize)
         self.SetBackgroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOW))
         self.SetIcon(wx.Icon("GUI/icon.png"))
+        self.Center()
 
         main_dialog = wx.FlexGridSizer(2, 1, 0, 0)
         main_dialog.SetFlexibleDirection(wx.VERTICAL)
@@ -510,9 +511,13 @@ class main_dialog(wx.Frame):
 
         main_dialog.Add(options_container, 1, wx.ALIGN_CENTER | wx.ALIGN_TOP | wx.ALL | wx.EXPAND, 5)
 
-        self.SetSizer(main_dialog)
-        self.Layout()
+        sizer = wx.BoxSizer()
+        sizer.AddStretchSpacer(1)
+        sizer.Add(main_dialog, 0, wx.ALIGN_CENTER)
+        sizer.AddStretchSpacer(1)
 
+        self.SetSizer(sizer)
+        self.Layout()
         self.Centre(wx.BOTH)
 
         # Connect Events

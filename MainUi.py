@@ -205,7 +205,7 @@ class MainFrame(lay.main_dialog):
         top_candidate = sorted(top_candidate, key=lambda k: k["rank"], reverse=True)
 
         print("\nalgorithm:", algo, "target:", target)
-        for i in range(1,6):
+        for i in range(1, 6):
             self.res_phone[i].SetLabelText(top_candidate[i-1]["brand"] + " " + top_candidate[i-1]["model"])
             self.res_phone[i].SetURL(db[top_candidate[i-1]["brand"]]["models"][top_candidate[i-1]["model"]]["url"])
 
@@ -222,7 +222,7 @@ class MainFrame(lay.main_dialog):
             print(top_candidate[i-1]["brand"], top_candidate[i-1]["model"], "|- Rank:", top_candidate[i-1]["rank"])
 
         algo_time = strftime("{}".format(result["time"] % 1000), gmtime(result["time"]/1000.0))
-        self.result_time.SetLabelText(algo + "Algorithm Finished After " + algo_time + " ms")
+        self.result_time.SetLabelText(algo + " Algorithm Finished After " + algo_time + " ms")
         self.result_time.Show()
         self.Layout()
 
