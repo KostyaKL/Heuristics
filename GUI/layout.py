@@ -455,7 +455,7 @@ class main_dialog(wx.Frame):
 
         result = wx.BoxSizer(wx.VERTICAL)
 
-        self.result_headline = wx.BoxSizer(wx.HORIZONTAL)
+        self.result_headline = wx.BoxSizer(wx.VERTICAL)
 
         self.result_label = wx.StaticText(self, wx.ID_ANY, u"Result", wx.DefaultPosition, wx.DefaultSize, 0)
         self.result_label.Wrap(-1)
@@ -463,12 +463,12 @@ class main_dialog(wx.Frame):
         self.result_label.SetFont(
             wx.Font(10, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_BOLD, True, "Arial"))
 
-        self.result_headline.Add(self.result_label, 0, wx.ALL, 5)
+        self.result_headline.Add(self.result_label, 0, wx.ALIGN_CENTER | wx.ALL, 5)
 
         self.result_time = wx.StaticText(self, wx.ID_ANY, u"After mS", wx.DefaultPosition, wx.DefaultSize, 0)
         self.result_time.Wrap(-1)
 
-        self.result_headline.Add(self.result_time, 0, wx.ALL, 5)
+        self.result_headline.Add(self.result_time, 0, wx.ALIGN_CENTER | wx.ALL, 5)
 
         result.Add(self.result_headline, 0, wx.ALIGN_CENTER | wx.ALL, 5)
 
