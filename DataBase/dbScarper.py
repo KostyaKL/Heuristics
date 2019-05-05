@@ -463,13 +463,8 @@ def get_specs(brand, model, model_count):
 
 
 def run_script():
-    for retry in range(0, 5):
-        try:
-            source = requests.get(url + "makers.php3")
-            break
-        except Exception as e:
-            print("no source -------------------------------------->")
 
+    source = requests.get(url + "makers.php3")
 
     # makers = load_obj("db")
 
