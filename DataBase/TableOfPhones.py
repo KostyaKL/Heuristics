@@ -1,6 +1,6 @@
 class TableOfPhones:
     num_of_specs = 29
-    num_of_phones = 9600
+    num_of_phones = 9601
 
     table = []  # each row is criteria, each column is phone
     criteria_weight = []
@@ -39,33 +39,24 @@ class TableOfPhones:
 
     rule_dict = []
 
-    def __init__(self, db, target):
+    def __init__(self, db, config):
         i = 0
         for brand in db:
             if brand != "time_stamp":
                 for model in db[brand]["models"]:
                     self.candidate_dict[i] = {"brand": brand, "model": model, "rank": 0}
                     i += 1
-        if target == "Children":
-            self.criteria_weight = [5, 4, 3, 3, 4, 1, 1, 5, 5, 5, 4, 2, 4, 4, 4, 4, 4, 4, 2, 1, 1, 1, 2, 5, 3, 5, 5, 5,
-                                    4]
-            self.build_table(db, "Children")
-        elif target == "Hi-Tech Employee":
-            self.criteria_weight = [5, 5, 3, 3, 4, 4, 3, 4, 5, 4, 4, 5, 5, 5, 5, 5, 5, 5, 2, 1, 3, 3, 4, 5, 4, 1, 2, 5,
-                                    4]
-            self.build_table(db, "Hi-Tech Employee")
-        elif target == "Pensioners":
-            self.criteria_weight = [5, 2, 4, 4, 4, 1, 1, 5, 3, 1, 1, 5, 5, 1, 4, 4, 4, 4, 4, 5, 4, 2, 1, 5, 1, 5, 5, 5,
-                                    3]
-            self.build_table(db, "Pensioners")
+        for i in range(0, 29):
+            self.criteria_weight.append(config[i+1]["Weight"])
+        self.build_table(db, config)
 
-    def build_table(self, db, target):
+    def build_table(self, db, config):
         for i in range(0, self.num_of_specs):
             criteria = []
             for j in range(0, self.num_of_phones):
                 spec_value = db[self.candidate_dict[j]["brand"]]["models"][self.candidate_dict[j]["model"]]["specs"][
                     self.specs_dict[i]]
-                criteria.append(self.spec_grade(self.specs_dict[i], spec_value, target))
+                criteria.append(self.spec_grade(i+1, spec_value, config))
             self.table.append(criteria)
 
     @staticmethod
@@ -125,267 +116,20 @@ class TableOfPhones:
             return 1
         return grade[spec_value - 1]
 
-    def spec_grade(self, spec, spec_value, target):
-        if spec == "battery":
-            if target == "Children":
-                return self.highest_better_grade(spec_value)
-            elif target == "Hi-Tech Employee":
-                return self.highest_better_grade(spec_value)
-            elif target == "Pensioners":
-                return self.highest_better_grade(spec_value)
-            else:
-                return 1
-        elif spec == "year":
-            if target == "Children":
-                return self.highest_better_grade(spec_value)
-            elif target == "Hi-Tech Employee":
-                return self.highest_better_grade(spec_value)
-            elif target == "Pensioners":
-                return self.highest_better_grade(spec_value)
-            else:
-                return 1
-        elif spec == "height":
-            if target == "Children":
-                return self.optimal_range_grade(spec_value, 145)
-            elif target == "Hi-Tech Employee":
-                return self.optimal_range_grade(spec_value, 150)
-            elif target == "Pensioners":
-                return self.optimal_range_grade(spec_value, 175)
-            else:
-                return 1
-        elif spec == "width":
-            if target == "Children":
-                return self.optimal_range_grade(spec_value, 65)
-            elif target == "Hi-Tech Employee":
-                return self.optimal_range_grade(spec_value, 70)
-            elif target == "Pensioners":
-                return self.optimal_range_grade(spec_value, 85)
-            else:
-                return 1
-        elif spec == "weight":
-            if target == "Children":
-                return self.lowest_better_grade(spec_value)
-            elif target == "Hi-Tech Employee":
-                return self.lowest_better_grade(spec_value)
-            elif target == "Pensioners":
-                return self.lowest_better_grade(spec_value)
-            else:
-                return 1
-        elif spec == "numofsim":
-            if target == "Children":
-                return self.not_important_grade()
-            elif target == "Hi-Tech Employee":
-                return self.highest_better_grade(spec_value)
-            elif target == "Pensioners":
-                return self.not_important_grade()
-            else:
-                return 1
-        elif spec == "simtype":
-            if target == "Children":
-                return self.not_important_grade()
-            elif target == "Hi-Tech Employee":
-                return self.constant_range_grade(spec_value, [1, 2, 3, 4])
-            elif target == "Pensioners":
-                return self.constant_range_grade(spec_value, [4, 3, 2, 1])
-            else:
-                return 1
-        elif spec == "displaysize":
-            if target == "Children":
-                return self.optimal_range_grade(spec_value, 4.75)
-            elif target == "Hi-Tech Employee":
-                return self.optimal_range_grade(spec_value, 5.25)
-            elif target == "Pensioners":
-                return self.highest_better_grade(spec_value)
-            else:
-                return 1
-        elif spec == "displayresolution":
-            if target == "Children":
-                return self.highest_better_grade(spec_value)
-            elif target == "Hi-Tech Employee":
-                return self.highest_better_grade(spec_value)
-            elif target == "Pensioners":
-                return self.highest_better_grade(spec_value)
-            else:
-                return 1
-        elif spec == "os":
-            if target == "Children":
-                return self.constant_range_grade(spec_value, [6, 5, 4, 3, 1, 2])
-            elif target == "Hi-Tech Employee":
-                return self.constant_range_grade(spec_value, [6, 5, 3, 4, 1, 2])
-            elif target == "Pensioners":
-                return self.constant_range_grade(spec_value, [5, 6, 3, 4, 1, 2])
-            else:
-                return 1
-        elif spec == "cpu":
-            if target == "Children":
-                return self.highest_better_grade(spec_value)
-            elif target == "Hi-Tech Employee":
-                return self.highest_better_grade(spec_value)
-            elif target == "Pensioners":
-                return self.highest_better_grade(spec_value)
-            else:
-                return 1
-        elif spec == "memoryslot":
-            if target == "Children":
-                return self.not_important_grade()
-            elif target == "Hi-Tech Employee":
-                return self.boolean_grade(spec_value, True)
-            elif target == "Pensioners":
+    def spec_grade(self, spec, spec_value, config):
+        if config[spec]["Rule"] == "Highest Better":
+            return self.highest_better_grade(spec_value)
+        elif config[spec]["Rule"] == "Lowest Better":
+            return self.lowest_better_grade(spec_value)
+        elif config[spec]["Rule"] == "Optimal Value":
+            return self.optimal_range_grade(spec_value, config[spec]["Value"])
+        elif config[spec]["Rule"] == "Boolean":
+            if config[spec]["Value"] == "Yes":
                 return self.boolean_grade(spec_value, True)
             else:
-                return 1
-        elif spec == "maxextmemory":
-            if target == "Children":
-                return self.highest_better_grade(spec_value)
-            elif target == "Hi-Tech Employee":
-                return self.highest_better_grade(spec_value)
-            elif target == "Pensioners":
-                return self.highest_better_grade(spec_value)
-            else:
-                return 1
-        elif spec == "RAM":
-            if target == "Children":
-                return self.highest_better_grade(spec_value)
-            elif target == "Hi-Tech Employee":
-                return self.highest_better_grade(spec_value)
-            elif target == "Pensioners":
-                return self.highest_better_grade(spec_value)
-            else:
-                return 1
-        elif spec == "cam1MP":
-            if target == "Children":
-                return self.highest_better_grade(spec_value)
-            elif target == "Hi-Tech Employee":
-                return self.highest_better_grade(spec_value)
-            elif target == "Pensioners":
-                return self.highest_better_grade(spec_value)
-            else:
-                return 1
-        elif spec == "cam1video":
-            if target == "Children":
-                return self.highest_better_grade(spec_value)
-            elif target == "Hi-Tech Employee":
-                return self.highest_better_grade(spec_value)
-            elif target == "Pensioners":
-                return self.highest_better_grade(spec_value)
-            else:
-                return 1
-        elif spec == "cam2MP":
-            if target == "Children":
-                return self.highest_better_grade(spec_value)
-            elif target == "Hi-Tech Employee":
-                return self.highest_better_grade(spec_value)
-            elif target == "Pensioners":
-                return self.highest_better_grade(spec_value)
-            else:
-                return 1
-        elif spec == "cam2video":
-            if target == "Children":
-                return self.highest_better_grade(spec_value)
-            elif target == "Hi-Tech Employee":
-                return self.highest_better_grade(spec_value)
-            elif target == "Pensioners":
-                return self.highest_better_grade(spec_value)
-            else:
-                return 1
-        elif spec == "ir":
-            if target == "Children":
-                return self.not_important_grade()
-            elif target == "Hi-Tech Employee":
-                return self.boolean_grade(spec_value, True)
-            elif target == "Pensioners":
-                return self.boolean_grade(spec_value, True)
-            else:
-                return 1
-        elif spec == "radio":
-            if target == "Children":
-                return self.not_important_grade()
-            elif target == "Hi-Tech Employee":
-                return self.not_important_grade()
-            elif target == "Pensioners":
-                return self.boolean_grade(spec_value, True)
-            else:
-                return 1
-        elif spec == "usb":
-            if target == "Children":
-                return self.constant_range_grade(spec_value, [3, 1, 2])
-            elif target == "Hi-Tech Employee":
-                return self.constant_range_grade(spec_value, [3, 1, 2])
-            elif target == "Pensioners":
-                return self.constant_range_grade(spec_value, [3, 1, 2])
-            else:
-                return 1
-        elif spec == "nfc":
-            if target == "Children":
-                return self.boolean_grade(spec_value, True)
-            elif target == "Hi-Tech Employee":
-                return self.boolean_grade(spec_value, True)
-            elif target == "Pensioners":
-                return self.not_important_grade()
-            else:
-                return 1
-        elif spec == "fingerprint":
-            if target == "Children":
                 return self.boolean_grade(spec_value, False)
-            elif target == "Hi-Tech Employee":
-                return self.boolean_grade(spec_value, True)
-            elif target == "Pensioners":
-                return self.boolean_grade(spec_value, False)
-            else:
-                return 1
-        elif spec == "price":
-            if target == "Children":
-                return self.lowest_better_grade(spec_value)
-            elif target == "Hi-Tech Employee":
-                return self.lowest_better_grade(spec_value)
-            elif target == "Pensioners":
-                return self.lowest_better_grade(spec_value)
-            else:
-                return 1
-        elif spec == "basemark":
-            if target == "Children":
-                return self.highest_better_grade(spec_value)
-            elif target == "Hi-Tech Employee":
-                return self.highest_better_grade(spec_value)
-            elif target == "Pensioners":
-                return self.not_important_grade()
-            else:
-                return 1
-        elif spec == "loudspeaker":
-            if target == "Children":
-                return self.highest_better_grade(spec_value)
-            elif target == "Hi-Tech Employee":
-                return self.not_important_grade()
-            elif target == "Pensioners":
-                return self.highest_better_grade(spec_value)
-            else:
-                return 1
-        elif spec == "audioquality":
-            if target == "Children":
-                return self.highest_better_grade(spec_value)
-            elif target == "Hi-Tech Employee":
-                return self.highest_better_grade(spec_value)
-            elif target == "Pensioners":
-                return self.highest_better_grade(spec_value)
-            else:
-                return 1
-        elif spec == "endurance":
-            if target == "Children":
-                return self.highest_better_grade(spec_value)
-            elif target == "Hi-Tech Employee":
-                return self.highest_better_grade(spec_value)
-            elif target == "Pensioners":
-                return self.highest_better_grade(spec_value)
-            else:
-                return 1
-        elif spec == "waterproof":
-            if target == "Children":
-                return self.boolean_grade(spec_value, True)
-            elif target == "Hi-Tech Employee":
-                return self.boolean_grade(spec_value, True)
-            elif target == "Pensioners":
-                return self.boolean_grade(spec_value, True)
-            else:
-                return 1
+        elif config[spec]["Rule"] == "Constant Scale":
+            return self.constant_range_grade(spec_value, config[spec]["Value"])
         else:
-            return 1
+            return self.not_important_grade()
+

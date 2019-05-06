@@ -201,24 +201,24 @@ class MainFrame(lay.main_dialog):
             else:
                 config[i]["Rule"] = self.common_rule_choice[self.rule[i].GetSelection()]
             if config[i]["Name"] == "SIM Card Type":
-                config[i]["Value"] = {}
-                config[i]["Value"]["Nano"] = self.sim_choice[self.nano_choice.GetSelection()]
-                config[i]["Value"]["Micro"] = self.sim_choice[self.micro_choice.GetSelection()]
-                config[i]["Value"]["Mini"] = self.sim_choice[self.mini_choice.GetSelection()]
-                config[i]["Value"]["Full"] = self.sim_choice[self.full_choice.GetSelection()]
+                config[i]["Value"] = []
+                config[i]["Value"].append(self.sim_choice[self.nano_choice.GetSelection()])
+                config[i]["Value"].append(self.sim_choice[self.micro_choice.GetSelection()])
+                config[i]["Value"].append(self.sim_choice[self.mini_choice.GetSelection()])
+                config[i]["Value"].append(self.sim_choice[self.full_choice.GetSelection()])
             elif config[i]["Name"] == "Operating System":
-                config[i]["Value"] = {}
-                config[i]["Value"]["Android"] = self.op_choice[self.android_choice.GetSelection()]
-                config[i]["Value"]["Apple"] = self.op_choice[self.apple_choice.GetSelection()]
-                config[i]["Value"]["Microsoft"] = self.op_choice[self.microsoft_choice.GetSelection()]
-                config[i]["Value"]["Blackberry"] = self.op_choice[self.blackberry_choice.GetSelection()]
-                config[i]["Value"]["Firefox"] = self.op_choice[self.firefox_choice.GetSelection()]
-                config[i]["Value"]["Symbian"] = self.op_choice[self.symbian_choice.GetSelection()]
+                config[i]["Value"] = []
+                config[i]["Value"].append(self.op_choice[self.android_choice.GetSelection()])
+                config[i]["Value"].append(self.op_choice[self.apple_choice.GetSelection()])
+                config[i]["Value"].append(self.op_choice[self.microsoft_choice.GetSelection()])
+                config[i]["Value"].append(self.op_choice[self.blackberry_choice.GetSelection()])
+                config[i]["Value"].append(self.op_choice[self.firefox_choice.GetSelection()])
+                config[i]["Value"].append(self.op_choice[self.symbian_choice.GetSelection()])
             elif config[i]["Name"] == "Charging Cable Type":
-                config[i]["Value"] = {}
-                config[i]["Value"]["Type C / iPhone"] = self.usb_choice[self.type_c_choice.GetSelection()]
-                config[i]["Value"]["Mini USB"] = self.usb_choice[self.mini_choice_usb.GetSelection()]
-                config[i]["Value"]["Micro USB"] = self.usb_choice[self.micro_choice_usb.GetSelection()]
+                config[i]["Value"] = []
+                config[i]["Value"].append(self.usb_choice[self.type_c_choice.GetSelection()])
+                config[i]["Value"].append(self.usb_choice[self.mini_choice_usb.GetSelection()])
+                config[i]["Value"].append(self.usb_choice[self.micro_choice_usb.GetSelection()])
             elif config[i]["Rule"] == "Boolean":
                 config[i]["Value"] = self.boolean_choice[self.value[i].GetSelection()]
             elif config[i]["Rule"] == "Not Important":
@@ -229,13 +229,30 @@ class MainFrame(lay.main_dialog):
 
         from DataBase import TableOfPhones, dbScarper
         db = dbScarper.load_obj("DataBase/db")
-        table = TableOfPhones.TableOfPhones(db, target)
+        table = TableOfPhones.TableOfPhones(db, config)
+
+        # for debugging
+        with open(target + '_table.csv', 'w') as f:
+            printout = "spec"
+            for i in range(0, table.num_of_specs):
+                printout = printout + "," + table.specs_dict[i]
+            printout = printout + "," + strftime("%d-%m-%Y %H:%M:%S", gmtime())
+            f.write(printout + "\n")
+            for j in range(0, table.num_of_phones):
+                printout = table.candidate_dict[j]["brand"] + " " + table.candidate_dict[j]["model"]
+                for i in range(0, table.num_of_specs):
+                    tmp = str(table.table[i][j])
+                    if tmp.find(",") >= 0:
+                        tmp = "\"" + tmp + "\""
+                    printout = printout + "," + tmp
+                f.write(printout + "\n")
+        # for debugging
 
         progg.Update(2, "Calculating")
         progg.Pulse()
         if algo == "Borda":
             from Algorithms import BordaAlgo
-            result = BordaAlgo.Borda.borda(table.table, table.num_of_phones, table.num_of_specs)
+            result = BordaAlgo.Borda.borda(table.table, table.num_of_phones-1, table.num_of_specs)
         elif algo == "TOPSIS":
             from Algorithms import TopsisAlgo
             result = TopsisAlgo.Topsis.topsis(table.table, table.num_of_phones, table.num_of_specs, table.criteria_weight)
