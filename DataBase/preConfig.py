@@ -18,7 +18,7 @@ pre_config = {'Children':
                    17: {'Name': 'Secondary Camera Quality', 'Rule': 'Highest Better', 'Value': 'N/A', 'Weight': 4},
                    18: {'Name': 'Secondary Camera Video', 'Rule': 'Highest Better', 'Value': 'N/A', 'Weight': 4},
                    19: {'Name': 'IR Transmitter', 'Rule': 'Not Important', 'Value': 'Good', 'Weight': 2},
-                   20: {'Name': 'Radio', 'Rule': 'Boolean', 'Not Important': 'Good', 'Weight': 1},
+                   20: {'Name': 'Radio', 'Rule': 'Not Important', 'Value': 'Good', 'Weight': 1},
                    21: {'Name': 'Charging Cable Type', 'Rule': 'Constant Scale', 'Value': [3, 1, 2], 'Weight': 1},
                    22: {'Name': 'NFC', 'Rule': 'Boolean', 'Value': 'Good', 'Weight': 1},
                    23: {'Name': 'Finger Print', 'Rule': 'Boolean', 'Value': 'Bad', 'Weight': 2},

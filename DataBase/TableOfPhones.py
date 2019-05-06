@@ -1,4 +1,4 @@
-class TableOfPhones:
+class TableOfPhonesClass:
     num_of_specs = 29
     num_of_phones = 9601
 
@@ -39,7 +39,8 @@ class TableOfPhones:
 
     rule_dict = []
 
-    def __init__(self, db, config):
+    def build_me(self, db, config):
+        self.table = []
         i = 0
         for brand in db:
             if brand != "time_stamp":
@@ -59,6 +60,23 @@ class TableOfPhones:
                 criteria.append(self.spec_grade(i+1, spec_value, config))
             self.table.append(criteria)
 
+    def spec_grade(self, spec, spec_value, config):
+        if config[spec]["Rule"] == "Highest Better":
+            return self.highest_better_grade(spec_value)
+        elif config[spec]["Rule"] == "Lowest Better":
+            return self.lowest_better_grade(spec_value)
+        elif config[spec]["Rule"] == "Optimal Value":
+            return self.optimal_range_grade(spec_value, config[spec]["Value"])
+        elif config[spec]["Rule"] == "Boolean":
+            if config[spec]["Value"] == "Yes":
+                return self.boolean_grade(spec_value, True)
+            else:
+                return self.boolean_grade(spec_value, False)
+        elif config[spec]["Rule"] == "Constant Scale":
+            return self.constant_range_grade(spec_value, config[spec]["Value"])
+        else:
+            return self.not_important_grade()
+
     @staticmethod
     def highest_better_grade(spec_value):
         try:
@@ -71,11 +89,14 @@ class TableOfPhones:
         try:
             if opt_range * 0.90 < int(spec_value) <= opt_range * 1.10:
                 return 5
-            elif opt_range * 0.80 < int(spec_value) <= opt_range * 0.90 or opt_range * 1.10 < int(spec_value) <= opt_range * 1.20:
+            elif opt_range * 0.80 < int(spec_value) <= opt_range * 0.90 or opt_range * 1.10 < int(
+                    spec_value) <= opt_range * 1.20:
                 return 4
-            elif opt_range * 0.70 < int(spec_value) <= opt_range * 0.80 or opt_range * 1.20 < int(spec_value) <= opt_range * 1.30:
+            elif opt_range * 0.70 < int(spec_value) <= opt_range * 0.80 or opt_range * 1.20 < int(
+                    spec_value) <= opt_range * 1.30:
                 return 3
-            elif opt_range * 0.60 < int(spec_value) <= opt_range * 0.70 or opt_range * 1.30 < int(spec_value) <= opt_range * 1.40:
+            elif opt_range * 0.60 < int(spec_value) <= opt_range * 0.70 or opt_range * 1.30 < int(
+                    spec_value) <= opt_range * 1.40:
                 return 2
             elif int(spec_value) <= opt_range * 0.60 or opt_range * 1.40 < int(spec_value):
                 return 1
@@ -115,21 +136,3 @@ class TableOfPhones:
         if spec_value - 1 < 0 or spec_value > len(grade):
             return 1
         return grade[spec_value - 1]
-
-    def spec_grade(self, spec, spec_value, config):
-        if config[spec]["Rule"] == "Highest Better":
-            return self.highest_better_grade(spec_value)
-        elif config[spec]["Rule"] == "Lowest Better":
-            return self.lowest_better_grade(spec_value)
-        elif config[spec]["Rule"] == "Optimal Value":
-            return self.optimal_range_grade(spec_value, config[spec]["Value"])
-        elif config[spec]["Rule"] == "Boolean":
-            if config[spec]["Value"] == "Yes":
-                return self.boolean_grade(spec_value, True)
-            else:
-                return self.boolean_grade(spec_value, False)
-        elif config[spec]["Rule"] == "Constant Scale":
-            return self.constant_range_grade(spec_value, config[spec]["Value"])
-        else:
-            return self.not_important_grade()
-
