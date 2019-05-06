@@ -42,9 +42,10 @@ class TableOfPhones:
     def __init__(self, db, target):
         i = 0
         for brand in db:
-            for model in db[brand]["models"]:
-                self.candidate_dict[i] = {"brand": brand, "model": model, "rank": 0}
-                i += 1
+            if brand != "time_stamp":
+                for model in db[brand]["models"]:
+                    self.candidate_dict[i] = {"brand": brand, "model": model, "rank": 0}
+                    i += 1
         if target == "Children":
             self.criteria_weight = [5, 4, 3, 3, 4, 1, 1, 5, 5, 5, 4, 2, 4, 4, 4, 4, 4, 4, 2, 1, 1, 1, 2, 5, 3, 5, 5, 5,
                                     4]

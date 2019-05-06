@@ -179,7 +179,7 @@ class MainFrame(lay.main_dialog):
     def calc(self, event):
         self.res_scroll.Hide()
         self.result_time.Hide()
-        progg = wx.ProgressDialog("Please Wait", "Calculating", maximum=100, parent=None, style=wx.PD_AUTO_HIDE | wx.PD_APP_MODAL)
+        progg = wx.ProgressDialog("Please Wait", "Loading Data Base", maximum=100, parent=None, style=wx.PD_AUTO_HIDE | wx.PD_APP_MODAL)
         progg.Pulse()
 
         if self.borda.GetValue() is True:
@@ -189,10 +189,50 @@ class MainFrame(lay.main_dialog):
 
         target = self.target_choiseChoices[self.target_choise.GetSelection()]
 
+        config = {}
+        for i in range(1, 30):
+            config[i] = {}
+            config[i]["Name"] = self.name[i].GetLabelText()
+
+            if self.specs_name[i][1] == "boolean":
+                config[i]["Rule"] = self.boolean_rule_choice[self.rule[i].GetSelection()]
+            elif self.specs_name[i][1] == "constant":
+                config[i]["Rule"] = self.constant_rule_choice[self.rule[i].GetSelection()]
+            else:
+                config[i]["Rule"] = self.common_rule_choice[self.rule[i].GetSelection()]
+            if config[i]["Name"] == "SIM Card Type":
+                config[i]["Value"] = {}
+                config[i]["Value"]["Nano"] = self.sim_choice[self.nano_choice.GetSelection()]
+                config[i]["Value"]["Micro"] = self.sim_choice[self.micro_choice.GetSelection()]
+                config[i]["Value"]["Mini"] = self.sim_choice[self.mini_choice.GetSelection()]
+                config[i]["Value"]["Full"] = self.sim_choice[self.full_choice.GetSelection()]
+            elif config[i]["Name"] == "Operating System":
+                config[i]["Value"] = {}
+                config[i]["Value"]["Android"] = self.op_choice[self.android_choice.GetSelection()]
+                config[i]["Value"]["Apple"] = self.op_choice[self.apple_choice.GetSelection()]
+                config[i]["Value"]["Microsoft"] = self.op_choice[self.microsoft_choice.GetSelection()]
+                config[i]["Value"]["Blackberry"] = self.op_choice[self.blackberry_choice.GetSelection()]
+                config[i]["Value"]["Firefox"] = self.op_choice[self.firefox_choice.GetSelection()]
+                config[i]["Value"]["Symbian"] = self.op_choice[self.symbian_choice.GetSelection()]
+            elif config[i]["Name"] == "Charging Cable Type":
+                config[i]["Value"] = {}
+                config[i]["Value"]["Type C / iPhone"] = self.usb_choice[self.type_c_choice.GetSelection()]
+                config[i]["Value"]["Mini USB"] = self.usb_choice[self.mini_choice_usb.GetSelection()]
+                config[i]["Value"]["Micro USB"] = self.usb_choice[self.micro_choice_usb.GetSelection()]
+            elif config[i]["Rule"] == "Boolean":
+                config[i]["Value"] = self.boolean_choice[self.value[i].GetSelection()]
+            elif config[i]["Rule"] == "Not Important":
+                config[i]["Value"] = 1
+            else:
+                config[i]["Value"] = self.value[i].GetValue()
+            config[i]["Weight"] = self.spec_weight_choice[self.weight[i].GetSelection()]
+
         from DataBase import TableOfPhones, dbScarper
         db = dbScarper.load_obj("DataBase/db")
         table = TableOfPhones.TableOfPhones(db, target)
 
+        progg.Update(2, "Calculating")
+        progg.Pulse()
         if algo == "Borda":
             from Algorithms import BordaAlgo
             result = BordaAlgo.Borda.borda(table.table, table.num_of_phones, table.num_of_specs)
@@ -207,6 +247,9 @@ class MainFrame(lay.main_dialog):
 
         top_candidate = sorted(top_candidate, key=lambda k: k["rank"], reverse=True)
 
+        progg.Update(2, "Loading Result")
+        progg.Pulse()
+        no_internet = False
         # print("\nalgorithm:", algo, "target:", target)
         for i in range(1, 6):
             self.res_phone[i].SetLabelText(top_candidate[i-1]["brand"] + " " + top_candidate[i-1]["model"])
@@ -214,16 +257,24 @@ class MainFrame(lay.main_dialog):
 
             img_url = db[top_candidate[i-1]["brand"]]["models"][top_candidate[i-1]["model"]]["img"]
 
-            with urllib.request.urlopen(img_url) as url:
-                with open('temp.jpg', 'wb') as f:
-                    f.write(url.read())
+            if not no_internet:
+                try:
+                    with urllib.request.urlopen(img_url) as url:
+                        with open('temp.jpg', 'wb') as f:
+                            f.write(url.read())
 
-            img = wx.Image('temp.jpg').ConvertToBitmap()
+                    img = wx.Image('temp.jpg').ConvertToBitmap()
 
-            self.res_img[i].SetBitmap(wx.Bitmap(img))
+                    self.res_img[i].SetBitmap(wx.Bitmap(img))
+                except:
+                    no_internet = True
+                    progg.Update(100, "WARNING! No Internet Connection, Can't Load Images")
+                    progg.Pulse()
 
             # print(top_candidate[i-1]["brand"], top_candidate[i-1]["model"], "|- Rank:", top_candidate[i-1]["rank"])
 
+        if no_internet:
+            wx.MessageBox("Can't Load Images", "No Internet Connection")
         # for debugging
         # with open(target + '_table.csv', 'w') as f:
         #     printout = "spec"
