@@ -238,6 +238,44 @@ class MainFrame(lay.main_dialog):
             self.rule_select(0)
 
     def calc(self, event):
+        self.get_config()
+        fields_error = False
+        for item in self.config:
+            if self.config[item]["Value"] == "":
+                fields_error = True
+                break
+            if self.config[item]["Rule"] == "Constant Scale":
+                if self.config[item]["Name"] == "SIM Card Type":
+                    tmp_val = []
+                    for i in range(0, 4):
+                        tmp_val.append(self.config[item]["Value"][i])
+                    while len(tmp_val) > 0:
+                        tmp = tmp_val.pop()
+                        if tmp in tmp_val:
+                            fields_error = True
+                            break
+                elif self.config[item]["Name"] == "Operating System":
+                    tmp_val = []
+                    for i in range(0, 6):
+                        tmp_val.append(self.config[item]["Value"][i])
+                    while len(tmp_val) > 0:
+                        tmp = tmp_val.pop()
+                        if tmp in tmp_val:
+                            fields_error = True
+                            break
+                elif self.config[item]["Name"] == "Charging Cable Type":
+                    tmp_val = []
+                    for i in range(0, 3):
+                        tmp_val.append(self.config[item]["Value"][i])
+                    while len(tmp_val) > 0:
+                        tmp = tmp_val.pop()
+                        if tmp in tmp_val:
+                            fields_error = True
+                            break
+        if fields_error:
+            wx.MessageBox("Please Fill All Fields", "Error!")
+            return
+
         self.res_scroll.Hide()
         self.result_time.Hide()
         progg = wx.ProgressDialog("Please Wait", "Loading Data Base", maximum=100, parent=None, style=wx.PD_AUTO_HIDE | wx.PD_APP_MODAL)
@@ -247,8 +285,6 @@ class MainFrame(lay.main_dialog):
             algo = "Borda"
         else:
             algo = "TOPSIS"
-
-        target = self.target_choiseChoices[self.target_choise.GetSelection()]
 
         from DataBase import TableOfPhones, dbScarper
         db = dbScarper.load_obj("DataBase/db")
