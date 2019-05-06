@@ -6,7 +6,7 @@ import wx.xrc
 
 from GUI import layout as lay
 from time import strftime, gmtime
-from DataBase import preConfig
+
 
 class MainFrame(lay.main_dialog):
     config = {}
@@ -21,7 +21,7 @@ class MainFrame(lay.main_dialog):
             self.topsis_click(0)
 
         from DataBase import dbScarper
-        self.preConfig = dbScarper.load_obj("DataBase/preConfig")
+        self.pre_config = dbScarper.load_obj("DataBase/preConfig")
         self.target_refresh()
 
         self.result_time.Hide()
@@ -44,242 +44,245 @@ class MainFrame(lay.main_dialog):
     def target_refresh(self):
         target = self.target_choiseChoices[self.target_choise.GetSelection()]
 
+        if target == "Custom":
+            self.rule_select(0)
+            return
+
         for i in range(1, 30):
             if self.specs_name[i][1] == "boolean":
-                self.rule[i].SetSelection(self.boolean_rule_choice.index(self.preConfig[target][i]["Rule"]))
+                self.rule[i].SetSelection(self.boolean_rule_choice.index(self.pre_config[target][i]["Rule"]))
             elif self.specs_name[i][1] == "constant":
-                self.rule[i].SetSelection(self.constant_rule_choice.index(self.preConfig[target][i]["Rule"]))
+                self.rule[i].SetSelection(self.constant_rule_choice.index(self.pre_config[target][i]["Rule"]))
             else:
-                self.rule[i].SetSelection(self.common_rule_choice.index(self.preConfig[target][i]["Rule"]))
+                self.rule[i].SetSelection(self.common_rule_choice.index(self.pre_config[target][i]["Rule"]))
 
-            if self.preConfig[target][i]["Name"] == "SIM Card Type":
-                self.nano_choice.SetSelection(self.sim_choice.index(str(self.preConfig[target][i]["Value"][0])))
-                self.micro_choice.SetSelection(self.sim_choice.index(str(self.preConfig[target][i]["Value"][1])))
-                self.mini_choice.SetSelection(self.sim_choice.index(str(self.preConfig[target][i]["Value"][2])))
-                self.full_choice.SetSelection(self.sim_choice.index(str(self.preConfig[target][i]["Value"][3])))
-            elif self.preConfig[target][i]["Name"] == "Operating System":
-                self.android_choice.SetSelection(self.op_choice.index(str(self.preConfig[target][i]["Value"][0])))
-                self.apple_choice.SetSelection(self.op_choice.index(str(self.preConfig[target][i]["Value"][1])))
-                self.microsoft_choice.SetSelection(self.op_choice.index(str(self.preConfig[target][i]["Value"][2])))
-                self.blackberry_choice.SetSelection(self.op_choice.index(str(self.preConfig[target][i]["Value"][3])))
-                self.firefox_choice.SetSelection(self.op_choice.index(str(self.preConfig[target][i]["Value"][4])))
-                self.symbian_choice.SetSelection(self.op_choice.index(str(self.preConfig[target][i]["Value"][5])))
-            elif self.preConfig[target][i]["Name"] == "Charging Cable Type":
-                self.type_c_choice.SetSelection(self.usb_choice.index(str(self.preConfig[target][i]["Value"][0])))
-                self.mini_choice_usb.SetSelection(self.usb_choice.index(str(self.preConfig[target][i]["Value"][1])))
-                self.micro_choice_usb.SetSelection(self.usb_choice.index(str(self.preConfig[target][i]["Value"][2])))
-            elif self.preConfig[target][i]["Rule"] == "Boolean":
-                self.value[i].SetSelection(self.boolean_choice.index(str(self.preConfig[target][i]["Value"])))
-            elif self.preConfig[target][i]["Rule"] == "Not Important":
+            if self.pre_config[target][i]["Name"] == "SIM Card Type":
+                self.nano_choice.SetSelection(self.sim_choice.index(str(self.pre_config[target][i]["Value"][0])))
+                self.micro_choice.SetSelection(self.sim_choice.index(str(self.pre_config[target][i]["Value"][1])))
+                self.mini_choice.SetSelection(self.sim_choice.index(str(self.pre_config[target][i]["Value"][2])))
+                self.full_choice.SetSelection(self.sim_choice.index(str(self.pre_config[target][i]["Value"][3])))
+            elif self.pre_config[target][i]["Name"] == "Operating System":
+                self.android_choice.SetSelection(self.op_choice.index(str(self.pre_config[target][i]["Value"][0])))
+                self.apple_choice.SetSelection(self.op_choice.index(str(self.pre_config[target][i]["Value"][1])))
+                self.microsoft_choice.SetSelection(self.op_choice.index(str(self.pre_config[target][i]["Value"][2])))
+                self.blackberry_choice.SetSelection(self.op_choice.index(str(self.pre_config[target][i]["Value"][3])))
+                self.firefox_choice.SetSelection(self.op_choice.index(str(self.pre_config[target][i]["Value"][4])))
+                self.symbian_choice.SetSelection(self.op_choice.index(str(self.pre_config[target][i]["Value"][5])))
+            elif self.pre_config[target][i]["Name"] == "Charging Cable Type":
+                self.type_c_choice.SetSelection(self.usb_choice.index(str(self.pre_config[target][i]["Value"][0])))
+                self.mini_choice_usb.SetSelection(self.usb_choice.index(str(self.pre_config[target][i]["Value"][1])))
+                self.micro_choice_usb.SetSelection(self.usb_choice.index(str(self.pre_config[target][i]["Value"][2])))
+            elif self.pre_config[target][i]["Rule"] == "Boolean":
+                self.value[i].SetSelection(self.boolean_choice.index(str(self.pre_config[target][i]["Value"])))
+            elif self.pre_config[target][i]["Rule"] == "Not Important":
                 None
             else:
-                self.value[i].SetValue(self.preConfig[target][i]["Value"])
+                self.value[i].SetValue(self.pre_config[target][i]["Value"])
 
-            self.weight[i].SetSelection(self.spec_weight_choice.index(str(self.preConfig[target][i]["Weight"])))
+            self.weight[i].SetSelection(self.spec_weight_choice.index(str(self.pre_config[target][i]["Weight"])))
 
-        if target == "Children":
-            criteria_weight = [5, 4, 3, 3, 4, 1, 1, 5, 5, 5, 4, 2, 4, 4, 4, 4, 4, 4, 2, 1, 1, 1, 2, 5, 3, 5, 5, 5, 4]
-
-            # 0 highest better/boollean/constant, 1 lowest/not important, 2 optimal, 3 not important
-            criteria_rule = [0, 0, 2, 2, 1, 3, 1, 2, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0]
-            for i in range(1, 30):
-                self.rule[i].Enable(False)
-                self.weight[i].Enable(False)
-                self.rule[i].SetSelection(criteria_rule[i-1])
-
-                if self.rule[i].GetString(criteria_rule[i - 1]) == "Highest Better" or self.rule[i].GetString(criteria_rule[i - 1]) == "Lowest Better":
-                    self.value[i].SetValue("N/A")
-                    self.value[i].Enable(False)
-                if self.rule[i].GetString(criteria_rule[i - 1]) == "Not Important":
-                    self.name[i].Enable(False)
-                    #self.value[i].Enable(False)
-                    self.weight[i].Enable(False)
-                else:
-                    self.name[i].Enable(True)
-                if self.name[i].GetLabel() == "Height":
-                    self.value[i].SetValue("145")
-                if self.name[i].GetLabel() == "Width":
-                    self.value[i].SetValue("65")
-                if self.name[i].GetLabel() == "Screen Size":
-                    self.value[i].SetValue("4.75")
-
-                if self.specs_name[i][1] == "constant":
-                    self.nano_choice.Enable(False)
-                    self.micro_choice.Enable(False)
-                    self.mini_choice.Enable(False)
-                    self.full_choice.Enable(False)
-
-                    self.android_choice.Enable(False)
-                    self.apple_choice.Enable(False)
-                    self.microsoft_choice.Enable(False)
-                    self.blackberry_choice.Enable(False)
-                    self.firefox_choice.Enable(False)
-                    self.symbian_choice.Enable(False)
-
-                    self.type_c_choice.Enable(False)
-                    self.micro_choice_usb.Enable(False)
-                    self.mini_choice_usb.Enable(False)
-                elif self.specs_name[i][1] == "" and self.common_rule_choice[
-                    self.rule[i].GetSelection()] == "Optimal Value":
-                    self.value[i].Enable(False)
-                else:
-                    self.value[i].Enable(False)
-
-                self.weight[i].SetSelection(criteria_weight[i - 1] - 1)
-
-            self.nano_choice.SetSelection(0)
-            self.micro_choice.SetSelection(0)
-            self.mini_choice.SetSelection(0)
-            self.full_choice.SetSelection(0)
-
-            self.android_choice.SetSelection(5)
-            self.apple_choice.SetSelection(4)
-            self.microsoft_choice.SetSelection(3)
-            self.blackberry_choice.SetSelection(2)
-            self.firefox_choice.SetSelection(0)
-            self.symbian_choice.SetSelection(1)
-
-            self.type_c_choice.SetSelection(2)
-            self.micro_choice_usb.SetSelection(1)
-            self.mini_choice_usb.SetSelection(0)
-
-        elif target == "Hi-Tech Employee":
-            criteria_weight = [5, 5, 3, 3, 4, 4, 3, 4, 5, 4, 4, 5, 5, 5, 5, 5, 5, 5, 2, 1, 3, 3, 4, 5, 4, 1, 2, 5, 4]
-
-            # 0 highest better/boollean/constant, 1 lowest/not important, 2 optimal, 3 not important
-            criteria_rule = [0, 0, 2, 2, 1, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0, 0, 0]
-            for i in range(1, 30):
-                self.rule[i].Enable(False)
-                self.weight[i].Enable(False)
-                self.rule[i].SetSelection(criteria_rule[i - 1])
-
-                if self.rule[i].GetString(criteria_rule[i - 1]) == "Highest Better" or self.rule[i].GetString(criteria_rule[i - 1]) == "Lowest Better":
-                    self.value[i].SetValue("N/A")
-                    self.value[i].Enable(False)
-                if self.rule[i].GetString(criteria_rule[i - 1]) == "Not Important":
-                    self.name[i].Enable(False)
-                    #self.value[i].Enable(False)
-                    self.weight[i].Enable(False)
-                else:
-                    self.name[i].Enable(True)
-                if self.name[i].GetLabel() == "Height":
-                    self.value[i].SetValue("150")
-                if self.name[i].GetLabel() == "Width":
-                    self.value[i].SetValue("70")
-                if self.name[i].GetLabel() == "Screen Size":
-                    self.value[i].SetValue("5.25")
-
-                if self.specs_name[i][1] == "constant":
-                    self.nano_choice.Enable(False)
-                    self.micro_choice.Enable(False)
-                    self.mini_choice.Enable(False)
-                    self.full_choice.Enable(False)
-
-                    self.android_choice.Enable(False)
-                    self.apple_choice.Enable(False)
-                    self.microsoft_choice.Enable(False)
-                    self.blackberry_choice.Enable(False)
-                    self.firefox_choice.Enable(False)
-                    self.symbian_choice.Enable(False)
-
-                    self.type_c_choice.Enable(False)
-                    self.micro_choice_usb.Enable(False)
-                    self.mini_choice_usb.Enable(False)
-                elif self.specs_name[i][1] == "" and self.common_rule_choice[
-                    self.rule[i].GetSelection()] == "Optimal Value":
-                    self.value[i].Enable(False)
-                else:
-                    self.value[i].Enable(False)
-
-                self.weight[i].SetSelection(criteria_weight[i - 1] - 1)
-
-                self.nano_choice.SetSelection(3)
-                self.micro_choice.SetSelection(2)
-                self.mini_choice.SetSelection(1)
-                self.full_choice.SetSelection(0)
-
-                self.android_choice.SetSelection(5)
-                self.apple_choice.SetSelection(4)
-                self.microsoft_choice.SetSelection(2)
-                self.blackberry_choice.SetSelection(3)
-                self.firefox_choice.SetSelection(0)
-                self.symbian_choice.SetSelection(1)
-
-                self.type_c_choice.SetSelection(2)
-                self.micro_choice_usb.SetSelection(1)
-                self.mini_choice_usb.SetSelection(0)
-
-        elif target == "Pensioners":
-            criteria_weight = [5, 2, 4, 4, 4, 1, 1, 5, 3, 1, 1, 5, 5, 1, 4, 4, 4, 4, 4, 5, 4, 2, 1, 5, 1, 5, 5, 5, 3]
-
-            # 0 highest better/boollean/constant, 1 lowest/not important, 2 optimal, 3 not important
-            criteria_rule = [0, 0, 2, 2, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 3, 0, 0, 0, 0]
-            for i in range(1, 30):
-                self.rule[i].Enable(False)
-                self.weight[i].Enable(False)
-                self.rule[i].SetSelection(criteria_rule[i - 1])
-
-                if self.rule[i].GetString(criteria_rule[i - 1]) == "Highest Better" or self.rule[i].GetString(criteria_rule[i - 1]) == "Lowest Better":
-                    self.value[i].SetValue("N/A")
-                    self.value[i].Enable(False)
-                if self.rule[i].GetString(criteria_rule[i - 1]) == "Not Important":
-                    self.name[i].Enable(False)
-                    #self.value[i].Enable(False)
-                    self.weight[i].Enable(False)
-                else:
-                    self.name[i].Enable(True)
-                if self.name[i].GetLabel() == "Height":
-                    self.value[i].SetValue("175")
-                if self.name[i].GetLabel() == "Width":
-                    self.value[i].SetValue("85")
-
-                if self.specs_name[i][1] == "constant":
-                    self.nano_choice.Enable(False)
-                    self.micro_choice.Enable(False)
-                    self.mini_choice.Enable(False)
-                    self.full_choice.Enable(False)
-
-                    self.android_choice.Enable(False)
-                    self.apple_choice.Enable(False)
-                    self.microsoft_choice.Enable(False)
-                    self.blackberry_choice.Enable(False)
-                    self.firefox_choice.Enable(False)
-                    self.symbian_choice.Enable(False)
-
-                    self.type_c_choice.Enable(False)
-                    self.micro_choice_usb.Enable(False)
-                    self.mini_choice_usb.Enable(False)
-                elif self.specs_name[i][1] == "" and self.common_rule_choice[
-                    self.rule[i].GetSelection()] == "Optimal Value":
-                    self.value[i].Enable(False)
-                else:
-                    self.value[i].Enable(False)
-
-                self.weight[i].SetSelection(criteria_weight[i - 1] - 1)
-
-                self.nano_choice.SetSelection(0)
-                self.micro_choice.SetSelection(1)
-                self.mini_choice.SetSelection(2)
-                self.full_choice.SetSelection(3)
-
-                self.android_choice.SetSelection(4)
-                self.apple_choice.SetSelection(5)
-                self.microsoft_choice.SetSelection(2)
-                self.blackberry_choice.SetSelection(3)
-                self.firefox_choice.SetSelection(0)
-                self.symbian_choice.SetSelection(1)
-
-                self.type_c_choice.SetSelection(2)
-                self.micro_choice_usb.SetSelection(1)
-                self.mini_choice_usb.SetSelection(0)
-
-        elif target == "Custom":
-            self.rule_select(0)
+        print(1)
+        #
+        # if target == "Children":
+        #     criteria_weight = [5, 4, 3, 3, 4, 1, 1, 5, 5, 5, 4, 2, 4, 4, 4, 4, 4, 4, 2, 1, 1, 1, 2, 5, 3, 5, 5, 5, 4]
+        #
+        #     # 0 highest better/boollean/constant, 1 lowest/not important, 2 optimal, 3 not important
+        #     criteria_rule = [0, 0, 2, 2, 1, 3, 1, 2, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0]
+        #     for i in range(1, 30):
+        #         self.rule[i].Enable(False)
+        #         self.weight[i].Enable(False)
+        #         self.rule[i].SetSelection(criteria_rule[i-1])
+        #
+        #         if self.rule[i].GetString(criteria_rule[i - 1]) == "Highest Better" or self.rule[i].GetString(criteria_rule[i - 1]) == "Lowest Better":
+        #             self.value[i].SetValue("N/A")
+        #             self.value[i].Enable(False)
+        #         if self.rule[i].GetString(criteria_rule[i - 1]) == "Not Important":
+        #             self.name[i].Enable(False)
+        #             #self.value[i].Enable(False)
+        #             self.weight[i].Enable(False)
+        #         else:
+        #             self.name[i].Enable(True)
+        #         if self.name[i].GetLabel() == "Height":
+        #             self.value[i].SetValue("145")
+        #         if self.name[i].GetLabel() == "Width":
+        #             self.value[i].SetValue("65")
+        #         if self.name[i].GetLabel() == "Screen Size":
+        #             self.value[i].SetValue("4.75")
+        #
+        #         if self.specs_name[i][1] == "constant":
+        #             self.nano_choice.Enable(False)
+        #             self.micro_choice.Enable(False)
+        #             self.mini_choice.Enable(False)
+        #             self.full_choice.Enable(False)
+        #
+        #             self.android_choice.Enable(False)
+        #             self.apple_choice.Enable(False)
+        #             self.microsoft_choice.Enable(False)
+        #             self.blackberry_choice.Enable(False)
+        #             self.firefox_choice.Enable(False)
+        #             self.symbian_choice.Enable(False)
+        #
+        #             self.type_c_choice.Enable(False)
+        #             self.micro_choice_usb.Enable(False)
+        #             self.mini_choice_usb.Enable(False)
+        #         elif self.specs_name[i][1] == "" and self.common_rule_choice[
+        #             self.rule[i].GetSelection()] == "Optimal Value":
+        #             self.value[i].Enable(False)
+        #         else:
+        #             self.value[i].Enable(False)
+        #
+        #         self.weight[i].SetSelection(criteria_weight[i - 1] - 1)
+        #
+        #     self.nano_choice.SetSelection(0)
+        #     self.micro_choice.SetSelection(0)
+        #     self.mini_choice.SetSelection(0)
+        #     self.full_choice.SetSelection(0)
+        #
+        #     self.android_choice.SetSelection(5)
+        #     self.apple_choice.SetSelection(4)
+        #     self.microsoft_choice.SetSelection(3)
+        #     self.blackberry_choice.SetSelection(2)
+        #     self.firefox_choice.SetSelection(0)
+        #     self.symbian_choice.SetSelection(1)
+        #
+        #     self.type_c_choice.SetSelection(2)
+        #     self.micro_choice_usb.SetSelection(1)
+        #     self.mini_choice_usb.SetSelection(0)
+        #
+        # elif target == "Hi-Tech Employee":
+        #     criteria_weight = [5, 5, 3, 3, 4, 4, 3, 4, 5, 4, 4, 5, 5, 5, 5, 5, 5, 5, 2, 1, 3, 3, 4, 5, 4, 1, 2, 5, 4]
+        #
+        #     # 0 highest better/boollean/constant, 1 lowest/not important, 2 optimal, 3 not important
+        #     criteria_rule = [0, 0, 2, 2, 1, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0, 0, 0]
+        #     for i in range(1, 30):
+        #         self.rule[i].Enable(False)
+        #         self.weight[i].Enable(False)
+        #         self.rule[i].SetSelection(criteria_rule[i - 1])
+        #
+        #         if self.rule[i].GetString(criteria_rule[i - 1]) == "Highest Better" or self.rule[i].GetString(criteria_rule[i - 1]) == "Lowest Better":
+        #             self.value[i].SetValue("N/A")
+        #             self.value[i].Enable(False)
+        #         if self.rule[i].GetString(criteria_rule[i - 1]) == "Not Important":
+        #             self.name[i].Enable(False)
+        #             #self.value[i].Enable(False)
+        #             self.weight[i].Enable(False)
+        #         else:
+        #             self.name[i].Enable(True)
+        #         if self.name[i].GetLabel() == "Height":
+        #             self.value[i].SetValue("150")
+        #         if self.name[i].GetLabel() == "Width":
+        #             self.value[i].SetValue("70")
+        #         if self.name[i].GetLabel() == "Screen Size":
+        #             self.value[i].SetValue("5.25")
+        #
+        #         if self.specs_name[i][1] == "constant":
+        #             self.nano_choice.Enable(False)
+        #             self.micro_choice.Enable(False)
+        #             self.mini_choice.Enable(False)
+        #             self.full_choice.Enable(False)
+        #
+        #             self.android_choice.Enable(False)
+        #             self.apple_choice.Enable(False)
+        #             self.microsoft_choice.Enable(False)
+        #             self.blackberry_choice.Enable(False)
+        #             self.firefox_choice.Enable(False)
+        #             self.symbian_choice.Enable(False)
+        #
+        #             self.type_c_choice.Enable(False)
+        #             self.micro_choice_usb.Enable(False)
+        #             self.mini_choice_usb.Enable(False)
+        #         elif self.specs_name[i][1] == "" and self.common_rule_choice[
+        #             self.rule[i].GetSelection()] == "Optimal Value":
+        #             self.value[i].Enable(False)
+        #         else:
+        #             self.value[i].Enable(False)
+        #
+        #         self.weight[i].SetSelection(criteria_weight[i - 1] - 1)
+        #
+        #         self.nano_choice.SetSelection(3)
+        #         self.micro_choice.SetSelection(2)
+        #         self.mini_choice.SetSelection(1)
+        #         self.full_choice.SetSelection(0)
+        #
+        #         self.android_choice.SetSelection(5)
+        #         self.apple_choice.SetSelection(4)
+        #         self.microsoft_choice.SetSelection(2)
+        #         self.blackberry_choice.SetSelection(3)
+        #         self.firefox_choice.SetSelection(0)
+        #         self.symbian_choice.SetSelection(1)
+        #
+        #         self.type_c_choice.SetSelection(2)
+        #         self.micro_choice_usb.SetSelection(1)
+        #         self.mini_choice_usb.SetSelection(0)
+        #
+        # elif target == "Pensioners":
+        #     criteria_weight = [5, 2, 4, 4, 4, 1, 1, 5, 3, 1, 1, 5, 5, 1, 4, 4, 4, 4, 4, 5, 4, 2, 1, 5, 1, 5, 5, 5, 3]
+        #
+        #     # 0 highest better/boollean/constant, 1 lowest/not important, 2 optimal, 3 not important
+        #     criteria_rule = [0, 0, 2, 2, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 3, 0, 0, 0, 0]
+        #     for i in range(1, 30):
+        #         self.rule[i].Enable(False)
+        #         self.weight[i].Enable(False)
+        #         self.rule[i].SetSelection(criteria_rule[i - 1])
+        #
+        #         if self.rule[i].GetString(criteria_rule[i - 1]) == "Highest Better" or self.rule[i].GetString(criteria_rule[i - 1]) == "Lowest Better":
+        #             self.value[i].SetValue("N/A")
+        #             self.value[i].Enable(False)
+        #         if self.rule[i].GetString(criteria_rule[i - 1]) == "Not Important":
+        #             self.name[i].Enable(False)
+        #             #self.value[i].Enable(False)
+        #             self.weight[i].Enable(False)
+        #         else:
+        #             self.name[i].Enable(True)
+        #         if self.name[i].GetLabel() == "Height":
+        #             self.value[i].SetValue("175")
+        #         if self.name[i].GetLabel() == "Width":
+        #             self.value[i].SetValue("85")
+        #
+        #         if self.specs_name[i][1] == "constant":
+        #             self.nano_choice.Enable(False)
+        #             self.micro_choice.Enable(False)
+        #             self.mini_choice.Enable(False)
+        #             self.full_choice.Enable(False)
+        #
+        #             self.android_choice.Enable(False)
+        #             self.apple_choice.Enable(False)
+        #             self.microsoft_choice.Enable(False)
+        #             self.blackberry_choice.Enable(False)
+        #             self.firefox_choice.Enable(False)
+        #             self.symbian_choice.Enable(False)
+        #
+        #             self.type_c_choice.Enable(False)
+        #             self.micro_choice_usb.Enable(False)
+        #             self.mini_choice_usb.Enable(False)
+        #         elif self.specs_name[i][1] == "" and self.common_rule_choice[
+        #             self.rule[i].GetSelection()] == "Optimal Value":
+        #             self.value[i].Enable(False)
+        #         else:
+        #             self.value[i].Enable(False)
+        #
+        #         self.weight[i].SetSelection(criteria_weight[i - 1] - 1)
+        #
+        #         self.nano_choice.SetSelection(0)
+        #         self.micro_choice.SetSelection(1)
+        #         self.mini_choice.SetSelection(2)
+        #         self.full_choice.SetSelection(3)
+        #
+        #         self.android_choice.SetSelection(4)
+        #         self.apple_choice.SetSelection(5)
+        #         self.microsoft_choice.SetSelection(2)
+        #         self.blackberry_choice.SetSelection(3)
+        #         self.firefox_choice.SetSelection(0)
+        #         self.symbian_choice.SetSelection(1)
+        #
+        #         self.type_c_choice.SetSelection(2)
+        #         self.micro_choice_usb.SetSelection(1)
+        #         self.mini_choice_usb.SetSelection(0)
 
     def calc(self, event):
         self.get_config()
 
-        #preConfig.pre_config[self.target_choiseChoices[self.target_choise.GetSelection()]] = self.config
+        # self.pre_config[self.target_choiseChoices[self.target_choise.GetSelection()]] = self.config
 
         fields_error = False
         for item in self.config:
@@ -407,8 +410,8 @@ class MainFrame(lay.main_dialog):
         self.borda_click(0)
         self.target_refresh()
 
-        # from DataBase import dbScarper
-        # dbScarper.save_obj(preConfig.pre_config, "preConfig")
+        from DataBase import dbScarper
+        #dbScarper.save_obj(str(self.pre_config), "DataBase/preConfig")
 
         for i in range(1,6):
             self.res_phone[i].SetLabelText("Phone Name")
