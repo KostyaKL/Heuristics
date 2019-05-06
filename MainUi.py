@@ -6,10 +6,12 @@ import wx.xrc
 
 from GUI import layout as lay
 from time import strftime, gmtime
-
+from DataBase import preConfig
 
 class MainFrame(lay.main_dialog):
     config = {}
+
+    pre_config = {}
 
     def __init__(self, parent):
         lay.main_dialog.__init__(self, parent)
@@ -17,6 +19,9 @@ class MainFrame(lay.main_dialog):
             self.borda_click(0)
         else:
             self.topsis_click(0)
+
+        from DataBase import dbScarper
+        self.preConfig = dbScarper.load_obj("DataBase/preConfig")
         self.target_refresh()
 
         self.result_time.Hide()
@@ -38,6 +43,40 @@ class MainFrame(lay.main_dialog):
 
     def target_refresh(self):
         target = self.target_choiseChoices[self.target_choise.GetSelection()]
+
+        for i in range(1, 30):
+            if self.specs_name[i][1] == "boolean":
+                self.rule[i].SetSelection(self.boolean_rule_choice.index(self.preConfig[target][i]["Rule"]))
+            elif self.specs_name[i][1] == "constant":
+                self.rule[i].SetSelection(self.constant_rule_choice.index(self.preConfig[target][i]["Rule"]))
+            else:
+                self.rule[i].SetSelection(self.common_rule_choice.index(self.preConfig[target][i]["Rule"]))
+
+            if self.preConfig[target][i]["Name"] == "SIM Card Type":
+                self.nano_choice.SetSelection(self.sim_choice.index(str(self.preConfig[target][i]["Value"][0])))
+                self.micro_choice.SetSelection(self.sim_choice.index(str(self.preConfig[target][i]["Value"][1])))
+                self.mini_choice.SetSelection(self.sim_choice.index(str(self.preConfig[target][i]["Value"][2])))
+                self.full_choice.SetSelection(self.sim_choice.index(str(self.preConfig[target][i]["Value"][3])))
+            elif self.preConfig[target][i]["Name"] == "Operating System":
+                self.android_choice.SetSelection(self.op_choice.index(str(self.preConfig[target][i]["Value"][0])))
+                self.apple_choice.SetSelection(self.op_choice.index(str(self.preConfig[target][i]["Value"][1])))
+                self.microsoft_choice.SetSelection(self.op_choice.index(str(self.preConfig[target][i]["Value"][2])))
+                self.blackberry_choice.SetSelection(self.op_choice.index(str(self.preConfig[target][i]["Value"][3])))
+                self.firefox_choice.SetSelection(self.op_choice.index(str(self.preConfig[target][i]["Value"][4])))
+                self.symbian_choice.SetSelection(self.op_choice.index(str(self.preConfig[target][i]["Value"][5])))
+            elif self.preConfig[target][i]["Name"] == "Charging Cable Type":
+                self.type_c_choice.SetSelection(self.usb_choice.index(str(self.preConfig[target][i]["Value"][0])))
+                self.mini_choice_usb.SetSelection(self.usb_choice.index(str(self.preConfig[target][i]["Value"][1])))
+                self.micro_choice_usb.SetSelection(self.usb_choice.index(str(self.preConfig[target][i]["Value"][2])))
+            elif self.preConfig[target][i]["Rule"] == "Boolean":
+                self.value[i].SetSelection(self.boolean_choice.index(str(self.preConfig[target][i]["Value"])))
+            elif self.preConfig[target][i]["Rule"] == "Not Important":
+                None
+            else:
+                self.value[i].SetValue(self.preConfig[target][i]["Value"])
+
+            self.weight[i].SetSelection(self.spec_weight_choice.index(str(self.preConfig[target][i]["Weight"])))
+
         if target == "Children":
             criteria_weight = [5, 4, 3, 3, 4, 1, 1, 5, 5, 5, 4, 2, 4, 4, 4, 4, 4, 4, 2, 1, 1, 1, 2, 5, 3, 5, 5, 5, 4]
 
@@ -239,6 +278,9 @@ class MainFrame(lay.main_dialog):
 
     def calc(self, event):
         self.get_config()
+
+        #preConfig.pre_config[self.target_choiseChoices[self.target_choise.GetSelection()]] = self.config
+
         fields_error = False
         for item in self.config:
             if self.config[item]["Value"] == "":
@@ -364,6 +406,9 @@ class MainFrame(lay.main_dialog):
         self.borda.SetValue(True)
         self.borda_click(0)
         self.target_refresh()
+
+        # from DataBase import dbScarper
+        # dbScarper.save_obj(preConfig.pre_config, "preConfig")
 
         for i in range(1,6):
             self.res_phone[i].SetLabelText("Phone Name")
