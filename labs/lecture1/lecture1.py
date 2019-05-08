@@ -1,6 +1,3 @@
-### Tshai Barshevsky 311334544
-### Kostya Lokshin 310765821
-
 import random
 import string
 
